@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AboutType } from './types/about';
+import { AreaStatusType } from './types/status';
 
 @Injectable()
 export class AppService {
@@ -49,4 +50,29 @@ export class AppService {
       },
     };
   }
+
+  userLogin(): AreaStatusType {
+    return {
+      error: false,
+      code: 200,
+      message: "User logged in",
+    };
+  }
+
+  userRegister(): AreaStatusType {
+    return {
+      error: false,
+      code: 200,
+      message: "User registered",
+    };
+  }
+
+  subscribeToService(serviceId: number): AreaStatusType {
+    return {
+      error: false,
+      code: 200,
+      message: "Subscribed to service " + serviceId,
+    };
+  }
+
 }
