@@ -8,10 +8,10 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getAboutJson(): AboutType {
+  getAboutJson(ip: any): AboutType {
     return {
       client: {
-        host: "localhost",
+        host: ip,
       },
       server: {
         current_time: 0,

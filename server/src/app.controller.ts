@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AboutType } from './types/about';
 import { AreaStatusType } from './types/status';
@@ -13,8 +13,8 @@ export class AppController {
   }
 
   @Get("about.json")
-  getAboutJson(): AboutType {
-    return this.appService.getAboutJson();
+  getAboutJson(@Ip() ip): AboutType {
+    return this.appService.getAboutJson(ip);
   }
 
   @Post("login")
