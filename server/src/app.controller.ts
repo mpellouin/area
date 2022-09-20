@@ -23,8 +23,8 @@ export class AppController {
   }
 
   @Post("register")
-  userRegister(): AreaStatusType {
-    return this.appService.userRegister();
+  userRegister(@Body() body): AreaStatusType {
+    return this.appService.userRegister(body);
   }
 
   @Post("subscribe/:serviceId")
