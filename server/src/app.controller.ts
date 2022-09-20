@@ -18,8 +18,8 @@ export class AppController {
   }
 
   @Post("login")
-  userLogin(): AreaStatusType {
-    return this.appService.userLogin();
+  userLogin(@Body() body): AreaStatusType {
+    return this.appService.userLogin(body);
   }
 
   @Post("register")

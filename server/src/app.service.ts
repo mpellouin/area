@@ -53,16 +53,32 @@ export class AppService {
     };
   }
 
-  userLogin(): AreaStatusType {
+  userLogin(body): AreaAuthType {
+    if (!body?.email || !body?.password) {
+      return {
+        error: true,
+        code: 400,
+        message: "Missing email or password",
+        token: "null",
+      };
+    }
+    // check if email exists in db
+    // if not return an error
+    // else retrieve user
+    const salt = genSaltSync(10);
+    const hash = hashSync(body.password, salt);
+
+    // check if password is correct else return an error
+
     return {
       error: false,
       code: 200,
       message: "User logged in",
+      token: sign({ email: body.email }, process.env.SECRET),
     };
   }
 
   userRegister(body): AreaAuthType {
-    console.log(body, process.env.SECRET);
     if (!body?.email || !body?.password) {
       return {
         error: true,
