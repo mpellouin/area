@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  ID Int @id @default(autoincrement())
+  customToken String
+  Providers Provider[]
+  Area Area[]
+}
+
+model Provider {
+  ID Int @id @default(autoincrement())
+  user User @relation(fields: [userID], references: [ID])
+  userID Int
+  Name String
+  AuthToken String
+}
+
+model Area {
+  ID Int @id @default(autoincrement())
+  user User @relation(fields: [userID], references: [ID])
+  userID Int
+}
