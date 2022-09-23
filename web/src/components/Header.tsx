@@ -28,7 +28,7 @@ function Header() {
                 <Link className='navbar-item' to='/'>
                     HOME
                 </Link>
-                <Link className='navbar-item' to='/auth'>
+                <Link className='navbar-item' to='/login'>
                     <button className='navbar-button'>LOGIN</button>
                 </Link>
             </div>
