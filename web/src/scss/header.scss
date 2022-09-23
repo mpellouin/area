@@ -13,7 +13,7 @@ header {
         width: auto;
         height: auto;
         position: relative;
-        margin-top: 10px;
+        margin-top: 5px;
         margin-left: 5%;
         user-select: none;
         display: flex;
@@ -32,7 +32,7 @@ header {
         color: #222525;
         margin: 24px;
         font-family: 'Roboto';
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
     .navbar-button {
         text-decoration: none;
@@ -41,7 +41,7 @@ header {
         border: none;
         font-family: 'Roboto';
         padding: 15px 25px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         cursor: pointer;
     }
     .header-pinned {
