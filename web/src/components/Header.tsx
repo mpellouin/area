@@ -21,7 +21,7 @@ function Header() {
         <header className={headerBackground ? 'header' : 'header-pinned'}>
             <div className='logo'>
                 <Link to='/'>
-                    <img src={require('../assets/Logo.svg').default} alt='Logo' width='100' height='100'/>
+                    <img src={require('../assets/Logo.svg').default} alt='Logo' width='80' height='80'/>
                 </Link>
             </div>
             <div className='navbar'>
