@@ -91,7 +91,7 @@ export class AppService {
     const salt = genSaltSync(10);
     const hash = hashSync(body.password, salt);
     // Save user in db with email and hash as password
-  
+
     return {
       error: false,
       code: 200,
