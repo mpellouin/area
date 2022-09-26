@@ -6,11 +6,12 @@ import { userController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { PrismaService } from './prisma.service';
 import { GoogleStrategy } from './Oauth/google.strategy';
-import { OAuthGoogle } from './Oauth/google.controller';
+import { AuthService } from './Oauth/auth.service';
+import { AuthController } from './Oauth/auth.controller';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  controllers: [AppController, userController, OAuthGoogle],
-  providers: [AppService, UserService, PrismaService, GoogleStrategy],
+  controllers: [AppController, userController, AuthController],
+  providers: [AppService, UserService, PrismaService, GoogleStrategy, AuthService],
 })
 export class AppModule {}
