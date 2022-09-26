@@ -5,10 +5,12 @@ import { ConfigModule } from '@nestjs/config';
 import { userController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { PrismaService } from './prisma.service';
+import { GoogleStrategy } from './Oauth/google.strategy';
+import { OAuthGoogle } from './Oauth/google.controller';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  controllers: [AppController, userController],
-  providers: [AppService, UserService, PrismaService],
+  controllers: [AppController, userController, OAuthGoogle],
+  providers: [AppService, UserService, PrismaService, GoogleStrategy],
 })
 export class AppModule {}
