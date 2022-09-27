@@ -12,7 +12,9 @@ export const Colors = {
   minorD: '#2CB67D',
   minorDOpacity: 'rgba(44, 182, 125, 0.5)',
   textW: '#222525',
+  textWOpacity: 'rgba(34, 37, 37, 0.8)',
   textD: '#FFFFFE',
+  textDOpacity: 'rgba(255, 255, 254, 0.8)',
 };
 
 export const Styles = StyleSheet.create({
