@@ -1,8 +1,11 @@
-.footer {
-    background-color: #61dafb;
+.footer-div {
+    background-color: var(--bg-white-theme);
     bottom: 0;
+    top: 0;
+    position: relative;
     width: 100%;
     height: 50px;
-    color: white;
+    color: var(--text-white-theme);
+    justify-content: center;
     display: flex;
 }

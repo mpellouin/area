@@ -8,6 +8,7 @@ header {
     justify-content: space-between;
     text-decoration: none;
     user-select: none;
+    transition: all ease-out 0.5s;
 
     .logo {
         width: auto;
@@ -29,14 +30,14 @@ header {
     }
     .navbar-item {
         text-decoration: none;
-        color: #222525;
+        color: var(--text-white-theme);
         margin: 24px;
         font-family: 'Roboto';
         font-size: 1.2rem;
     }
     .navbar-button {
         text-decoration: none;
-        background-color: #F45D48;
+        background-color: var(--design-white-theme);
         border-radius: 10px;
         border: none;
         font-family: 'Roboto';
@@ -46,5 +47,7 @@ header {
     }
     .header-pinned {
         background-color: #F8F5F2;
+        width: 100%;
+        height: 100%;
     }
 }
