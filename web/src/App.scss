@@ -34,7 +34,7 @@ div {
 
 .page {
   width: 100vw;
-  height: calc(100vh - 89px);
+  height: calc(100vh - 89px - 50px);
   display: flex;
   flex-direction: column;
   align-items: center;
