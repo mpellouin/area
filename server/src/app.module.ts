@@ -11,10 +11,11 @@ import { AuthController } from './Oauth/auth.controller';
 import { HttpModule } from '@nestjs/axios';
 import { ReactionController } from './reactions/reaction.controller';
 import { ReactionService } from './reactions/reaction.strategy';
+import { ActionsService } from './actions/actions.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), HttpModule],
   controllers: [AppController, userController, AuthController, ReactionController],
-  providers: [AppService, UserService, PrismaService, GoogleStrategy, AuthService, ReactionService],
+  providers: [AppService, UserService, PrismaService, GoogleStrategy, AuthService, ReactionService, ActionsService],
 })
 export class AppModule {}
