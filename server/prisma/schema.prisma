@@ -11,6 +11,7 @@ model User {
   ID Int @id @default(autoincrement())
   customToken String
   email String
+  password String
   Providers Provider[]
   Area Area[]
 }
