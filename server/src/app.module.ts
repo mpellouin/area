@@ -8,10 +8,13 @@ import { PrismaService } from './prisma.service';
 import { GoogleStrategy } from './Oauth/google.strategy';
 import { AuthService } from './Oauth/auth.service';
 import { AuthController } from './Oauth/auth.controller';
+import { HttpModule } from '@nestjs/axios';
+import { ReactionController } from './reactions/reaction.controller';
+import { ReactionService } from './reactions/reaction.strategy';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
-  controllers: [AppController, userController, AuthController],
-  providers: [AppService, UserService, PrismaService, GoogleStrategy, AuthService],
+  imports: [ConfigModule.forRoot(), HttpModule],
+  controllers: [AppController, userController, AuthController, ReactionController],
+  providers: [AppService, UserService, PrismaService, GoogleStrategy, AuthService, ReactionService],
 })
 export class AppModule {}
