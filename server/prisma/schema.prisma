@@ -13,6 +13,7 @@ model User {
   email String
   Providers Provider[]
   Area Area[]
+  googleID String?
 }
 
 model Provider {
