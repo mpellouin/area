@@ -14,6 +14,7 @@ model User {
   password String
   Providers Provider[]
   Area Area[]
+  googleID String?
 }
 
 model Provider {
