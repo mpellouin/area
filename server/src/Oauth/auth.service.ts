@@ -1,12 +1,17 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { Prisma, User } from "@prisma/client";
+import { prisma, Prisma, User } from "@prisma/client";
+import { create } from "domain";
+import { PrismaService } from "src/prisma.service";
+import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
 
 
 @Injectable()
 export class  AuthService {
     constructor(
-        private userService: UserService
+        private userService: UserService,
+        private providerService: ProviderService,
+        private prismaService: PrismaService
     ) {}
 
     async login(user) {
@@ -30,9 +35,17 @@ export class  AuthService {
             } else {
             //if(cookie) {...}
                 const userAccount = userData.user
-                const newUser = this.userService.createUser({email: userAccount.email, customToken: "", googleID: userAccount.id, password: userAccount.id})
+                const newUser = await this.userService.createUser({email: userAccount.email, customToken: "", googleID: userAccount.id, password: userAccount.id})
                 if (newUser) {
                     try {
+                        await this.prismaService.user.update({
+                            where: {ID: newUser.ID},
+                            data: {
+                                Providers: {
+                                    create: {Name: "google", AuthToken: userData.user.refreshToken}
+                                }
+                            }
+                        })
                         return this.login(userData.user)
                     }
                     catch(error) {
