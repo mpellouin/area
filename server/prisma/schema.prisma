@@ -14,7 +14,7 @@ model User {
   password String
   Providers Provider[]
   Area Area[]
-  googleID String?
+  googleID String? @default("null")
 }
 
 model Provider {

@@ -17,18 +17,29 @@ export class  AuthService {
         console.log(userData.user)
         if (!userData.user) throw new BadRequestException();
         if (body) {
-            let user = await this.userService.users({where: {googleID: userData.user.id}})[0]
+            let users = await this.userService.users({where: {googleID: userData.user.id}})
+            let user = users[0]
+            console.log(userData.user.id)
             if (user) {
-               try {
+                try {
                     return this.login(userData.user)
                 }
                 catch(error) {
                     throw new Error(error)
                 }
-            }
+            } else {
             //if(cookie) {...}
-            const newUser = userData.user
-            this.userService.createUser({email: newUser.email, customToken: "", googleID: newUser.id})
+                const userAccount = userData.user
+                const newUser = this.userService.createUser({email: userAccount.email, customToken: "", googleID: userAccount.id, password: userAccount.id})
+                if (newUser) {
+                    try {
+                        return this.login(userData.user)
+                    }
+                    catch(error) {
+                        throw new Error(error)
+                    }
+                }
+            }
         }
     }
 }
