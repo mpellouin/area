@@ -22,7 +22,8 @@ model Provider {
   user User @relation(fields: [userID], references: [ID])
   userID Int
   Name String
-  AuthToken String
+  accessToken String
+  refreshToken String
 }
 
 model Area {

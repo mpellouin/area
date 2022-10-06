@@ -1,11 +1,49 @@
 import { Injectable } from "@nestjs/common";
-import { Provider, Prisma, prisma } from "@prisma/client";
+import { Provider, Prisma, User } from "@prisma/client";
 import { PrismaService } from "src/prisma.service";
+import internal from "stream";
 
 @Injectable()
 export class ProviderService {
     constructor(private prisma: PrismaService) {}
-    async createProvider(data: Prisma.ProviderCreateInput) {
-        return this.prisma.provider.create({data})
+    async updateUserToken(userID: number, providerName: string, accessToken: string = "null", refreshToken: string) {
+        const userProviders = await this.getUserProviders({where: {userID : userID, Name : providerName}})
+        const provider = userProviders[0]
+        if (provider) {
+            await this.prisma.user.update({
+                where: {ID: userID, },
+                data: {
+                    Providers: {
+                        update: {where: {ID : provider.ID} , data: {Name: providerName, accessToken: accessToken, refreshToken: refreshToken}}
+                    }
+                }
+            })
+        } else {
+            await this.prisma.user.update({
+                where: {ID: userID},
+                data: {
+                    Providers: {
+                        create: {Name: providerName, accessToken: accessToken, refreshToken: refreshToken}
+                    }
+                }
+            })
+        }
+    }
+
+    async getUserProviders(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.ProviderWhereUniqueInput;
+    where?: Prisma.ProviderWhereInput;
+    orderBy?: Prisma.ProviderOrderByWithRelationInput;
+  }): Promise<Provider[]> {
+    const { skip, take, cursor, where, orderBy } = params;
+    return this.prisma.provider.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
     }
 }

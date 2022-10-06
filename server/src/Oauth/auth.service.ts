@@ -27,6 +27,7 @@ export class  AuthService {
             console.log(userData.user.id)
             if (user) {
                 try {
+                    this.providerService.updateUserToken(user.ID, "google", userData.user.accessToken, userData.user.refreshToken)
                     return this.login(userData.user)
                 }
                 catch(error) {
@@ -38,14 +39,7 @@ export class  AuthService {
                 const newUser = await this.userService.createUser({email: userAccount.email, customToken: "", googleID: userAccount.id, password: userAccount.id})
                 if (newUser) {
                     try {
-                        await this.prismaService.user.update({
-                            where: {ID: newUser.ID},
-                            data: {
-                                Providers: {
-                                    create: {Name: "google", AuthToken: userData.user.refreshToken}
-                                }
-                            }
-                        })
+                        this.providerService.updateUserToken(newUser.ID, "google", userData.user.accessToken, userData.user.refreshToken)
                         return this.login(userData.user)
                     }
                     catch(error) {
