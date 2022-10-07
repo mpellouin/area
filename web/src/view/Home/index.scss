@@ -33,7 +33,7 @@
                 @media screen and (max-width: 1200px) {
                     left: auto;
                 }
-                font-family: 'Roboto';
+                font-family: $font-family;
                 font-style: normal;
                 font-weight: 700;
                 font-size: 37px;
@@ -42,13 +42,13 @@
 
                 margin: 22px;
                 
-                color: #222525;
+                color: $text-white-theme;
             }
             .secondaryText {
                 @media screen and (max-width: 1200px) {
                     left: auto;
                 }
-                font-family: 'Roboto';
+                font-family: $font-family;
                 font-style: normal;
                 font-weight: 500;
                 font-size: 18px;
@@ -84,13 +84,13 @@
             // width: 785px;
             // height: 86px;
 
-            font-family: 'Roboto';
+            font-family: $font-family;
             font-style: normal;
             font-weight: 700;
             font-size: 37px;
             line-height: 43px;
 
-            color: #222525;
+            color: $text-white-theme;
             z-index: 4;
         }
         .fourthText {
@@ -98,13 +98,13 @@
             top: 415px;
             left: 614px;
 
-            font-family: 'Roboto';
+            font-family: $font-family;
             font-style: normal;
             font-weight: 500;
             font-size: 18px;
             line-height: 21px;
 
-            color: #222525;
+            color: $text-white-theme;
         }
     }
     .thirdPart {
@@ -121,7 +121,7 @@
             left: 60%;
             top: 1876px;
             
-            font-family: 'Roboto';
+            font-family: $font-family;
             font-style: normal;
             font-weight: 700;
             font-size: 37px;
@@ -150,14 +150,14 @@
 
         .teamTitle {
             display: flex;
-            font-family: 'Roboto';
+            font-family: $font-family;
             font-style: normal;
             font-weight: 300;
             font-size: 64px;
             line-height: 75px;
             justify-content: center;
 
-            color: #000000;
+            color: $black;
             background-color: $design-white-theme;
         }
         .teamMembers {
@@ -179,7 +179,7 @@
             height: 170px;
             background-color: $design-white-theme;
             border-radius: 20px;
-            border: 1px solid #000000;
+            border: 1px solid $black;
         }
     }
 }

@@ -159,7 +159,7 @@
         opacity: .5;
         &:before {
             content: '';
-            background: linear-gradient(to right, transparent, #000000, transparent);
+            background: linear-gradient(to right, transparent, $black, transparent);
             position: absolute;
             left: 0;
             top: 50%;
@@ -170,11 +170,11 @@
             content: attr(data-content);
             position: relative;
             display: inline-block;
-            color: black;
+            color: $black;
 
             padding: 0 .5em;
             line-height: 1.5em;
-            color: rgba($color: #000000, $alpha: 0.9);
+            color: rgba($color: $black, $alpha: 0.9);
             background-color: #fcfcfa;
         }
     }

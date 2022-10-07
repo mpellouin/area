@@ -1,18 +1,5 @@
 @import "./scss/_vars.scss";
 
-:root {
-  --bg-white-theme: #F8F5F2;
-  --links-white-theme: #078080;
-  --text-white-theme: #222525;
-  --design-white-theme: #F45D48;
-  --form-container-white-theme: #FFFFFE;
-
-  --bg-black-theme: #222525;
-  --links-black-theme: #7F5AF0;
-  --text-black-theme: #FFFFFE;
-  --design-black-theme: #2CB67D;
-}
-
 body {
   top: 0;
   left: 0;
@@ -22,7 +9,7 @@ body {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  font-family: 'Roboto';
+  font-family: $font-family;
 }
 
 code {
