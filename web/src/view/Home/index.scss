@@ -1,7 +1,9 @@
+@import "../../scss/_vars.scss";
+
 .homepage {
     width: 100%;
 
-    background: #F8F5F2;
+    background-color: $bg-white-theme;
     display: flex;
     flex-direction: column;
 
@@ -55,7 +57,7 @@
 
                 margin: 22px;
                 
-                color: #222525;
+                color: $text-white-theme;
             }
         }
     }
@@ -126,7 +128,7 @@
             line-height: 43px;
             text-align: center;
             
-            color: #222525;
+            color: $text-white-theme;
         }
 
         .img3 {
@@ -156,7 +158,7 @@
             justify-content: center;
 
             color: #000000;
-            background-color: coral;
+            background-color: $design-white-theme;
         }
         .teamMembers {
             display: flex;
@@ -175,7 +177,7 @@
             display: flex;
             width: 170px;
             height: 170px;
-            background-color: lightsalmon;
+            background-color: $design-white-theme;
             border-radius: 20px;
             border: 1px solid #000000;
         }

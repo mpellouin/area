@@ -1,3 +1,5 @@
+@import "./scss/_vars.scss";
+
 :root {
   --bg-white-theme: #F8F5F2;
   --links-white-theme: #078080;
@@ -39,6 +41,6 @@ div {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-white-theme);
+  background-color: $bg-white-theme;
   position: relative;
 }

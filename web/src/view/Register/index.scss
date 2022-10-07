@@ -1,3 +1,5 @@
+@import "../../scss/_vars.scss";
+
 .formContainer {
     display: flex;
     flex-direction: column;
@@ -86,14 +88,14 @@
             height: 40px;
             border: 0px solid rgba(0, 0, 0, 0.4);
             border-radius: 9px;
-            background-color: #078080;
+            background-color: $links-white-theme;
             color: #fffffe;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
     
                 &:hover {
-                    background-color: rgba($color: #078080, $alpha: 0.7);
+                    background-color: rgba($color: $links-white-theme, $alpha: 0.7);
                 }
             }
     }
@@ -112,13 +114,13 @@
             border: 1px solid rgba(0, 0, 0, 0.4);
             border-radius: 9px;
             background-color: #fffffe;
-            color: #078080;
+            color: $links-white-theme;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
     
                 &:hover {
-                    background-color: rgba($color: #078080, $alpha: 0.1);
+                    background-color: rgba($color: $links-white-theme, $alpha: 0.1);
                 }
             img {
                 width: 40px;

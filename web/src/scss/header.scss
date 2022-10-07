@@ -1,3 +1,5 @@
+@import "./_vars.scss";
+
 header {
     position : sticky;
     top : 0;
@@ -10,7 +12,7 @@ header {
     text-decoration: none;
     user-select: none;
     transition: all ease-out 0.5s;
-    background-color: var(--bg-white-theme);
+    background-color: $bg-white-theme;
 
     .logo {
         width: auto;
@@ -32,14 +34,14 @@ header {
     }
     .navbar-item {
         text-decoration: none;
-        color: var(--text-white-theme);
+        color: $text-white-theme;
         margin: 24px;
         font-family: 'Roboto';
         font-size: 1.2rem;
     }
     .navbar-button {
         text-decoration: none;
-        background-color: var(--design-white-theme);
+        background-color: $design-white-theme;
         border-radius: 10px;
         border: none;
         font-family: 'Roboto';
