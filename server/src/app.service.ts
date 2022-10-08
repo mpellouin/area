@@ -3,14 +3,14 @@ import { AboutType } from './types/about';
 import { AreaAuthType, AreaStatusType } from './types/status';
 import { genSaltSync, hashSync } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { Observable } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
+import { ReactionService } from './reactions/reaction.strategy';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly httpService: HttpService,
-              private readonly actionsService: ActionsService) {}
+  constructor(private readonly actionsService: ActionsService,
+              private readonly reactionsService: ReactionService) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -114,34 +114,12 @@ export class AppService {
     };
   }
 
-  async poc(body, actionId: number): Promise<AreaStatusType> {
+  async createArea(body, actionId: number, reactionId: number): Promise<AreaStatusType> {
     const twitterAccount = body?.twitterAccount;
     try {
       const observable = await this.actionsService.factory(actionId, body);
-      observable.subscribe((data: any) => {
-        this.httpService
-          .post(process.env.DISCORD_WEBHOOK, {
-            "content": `${twitterAccount} just tweeted!`,
-            "embeds": [
-              {
-                "title": data.data[0].text,
-                "url": `https://twitter.com/${twitterAccount}/status/${data.data[0].id}`,
-                "author": {
-                  "name": twitterAccount,
-                  "url": `https://twitter.com/${twitterAccount}`,
-                },
-              },
-            ],
-          }, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${body.token}`,
-            },
-          })
-          .subscribe((response) => {
-            console.log(response.data);
-          });
-      });
+      console.log("observable created");
+      observable.subscribe((data: any) => {this.reactionsService.factory(reactionId, body)});
     } catch (e) {
       console.log(e);
     }
