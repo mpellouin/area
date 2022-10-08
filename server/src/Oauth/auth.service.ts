@@ -1,6 +1,4 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { prisma, Prisma, User } from "@prisma/client";
-import { create } from "domain";
 import { PrismaService } from "src/prisma.service";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
@@ -15,6 +13,7 @@ export class  AuthService {
     ) {}
 
     async login(user) {
+        console.log("login")
         return("login ok ! User = " + JSON.stringify(user))
     }
 

@@ -32,8 +32,9 @@ export class AppController {
     return this.appService.subscribeToService(serviceId);
   }
 
-  @Post("poc/:actionId")
-  async poc(@Body() body, @Param('actionId') actionId : number): Promise<AreaStatusType> {
-    return this.appService.poc(body, actionId);
+  @Post("createArea/:actionId/:reactionId")
+  async poc(@Body() body, @Param('actionId') actionId : number,
+                          @Param('reactionId') reactionID: number): Promise<AreaStatusType> {
+    return this.appService.createArea(body, actionId, reactionID);
   }
 }
