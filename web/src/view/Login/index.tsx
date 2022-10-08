@@ -1,6 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 import './index.scss'
+
+const buttons = [
+    {
+        name: "HOME",
+        path: "/",
+        isButton: false
+    },
+    {
+        name: "REGISTER",
+        path: "/register",
+        isButton: true
+    }
+]
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,6 +24,7 @@ const Login = () => {
 
     return (
         <>
+        <Header buttons={buttons}/>
             <div className="page">
                 <img className="loginBack" src="LoginBack.svg" alt="loginBack" />
                 <img className="loginBackFiles" src="LoginBackFiles.svg" alt="loginBackRight" />
@@ -21,7 +36,7 @@ const Login = () => {
                         <div className="formBody">
                                 <input type="email" name="email" id="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                                 <input type={passIsShown ? 'text' : 'password'} name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                                <label htmlFor="passwordInput" onClick={() => console.log("LIsa")}><b>Forgot password?</b></label>
+                                <label htmlFor="passwordInput"><b>Forgot password?</b></label>
                         </div>
                         <div className="formFooter">
                             <button>Sign In</button>

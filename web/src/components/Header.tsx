@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../scss/header.scss';
 
-function Header() {
+function Header({buttons} : any) {
     const [headerBackground, setHeaderBackground] = useState(true);
     const changeBackground = () => {
         if (window.scrollY > 0) 
@@ -25,12 +25,13 @@ function Header() {
                 </Link>
             </div>
             <div className='navbar'>
-                <Link className='navbar-item' to='/'>
-                    HOME
-                </Link>
-                <Link className='navbar-item' to='/login'>
-                    <button className='navbar-button'>LOGIN</button>
-                </Link>
+                {buttons.map((btn : any) => 
+                    <Link className='navbar-item' to={btn.path}>
+                        <button className={'navbar-isNotButton  ' + (btn.isButton ? 'navbar-button' : 'navbar-isNotButton')}>
+                            {btn.name}
+                        </button>
+                    </Link>
+                )}
             </div>
         </header>
     );

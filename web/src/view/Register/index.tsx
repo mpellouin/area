@@ -1,7 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Header from "../../components/Header";
 import './index.scss'
+
+const buttons = [
+    {
+        name: "HOME",
+        path: "/",
+        isButton: false
+    },
+    {
+        name: "LOGIN",
+        path: "/login",
+        isButton: true
+    }
+]
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -11,6 +25,7 @@ const Register = () => {
 
     return (
         <>
+        <Header buttons={buttons}/>
             <div className="page">
                 <img className="loginBack" src="LoginBack.svg" alt="loginBack" />
                 <img className="loginBackFiles" src="LoginBackFiles.svg" alt="loginBackRight" />                  

@@ -1,9 +1,24 @@
 import React from "react";
 import './index.scss'
+import Header from "../../components/Header";
+
+const buttons = [
+  {
+      name: "HOME",
+      path: "/",
+      isButton: false
+  },
+  {
+      name: "LOGIN",
+      path: "/login",
+      isButton: true
+  }
+]
 
 function Home() {
   return (
     <div className="homepage">
+      <Header buttons={buttons}/>
       <div className="firstPart">
         <img className="img1" src="Home_1.svg" alt="Home_1"></img>
         <div className="firstPartTexts">
