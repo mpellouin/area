@@ -11,12 +11,12 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAt, faUnlock} from '@fortawesome/free-solid-svg-icons';
 
-import {Colors} from '../../Style';
+import {Colors} from '../../../Style';
 
-import Title from '../components/Title';
-import Button from '../components/Button';
-import Separator from '../components/Separator';
-import LoginSvg from '../components/svg/LoginSvg';
+import Title from '../../components/Title';
+import Button from '../../components/Button';
+import Separator from '../../components/Separator';
+import LoginSvg from '../../components/svg/LoginSvg';
 import {useNavigation} from '@react-navigation/native';
 
 const Styles = StyleSheet.create({
@@ -49,12 +49,18 @@ const Styles = StyleSheet.create({
     marginRight: 30,
     marginTop: 25,
   },
+  registerInput: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+  },
 });
 
 const Login = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
+  const navigation = useNavigation();
 
   return (
     <ScrollView style={Styles.container}>
@@ -78,7 +84,7 @@ const Login = () => {
             onChangeText={newEmail => {
               setEmail(newEmail);
             }}
-            maxLength={32}
+            maxLength={28}
           />
         </View>
         <Separator
@@ -137,20 +143,22 @@ const Login = () => {
           width={137.5}
         />
       </View>
-      <Text
-        style={{
-          color: isDarkMode ? Colors.textD : Colors.textW,
-          textAlignVertical: 'center',
-        }}>
-        New to AREA ?{' '}
+      <View style={Styles.registerInput}>
         <Text
-          style={{color: isDarkMode ? Colors.majorD : Colors.majorW}}
-          onPress={() => {
-            test;
+          style={{
+            color: isDarkMode ? Colors.textD : Colors.textW,
+            textAlignVertical: 'center',
           }}>
-          Register
+          New to AREA ?
+          <Text
+            style={{color: isDarkMode ? Colors.majorD : Colors.majorW}}
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
+            Register
+          </Text>
         </Text>
-      </Text>
+      </View>
     </ScrollView>
   );
 };
