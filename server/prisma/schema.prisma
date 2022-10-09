@@ -11,8 +11,10 @@ model User {
   ID Int @id @default(autoincrement())
   customToken String
   email String
+  password String
   Providers Provider[]
   Area Area[]
+  googleID String? @default("null")
 }
 
 model Provider {
@@ -20,7 +22,8 @@ model Provider {
   user User @relation(fields: [userID], references: [ID])
   userID Int
   Name String
-  AuthToken String
+  accessToken String
+  refreshToken String
 }
 
 model Area {
