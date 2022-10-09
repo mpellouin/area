@@ -120,7 +120,7 @@
             cursor: pointer;
     
                 &:hover {
-                    background-color: rgba($color: #078080, $alpha: 0.1);
+                    background-color: rgba($color: $links-white-theme, $alpha: 0.1);
                 }
             img {
                 width: 40px;
@@ -170,7 +170,7 @@
             content: attr(data-content);
             position: relative;
             display: inline-block;
-            color: $black;
+            color: black;
 
             padding: 0 .5em;
             line-height: 1.5em;
