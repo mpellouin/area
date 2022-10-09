@@ -3,7 +3,6 @@ import { PrismaService } from "src/prisma.service";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
 
-
 @Injectable()
 export class  AuthService {
     constructor(
