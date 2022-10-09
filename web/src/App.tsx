@@ -5,6 +5,7 @@ import Login from "./view/Login";
 import Register from "./view/Register";
 import Footer from './components/Footer';
 import Home from "./view/Home";
+import AreaPage from "./view/Area";
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/areas" element={<AreaPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
