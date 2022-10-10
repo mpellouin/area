@@ -25,17 +25,7 @@ const Login = () => {
 
     const loginWithGoogle = async () => {
         console.log("login with google");
-        try {
-            const res = await googleAuth();
-            if (res.status <= 299) {
-                console.log(res);
-                navigate('/areas');
-            } else {
-                throw new Error("Error");
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        window.location.replace("http://localhost:8080/auth/google")
     }
 
     return (
