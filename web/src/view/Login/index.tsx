@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import './index.scss'
 
@@ -20,7 +20,11 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passIsShown, setPassIsShown] = useState(false);
-    const navigate = useNavigate();
+
+    const loginWithGoogle = async () => {
+        console.log("login with google");
+        window.location.replace("http://localhost:8080/auth/google")
+    }
 
     return (
         <>
@@ -43,7 +47,7 @@ const Login = () => {
                         </div>
                         <hr className="lineText" data-content="Or sign with"/>
                         <div className="alternateLogins">
-                            <button>
+                            <button onClick={() => loginWithGoogle()}>
                                 <img src="logo_google.svg" alt="Google" />
                             </button>
                             <button className="facebookLogin">
