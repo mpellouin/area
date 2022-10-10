@@ -2,12 +2,12 @@ import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, View, StyleSheet, Pressable, Text} from 'react-native';
 import {Colors} from '../../Style';
 
-export const Styles = StyleSheet.create({
+const Styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-    marginTop: 32,
+    marginTop: 25,
     paddingHorizontal: 24,
   },
   buttonStyle: {
@@ -28,8 +28,10 @@ const Button: React.FC<
   PropsWithChildren<{
     title: string;
     width: number;
+    email?: string;
+    pwd?: string;
   }>
-> = ({title, width}) => {
+> = ({title, width, email, pwd}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -51,7 +53,8 @@ const Button: React.FC<
           },
         ]}
         onPress={() => {
-          console.log('isPressed');
+          console.log(email);
+          console.log(pwd);
         }}>
         <Text style={Styles.textStyle}>{title}</Text>
       </Pressable>

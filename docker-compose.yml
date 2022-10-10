@@ -1,13 +1,12 @@
-# This is just a template, we will fill it while the project advances
-version: "3.9"
+version: "1.0"
 services:
-  web:
-    build: .
+  server:
+    build: ./server
     ports:
-      - "8000:5000"
-    volumes:
-      - .:/code
-    environment:
-      FLASK_DEBUG: True
-  redis:
-    image: "redis:alpine"
+      - "8080:8080"
+  web:
+    build: ./web
+    ports:
+      - "8081: 8081"
+  mobile:
+    build: ./mobile

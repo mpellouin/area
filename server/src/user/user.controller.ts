@@ -14,7 +14,7 @@ export class userController {
     }
 
     @Post()
-    async createUser(@Body() userData: {email: string; customToken: string}): Promise<UserModel> {
+    async createUser(@Body() userData: {email: string; customToken: string, password: string}): Promise<UserModel> {
         console.log("body = ", userData)
         return this.userService.createUser(userData)
     }

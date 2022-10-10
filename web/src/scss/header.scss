@@ -1,13 +1,18 @@
+@import "./_vars.scss";
+
 header {
     position : sticky;
     top : 0;
     display: flex;
     width: 100%;
     height: 100%;
+    z-index: 10;
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
     user-select: none;
+    transition: all ease-out 0.5s;
+    background-color: $bg-white-theme;
 
     .logo {
         width: auto;
@@ -18,6 +23,7 @@ header {
         user-select: none;
         display: flex;
     }
+
     .navbar {
         width: 100%;
         text-align: center;
@@ -26,25 +32,35 @@ header {
         display: inline-block;
         margin-right: 10px;
         text-align: right;
+
+        .navbar-item {
+            text-decoration: none;
+            color: $text-white-theme;
+            margin: 24px;
+    
+            .navbar-isNotButton {
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-size: 1.2rem;
+                font-family: $font-family;
+                cursor: pointer;
+            }
+            .navbar-button {
+                text-decoration: none;
+                background-color: $design-white-theme;
+                border-radius: 10px;
+                border: none;
+                font-family: $font-family;
+                padding: 15px 25px;
+                font-size: 1.2rem;
+                cursor: pointer;
+            }
+        }
     }
-    .navbar-item {
-        text-decoration: none;
-        color: #222525;
-        margin: 24px;
-        font-family: 'Roboto';
-        font-size: 1.2rem;
-    }
-    .navbar-button {
-        text-decoration: none;
-        background-color: #F45D48;
-        border-radius: 10px;
-        border: none;
-        font-family: 'Roboto';
-        padding: 15px 25px;
-        font-size: 1.2rem;
-        cursor: pointer;
-    }
-    .header-pinned {
-        background-color: #F8F5F2;
-    }
+}
+
+.header-pinned {
+    background-color: #F8F5F2;
+    z-index: 10;
 }

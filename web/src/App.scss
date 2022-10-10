@@ -1,3 +1,5 @@
+@import "./scss/_vars.scss";
+
 body {
   top: 0;
   left: 0;
@@ -7,7 +9,7 @@ body {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  font-family: 'Roboto';
+  font-family: $font-family;
 }
 
 code {
@@ -21,11 +23,11 @@ div {
 
 .page {
   width: 100vw;
-  height: calc(100vh - 89px);
+  height: calc(100vh - 89px - 50px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f8f5f2;
+  background-color: $bg-white-theme;
   position: relative;
 }
