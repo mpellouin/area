@@ -24,12 +24,12 @@ const Styles = StyleSheet.create({
   },
 });
 
-const Button: React.FC<
+const ButtonLogin: React.FC<
   PropsWithChildren<{
     title: string;
     width: number;
-    email?: string;
-    pwd?: string;
+    email: string;
+    pwd: string;
   }>
 > = ({title, width, email, pwd}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,4 +62,4 @@ const Button: React.FC<
   );
 };
 
-export default Button;
+export default ButtonLogin;
