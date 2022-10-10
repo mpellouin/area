@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { response } from "express";
 import { PrismaService } from "src/prisma.service";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
@@ -13,7 +14,8 @@ export class  AuthService {
 
     async login(user) {
         console.log("login")
-        return("login ok ! User = " + JSON.stringify(user))
+        //return("login ok ! User = " + JSON.stringify(user))
+        return response.redirect("http://localhost:8081/areas")
     }
 
     async loggingWithGoogle(userData, body?) {
