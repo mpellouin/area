@@ -8,7 +8,9 @@ export class AuthController {
 
     @UseGuards(AuthGuard("google"))
     @Get("google")
-    async loginWithGoogle() {}
+    async loginWithGoogle() {
+        console.log("someone is trying to login with google")
+    }
 
     @UseGuards(AuthGuard("google"))
     @Get("google/redirect")

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import googleAuth from "../../ApiFunctions/googleAuth";
 import Header from "../../components/Header";
 import './index.scss'
 
@@ -22,6 +23,21 @@ const Login = () => {
     const [passIsShown, setPassIsShown] = useState(false);
     const navigate = useNavigate();
 
+    const loginWithGoogle = async () => {
+        console.log("login with google");
+        try {
+            const res = await googleAuth();
+            if (res.status <= 299) {
+                console.log(res);
+                navigate('/areas');
+            } else {
+                throw new Error("Error");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <>
         <Header buttons={buttons}/>
@@ -43,7 +59,7 @@ const Login = () => {
                         </div>
                         <hr className="lineText" data-content="Or sign with"/>
                         <div className="alternateLogins">
-                            <button>
+                            <button onClick={() => loginWithGoogle()}>
                                 <img src="logo_google.svg" alt="Google" />
                             </button>
                             <button className="facebookLogin">

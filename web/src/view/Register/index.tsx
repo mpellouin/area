@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../../components/Header";
 import './index.scss'
+import googleAuth from "../../ApiFunctions/googleAuth";
 
 const buttons = [
     {
@@ -22,6 +23,22 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [passIsShown, setPassIsShown] = useState(false);
+    const navigate = useNavigate();
+
+    const loginWithGoogle = async () => {
+        console.log("login with google");
+        try {
+            const res = await googleAuth();
+            if (res.status <= 299) {
+                console.log(res);
+                navigate('/areas');
+            } else {
+                throw new Error("Error");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
