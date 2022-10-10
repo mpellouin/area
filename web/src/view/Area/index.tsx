@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './index.scss'
 import Header from "../../components/Header";
 import CreateAreaModal from "./CreateAreaModal";
+import { useNavigate } from "react-router-dom";
 
 const buttons = [
   {
@@ -19,11 +20,24 @@ const buttons = [
 const AreaPage = () => {
     const [areas, setAreas] = useState([])
     const [isCreateMode , setIsCreateMode] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("fetching areas");
-        //todo fetch areas
-    }, [])
+        if (localStorage.getItem('accessToken')) {
+            return;
+        } else {
+            // get accessToken urlParams and save it to localStorage
+            // if no accessToken redirect to login
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const accessToken = urlParams.get('token');
+            if (accessToken) {
+                localStorage.setItem('accessToken', accessToken);
+            } else {
+                navigate('/login');
+            }
+        }
+    }, [navigate])
 
   return (
     <div className="areaPage">

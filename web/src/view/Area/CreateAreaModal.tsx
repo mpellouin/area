@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import './index.scss'
 import createArea from "../../ApiFunctions/createArea";
 
@@ -49,6 +49,7 @@ const CreateAreaModal = () => {
             reactionId,
             ...actionParams,
             ...reactionParams,
+            accessToken: localStorage.getItem('accessToken'),
         }
         console.log(area);
         try {

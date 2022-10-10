@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import googleAuth from "../../ApiFunctions/googleAuth";
+import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import './index.scss'
 
@@ -21,7 +20,6 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passIsShown, setPassIsShown] = useState(false);
-    const navigate = useNavigate();
 
     const loginWithGoogle = async () => {
         console.log("login with google");
