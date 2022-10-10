@@ -11,13 +11,14 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAt, faUnlock} from '@fortawesome/free-solid-svg-icons';
 
+import {useNavigation} from '@react-navigation/native';
+
 import {Colors} from '../../../Style';
 
 import Title from '../../components/Title';
-import Button from '../../components/Button';
+import ButtonLogin from '../../components/ButtonLogin';
 import Separator from '../../components/Separator';
 import LoginSvg from '../../components/svg/LoginSvg';
-import {useNavigation} from '@react-navigation/native';
 
 const Styles = StyleSheet.create({
   container: {
@@ -26,6 +27,23 @@ const Styles = StyleSheet.create({
   containerSvg: {
     marginTop: 25,
     alignItems: 'center',
+  },
+  containerAuth: {
+    width: '100%',
+    marginTop: 15,
+    marginBottom: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  containerRectangle: {
+    width: 70,
+    height: 35,
+    borderRadius: 8,
+    borderWidth: 1,
   },
   containerInput: {
     marginLeft: 30,
@@ -40,6 +58,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     textAlignVertical: 'center',
     padding: 0,
+    width: '80%',
   },
   separator: {
     display: 'flex',
@@ -47,7 +66,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: 30,
     marginRight: 30,
-    marginTop: 25,
+    marginTop: 20,
   },
   registerInput: {
     justifyContent: 'center',
@@ -77,7 +96,7 @@ const Login = () => {
           />
           <TextInput
             style={Styles.input}
-            placeholder="email ID"
+            placeholder="Email ID*"
             placeholderTextColor={
               isDarkMode ? Colors.textDOpacity : Colors.textWOpacity
             }
@@ -103,7 +122,7 @@ const Login = () => {
           />
           <TextInput
             style={Styles.input}
-            placeholder="password"
+            placeholder="Password*"
             placeholderTextColor={
               isDarkMode ? Colors.textDOpacity : Colors.textWOpacity
             }
@@ -121,7 +140,7 @@ const Login = () => {
           width={270}
         />
       </View>
-      <Button title="Login" width={160} email={email} pwd={pwd} />
+      <ButtonLogin title="Login" width={160} email={email} pwd={pwd} />
       <View style={Styles.separator}>
         <Separator
           marginTop={15}
@@ -143,6 +162,29 @@ const Login = () => {
           width={137.5}
         />
       </View>
+      <View style={Styles.containerAuth}>
+        <View
+          style={[
+            Styles.containerRectangle,
+            {
+              borderColor: isDarkMode ? Colors.textD : Colors.textW,
+            },
+          ]}></View>
+        <View
+          style={[
+            Styles.containerRectangle,
+            {
+              borderColor: isDarkMode ? Colors.textD : Colors.textW,
+            },
+          ]}></View>
+        <View
+          style={[
+            Styles.containerRectangle,
+            {
+              borderColor: isDarkMode ? Colors.textD : Colors.textW,
+            },
+          ]}></View>
+      </View>
       <View style={Styles.registerInput}>
         <Text
           style={{
@@ -155,6 +197,7 @@ const Login = () => {
             onPress={() => {
               navigation.navigate('Register');
             }}>
+            {' '}
             Register
           </Text>
         </Text>

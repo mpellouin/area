@@ -24,7 +24,7 @@ const App = () => {
         backgroundColor={isDarkMode ? Colors.backgroundD : Colors.backgroundW}
       />
       <Stack.Navigator
-        initialRouteName="Homepage"
+        initialRouteName="Register"
         screenOptions={{
           headerShown: false,
         }}>

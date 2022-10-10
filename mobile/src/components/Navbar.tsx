@@ -1,4 +1,6 @@
 import React, {type PropsWithChildren} from 'react';
+import {View, StyleSheet, useColorScheme, Pressable} from 'react-native';
+
 import {
   faBars,
   faCirclePlus,
@@ -6,8 +8,9 @@ import {
   faLayerGroup,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
 import {useNavigation} from '@react-navigation/native';
-import {View, StyleSheet, useColorScheme, Pressable} from 'react-native';
+
 import {Colors} from '../../Style';
 
 const Styles = StyleSheet.create({
