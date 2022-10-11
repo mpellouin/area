@@ -1,13 +1,13 @@
 import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, View, StyleSheet, Pressable, Text} from 'react-native';
-import {Colors} from '../../Style';
+import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-    marginTop: 25,
+    marginTop: 20,
     paddingHorizontal: 24,
   },
   buttonStyle: {
@@ -24,15 +24,13 @@ const Styles = StyleSheet.create({
   },
 });
 
-const ButtonRegister: React.FC<
+const ButtonForgotPasswd: React.FC<
   PropsWithChildren<{
-    title: string;
-    width: number;
     email: string;
-    pwd: string;
-    confirm: string;
+    width: number;
+    title: string;
   }>
-> = ({title, width, email, pwd, confirm}) => {
+> = ({width, email, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -54,9 +52,7 @@ const ButtonRegister: React.FC<
           },
         ]}
         onPress={() => {
-          if (pwd !== confirm) console.log('false');
           console.log(email);
-          console.log(pwd);
         }}>
         <Text style={Styles.textStyle}>{title}</Text>
       </Pressable>
@@ -64,4 +60,4 @@ const ButtonRegister: React.FC<
   );
 };
 
-export default ButtonRegister;
+export default ButtonForgotPasswd;

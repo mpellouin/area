@@ -5,16 +5,10 @@ import {
   StyleSheet,
   ScrollView,
   useColorScheme,
-  Pressable,
   TextInput,
 } from 'react-native';
 
-import {
-  faArrowLeft,
-  faAt,
-  faLock,
-  faUnlock,
-} from '@fortawesome/free-solid-svg-icons';
+import {faAt, faLock, faUnlock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {useNavigation} from '@react-navigation/native';
@@ -24,14 +18,12 @@ import {Colors} from '../../../Style';
 import SignUpSvg from '../../components/svg/SignUpSvg';
 import Title from '../../components/Title';
 import Separator from '../../components/Separator';
-import ButtonRegister from '../../components/ButtonRegister';
+import ButtonRegister from '../../components/buttons/ButtonRegister';
+import ButtonBack from '../../components/buttons/ButtonBack';
 
 const Styles = StyleSheet.create({
   container: {
     height: '100%',
-  },
-  comeBack: {
-    margin: 15,
   },
   containerSvg: {
     alignItems: 'center',
@@ -91,18 +83,7 @@ const Register = () => {
 
   return (
     <ScrollView style={Styles.container}>
-      <View style={Styles.comeBack}>
-        <Pressable
-          onPress={() => {
-            navigation.navigate('Login');
-          }}>
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            size={25}
-            color={isDarkMode ? Colors.majorD : Colors.majorW}
-          />
-        </Pressable>
-      </View>
+      <ButtonBack path={'Login'} />
       <View style={Styles.containerSvg}>
         <SignUpSvg />
       </View>

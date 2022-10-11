@@ -16,7 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors} from '../../../Style';
 
 import Title from '../../components/Title';
-import ButtonLogin from '../../components/ButtonLogin';
+import ButtonLogin from '../../components/buttons/ButtonLogin';
 import Separator from '../../components/Separator';
 import LoginSvg from '../../components/svg/LoginSvg';
 
@@ -60,13 +60,20 @@ const Styles = StyleSheet.create({
     padding: 0,
     width: '80%',
   },
+  forgotPasswordInput: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    alignItems: 'flex-end',
+    textAlign: 'right',
+    paddingRight: 35,
+  },
   separator: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 30,
     marginRight: 30,
-    marginTop: 20,
+    marginTop: 15,
   },
   registerInput: {
     justifyContent: 'center',
@@ -84,7 +91,7 @@ const Login = () => {
   return (
     <ScrollView style={Styles.container}>
       <View style={Styles.containerSvg}>
-        <LoginSvg props={undefined} />
+        <LoginSvg />
       </View>
       <Title title="Login" />
       <View>
@@ -139,6 +146,16 @@ const Login = () => {
           color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
           width={270}
         />
+        <Text
+          style={[
+            Styles.forgotPasswordInput,
+            {color: isDarkMode ? Colors.majorD : Colors.majorW},
+          ]}
+          onPress={() => {
+            navigation.navigate('ForgotPassword');
+          }}>
+          Forgot Password ?
+        </Text>
       </View>
       <ButtonLogin title="Login" width={160} email={email} pwd={pwd} />
       <View style={Styles.separator}>

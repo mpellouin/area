@@ -1,13 +1,13 @@
 import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, View, StyleSheet, Pressable, Text} from 'react-native';
-import {Colors} from '../../Style';
+import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-    marginTop: 25,
+    marginTop: 20,
     paddingHorizontal: 24,
   },
   buttonStyle: {
