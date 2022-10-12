@@ -2,6 +2,7 @@
 
 .homepage {
     width: 100%;
+    height: 100%;
 
     background-color: $bg-white-theme;
     display: flex;
@@ -9,9 +10,11 @@
 
     .firstPart {
         width: 100%;
-        left: 0px;
+        height: 100%;
+        left: 0;
+        top: 0;
         display: flex;
-        margin: 45px 0 45px 20px;
+        margin: 100px 0 150px 20px;
 
 
         @media screen and (max-width: 1200px) {
@@ -19,8 +22,37 @@
             margin-top: 137px;
         }
         .img1 {
+            z-index: 2;
             @media screen and (max-width: 1200px) {
                 display: none;
+            }
+        }
+        .img_vector1{
+            width: 600px;
+            height: 200px;
+            display: flex;
+            top: 480px;
+            left: 80px;
+            z-index: 7;
+            position: absolute;
+            user-select: none;
+            @media screen and (max-width: 1200px)
+            {
+                display: none;
+            }
+        }
+        .img_vector2 {
+            width: 600px;
+            height: 200px;
+            display: flex;
+            position: absolute;
+            right: 0px;
+            top: 580px;
+            user-select: none;
+            z-index: 7;
+            @media screen and (max-width: 1200px)
+            {
+                top: 400px;
             }
         }
         .firstPartTexts {
@@ -35,13 +67,11 @@
                 }
                 font-family: $font-family;
                 font-style: normal;
-                font-weight: 700;
+                font-weight: bold;
                 font-size: 37px;
                 line-height: 43px;
                 text-align: center;
-
-                margin: 22px;
-                
+                margin: 22px; 
                 color: $text-white-theme;
             }
             .secondaryText {
@@ -63,7 +93,7 @@
     }
     .secondPart {
         width: 100%;
-        height: 960px;
+        height: 700px;
         background: rgba(34, 37, 37, 0.1);
         z-index: 2;
 
@@ -75,18 +105,44 @@
             // margin: 104px 0 103px 0;
             width: 552px;
             height: 513px;
+            @media screen and (max-width: 1200px) {
+                display: none;
+            }
+        }
+        .img_vector3 {
+            width: 900px;
+            height: 200px;
+            position: absolute;
+            left: 0px;
+            top: 800px;
+            @media screen and (max-width: 1200px) {
+                width: 700px;
+            }
+        }
+        .img_vector4 {
+            width: 500px;
+            height: 180px;
+            position: absolute;
+            top: 1345px;
+            left: 800px;
+
+            @media screen and (max-width: 1200px) {
+                display: none;
+            }
         }
 
         .thirdText {
-            position: relative;
-            top: 320px;
-            left: 200px;
+            position: absolute;
+            top: 1040px;
+            left: 10%;
+            width: auto;
+            height: auto;
             // width: 785px;
             // height: 86px;
 
             font-family: $font-family;
             font-style: normal;
-            font-weight: 700;
+            font-weight: bold;
             font-size: 37px;
             line-height: 43px;
 
@@ -94,9 +150,9 @@
             z-index: 4;
         }
         .fourthText {
-            position: relative;
-            top: 415px;
-            left: 614px;
+            position: absolute;
+            top: 1180px;
+            left: 15%;
 
             font-family: $font-family;
             font-style: normal;
@@ -109,26 +165,37 @@
     }
     .thirdPart {
         width: 100%;
-        height: 960px;
+        height: 800px;
+        @media screen and (max-width: 1200px) {
+            height: 600px;
+        }
 
         .fifthText {
             @media screen and (max-width: 1200px) {
-                left: 40%;
+                left: 30%;
+                top: 1500px;
             }
             position: absolute;
-            width: 325px;
-            height: 86px;
             left: 60%;
-            top: 1876px;
+            top: 1800px;
             
             font-family: $font-family;
             font-style: normal;
-            font-weight: 700;
+            font-weight: bold;
             font-size: 37px;
             line-height: 43px;
             text-align: center;
             
             color: $text-white-theme;
+        }
+        .ifThen_vector {
+            position: absolute;
+            top: 2000px;
+            left: 62.5%;
+            @media screen and (max-width: 1200px) {
+                left: 32%;
+                top: 1700px;
+            }
         }
 
         .img3 {
@@ -136,7 +203,30 @@
             width: 613px;
             height: 483px;
             left: 5%;
-            top: 1738px;
+            top: 1700px;
+            @media screen and (max-width: 1200px) {
+                display: none;
+            }
+        }
+        .img_vector5 {
+            width: 1150px;
+            height: 180px;
+            position: absolute;
+            top: 1500px;
+            left: 800px;
+            @media screen and (max-width: 1200px) {
+                top: 1300px;
+                left: 200px;
+            }
+        }
+        .vector_break {
+            position: absolute;
+            top: 2100px;
+            right: 0;
+            width: 100%;
+            @media screen and (max-width: 1200px) {
+                top: 1800px;
+            }
         }
     }
     .teamPart {
@@ -152,7 +242,7 @@
             display: flex;
             font-family: $font-family;
             font-style: normal;
-            font-weight: 300;
+            font-weight: normal;
             font-size: 64px;
             line-height: 75px;
             justify-content: center;
