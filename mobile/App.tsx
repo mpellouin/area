@@ -11,6 +11,8 @@ import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
 import User from './src/view/User';
+import ForgotPassword from './src/view/signFiles/ForgotPassword';
+import ResetPassword from './src/view/signFiles/ResetPassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,12 +26,14 @@ const App = () => {
         backgroundColor={isDarkMode ? Colors.backgroundD : Colors.backgroundW}
       />
       <Stack.Navigator
-        initialRouteName="Homepage"
+        initialRouteName="ResetPassword"
         screenOptions={{
           headerShown: false,
         }}>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen
           name="Homepage"
           component={Homepage}

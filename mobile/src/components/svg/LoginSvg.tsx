@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {useColorScheme} from 'react-native';
+
 import Svg, {G, Path, Defs, ClipPath} from 'react-native-svg';
+
 import {Colors} from '../../../Style';
 
 type AppProps = {
-  props: any;
+  props?: any;
 };
 
 function LoginSvg({props}: AppProps) {
