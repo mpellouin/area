@@ -18,6 +18,8 @@ import Button from '../components/Button';
 import Separator from '../components/Separator';
 import LoginSvg from '../components/svg/LoginSvg';
 import {useNavigation} from '@react-navigation/native';
+import { Button as ReactButton } from 'react-native';
+import Auth from './auth';
 
 const Styles = StyleSheet.create({
   container: {
@@ -151,6 +153,29 @@ const Login = () => {
           Register
         </Text>
       </Text>
+      <View style={Styles.separator}>
+        <Separator
+          marginTop={15}
+          marginLeft={0}
+          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
+          width={137.5}
+        />
+        <Text
+          style={{
+            color: isDarkMode ? Colors.textD : Colors.textW,
+            textAlignVertical: 'center',
+          }}>
+          OR
+        </Text>
+        <Separator
+          marginTop={15}
+          marginLeft={0}
+          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
+          width={137.5}
+        />
+      </View>
+      <View>
+      </View>
     </ScrollView>
   );
 };

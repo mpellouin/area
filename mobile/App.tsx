@@ -7,6 +7,7 @@ import {Colors} from './Style';
 
 import Login from './src/SignFiles/Login';
 import Register from './src/SignFiles/Register';
+import Auth from './src/SignFiles/auth'
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
         }}>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Auth" component={Auth} />
       </Stack.Navigator>
     </NavigationContainer>
   );
