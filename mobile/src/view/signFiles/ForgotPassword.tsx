@@ -89,12 +89,7 @@ const ForgotPassword = () => {
             maxLength={28}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <ButtonForgotPasswd title={'Submit'} width={160} email={email} />
     </ScrollView>

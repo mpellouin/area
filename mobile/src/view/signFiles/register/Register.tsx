@@ -13,13 +13,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {useNavigation} from '@react-navigation/native';
 
-import {Colors} from '../../../Style';
+import {Colors} from '../../../../Style';
 
-import SignUpSvg from '../../components/svg/SignUpSvg';
-import Title from '../../components/Title';
-import Separator from '../../components/Separator';
-import ButtonRegister from '../../components/buttons/ButtonRegister';
-import ButtonBack from '../../components/buttons/ButtonBack';
+import SignUpSvg from '../../../components/svg/SignUpSvg';
+import Title from '../../../components/Title';
+import Separator from '../../../components/Separator';
+import ButtonRegister from '../../../components/buttons/ButtonRegister';
+import ButtonBack from '../../../components/buttons/ButtonBack';
+import AuthRegister from './AuthRegister';
 
 const Styles = StyleSheet.create({
   container: {
@@ -37,12 +38,6 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-  },
-  containerRectangle: {
-    width: 70,
-    height: 35,
-    borderRadius: 8,
-    borderWidth: 1,
   },
   containerInput: {
     marginTop: 20,
@@ -89,27 +84,15 @@ const Register = () => {
       </View>
       <Title title="Sign up" />
       <View style={Styles.containerAuth}>
-        <View
-          style={[
-            Styles.containerRectangle,
-            {
-              borderColor: isDarkMode ? Colors.textD : Colors.textW,
-            },
-          ]}></View>
-        <View
-          style={[
-            Styles.containerRectangle,
-            {
-              borderColor: isDarkMode ? Colors.textD : Colors.textW,
-            },
-          ]}></View>
-        <View
-          style={[
-            Styles.containerRectangle,
-            {
-              borderColor: isDarkMode ? Colors.textD : Colors.textW,
-            },
-          ]}></View>
+        <View>
+          <AuthRegister title={'Google'} />
+        </View>
+        <View>
+          <AuthRegister title={'Github'} />
+        </View>
+        <View>
+          <AuthRegister title={'Twitter'} />
+        </View>
       </View>
       <View style={Styles.registerSeparator}>
         <Text
@@ -139,12 +122,7 @@ const Register = () => {
             maxLength={28}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textD : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <View>
         <View style={Styles.containerInput}>
@@ -166,12 +144,7 @@ const Register = () => {
             maxLength={35}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <View>
         <View style={Styles.containerInput}>
@@ -193,12 +166,7 @@ const Register = () => {
             maxLength={32}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <ButtonRegister
         title="Sign Up"
