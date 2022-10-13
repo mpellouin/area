@@ -16,6 +16,7 @@ import { TwitterActionsService } from "./actions/twitter/twitter.actions.service
 import { GoogleReactionsService } from "./reactions/google/google.reactions.service";
 import { DiscordReactionsService } from './reactions/discord/discord.reactions.service';
 import { FlightService } from './actions/flight/flight.service';
+import { GoogleActionsService } from './actions/google/google.actions.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), HttpModule],
@@ -23,6 +24,7 @@ import { FlightService } from './actions/flight/flight.service';
   providers: [AppService, UserService, PrismaService,
               GoogleStrategy, AuthService, ReactionService,
               ActionsService, ProviderService, TwitterActionsService,
-              GoogleReactionsService, DiscordReactionsService, FlightService],
+              GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
+              FlightService],
 })
 export class AppModule {}
