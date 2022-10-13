@@ -23,19 +23,13 @@ const AreaPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem('accessToken')) {
-            return;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const accessToken = urlParams.get('token');
+        if (accessToken) {
+            localStorage.setItem('accessToken', accessToken);
         } else {
-            // get accessToken urlParams and save it to localStorage
-            // if no accessToken redirect to login
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            const accessToken = urlParams.get('token');
-            if (accessToken) {
-                localStorage.setItem('accessToken', accessToken);
-            } else {
-                navigate('/login');
-            }
+            navigate('/login');
         }
     }, [navigate])
 
