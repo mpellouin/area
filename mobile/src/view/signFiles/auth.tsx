@@ -1,7 +1,7 @@
 import { WebView } from "react-native-webview";
 import React, { useState, useEffect } from "react";
 import { View, Linking, Pressable, StyleSheet, Button, SafeAreaView } from "react-native";
-import {Colors} from '../../Style';
+import {Colors} from '../../../Style';
 
 const Auth = () => {
     const [uri, setURL] = useState("")
@@ -11,7 +11,7 @@ const Auth = () => {
         Linking.addEventListener("url", (url) => handleOpenUrl(url.url));
         Linking.getInitialURL().then((url: any) => {
         if (url) {
-            console.log(url);
+            console.log("url = ", url);
         }
         });
         return () => {
@@ -33,6 +33,7 @@ const Auth = () => {
             <SafeAreaView style={{ flex: 1 }}>
             <WebView
                 originWhitelist={['*']}
+                userAgent={"Chrome/18.0.1025.133 Mobile Safari/535.19"}
                 source={{ uri }}
             />
             </SafeAreaView>

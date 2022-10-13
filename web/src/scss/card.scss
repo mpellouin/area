@@ -1,0 +1,39 @@
+.card {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: double #F45D48;
+    position: relative;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        transform: scale(1.04);
+        transition: 0.5s ease-in;
+        box-shadow: 12px 12px 5px 2px rgba(34, 37, 37, 0.1);
+    }
+    .card-image {
+        position: relative;
+        user-select: none;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+        text-align: center;
+    }
+    .card-content {
+        align-self: center;
+    }
+    .card-title {
+        align-self: center;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+    .card-description {
+        align-self: center;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+}

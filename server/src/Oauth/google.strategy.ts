@@ -17,7 +17,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
                     'https://www.googleapis.com/auth/gmail.compose',
                     'https://www.googleapis.com/auth/gmail.send'
                   ]
-
         });
     }
     authorizationParams(): { [key: string]: string; } {

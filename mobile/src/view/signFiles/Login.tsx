@@ -11,15 +11,16 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAt, faUnlock} from '@fortawesome/free-solid-svg-icons';
 
-import {Colors} from '../../Style';
-
-import Title from '../components/Title';
-import Button from '../components/Button';
-import Separator from '../components/Separator';
-import LoginSvg from '../components/svg/LoginSvg';
 import {useNavigation} from '@react-navigation/native';
 import { Button as ReactButton } from 'react-native';
 import Auth from './auth';
+
+import {Colors} from '../../../Style';
+
+import Title from '../../components/Title';
+import ButtonLogin from '../../components/buttons/ButtonLogin';
+import Separator from '../../components/Separator';
+import LoginSvg from '../../components/svg/LoginSvg';
 
 const Styles = StyleSheet.create({
   container: {
@@ -28,6 +29,23 @@ const Styles = StyleSheet.create({
   containerSvg: {
     marginTop: 25,
     alignItems: 'center',
+  },
+  containerAuth: {
+    width: '100%',
+    marginTop: 15,
+    marginBottom: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  containerRectangle: {
+    width: 70,
+    height: 35,
+    borderRadius: 8,
+    borderWidth: 1,
   },
   containerInput: {
     marginLeft: 30,
@@ -42,6 +60,14 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     textAlignVertical: 'center',
     padding: 0,
+    width: '80%',
+  },
+  forgotPasswordInput: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    alignItems: 'flex-end',
+    textAlign: 'right',
+    paddingRight: 35,
   },
   separator: {
     display: 'flex',
@@ -49,7 +75,12 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: 30,
     marginRight: 30,
-    marginTop: 25,
+    marginTop: 15,
+  },
+  registerInput: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -57,11 +88,12 @@ const Login = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
+  const navigation = useNavigation();
 
   return (
     <ScrollView style={Styles.container}>
       <View style={Styles.containerSvg}>
-        <LoginSvg props={undefined} />
+        <LoginSvg />
       </View>
       <Title title="Login" />
       <View>
@@ -73,14 +105,14 @@ const Login = () => {
           />
           <TextInput
             style={Styles.input}
-            placeholder="email ID"
+            placeholder="Email ID*"
             placeholderTextColor={
               isDarkMode ? Colors.textDOpacity : Colors.textWOpacity
             }
             onChangeText={newEmail => {
               setEmail(newEmail);
             }}
-            maxLength={32}
+            maxLength={28}
           />
         </View>
         <Separator
@@ -99,7 +131,7 @@ const Login = () => {
           />
           <TextInput
             style={Styles.input}
-            placeholder="password"
+            placeholder="Password*"
             placeholderTextColor={
               isDarkMode ? Colors.textDOpacity : Colors.textWOpacity
             }
@@ -116,43 +148,18 @@ const Login = () => {
           color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
           width={270}
         />
-      </View>
-      <Button title="Login" width={160} email={email} pwd={pwd} />
-      <View style={Styles.separator}>
-        <Separator
-          marginTop={15}
-          marginLeft={0}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={137.5}
-        />
         <Text
-          style={{
-            color: isDarkMode ? Colors.textD : Colors.textW,
-            textAlignVertical: 'center',
-          }}>
-          OR
-        </Text>
-        <Separator
-          marginTop={15}
-          marginLeft={0}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={137.5}
-        />
-      </View>
-      <Text
-        style={{
-          color: isDarkMode ? Colors.textD : Colors.textW,
-          textAlignVertical: 'center',
-        }}>
-        New to AREA ?{' '}
-        <Text
-          style={{color: isDarkMode ? Colors.majorD : Colors.majorW}}
+          style={[
+            Styles.forgotPasswordInput,
+            {color: isDarkMode ? Colors.majorD : Colors.majorW},
+          ]}
           onPress={() => {
-            test;
+            navigation.navigate('ForgotPassword');
           }}>
-          Register
+          Forgot Password ?
         </Text>
-      </Text>
+      </View>
+      <ButtonLogin title="Login" width={160} email={email} pwd={pwd} />
       <View style={Styles.separator}>
         <Separator
           marginTop={15}
@@ -174,7 +181,53 @@ const Login = () => {
           width={137.5}
         />
       </View>
-      <View>
+      <View style={Styles.containerAuth}>
+        <View
+          style={[
+            Styles.containerRectangle,
+            {
+              borderColor: isDarkMode ? Colors.textD : Colors.textW,
+            },
+          ]}></View>
+        <View
+          style={[
+            Styles.containerRectangle,
+            {
+              borderColor: isDarkMode ? Colors.textD : Colors.textW,
+            },
+          ]}></View>
+        <View
+          style={[
+            Styles.containerRectangle,
+            {
+              borderColor: isDarkMode ? Colors.textD : Colors.textW,
+            },
+          ]}></View>
+      </View>
+      <View style={Styles.registerInput}>
+        <Text
+          style={{
+            color: isDarkMode ? Colors.textD : Colors.textW,
+            textAlignVertical: 'center',
+          }}>
+          New to AREA ?
+          <Text
+            style={{color: isDarkMode ? Colors.majorD : Colors.majorW}}
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
+            {' '}
+            Register
+          </Text>
+          <Text
+            style={{color: isDarkMode ? Colors.majorD : Colors.majorW}}
+            onPress={() => {
+              navigation.navigate('Auth');
+            }}>
+            {' '}
+            Auth
+          </Text>
+        </Text>
       </View>
     </ScrollView>
   );

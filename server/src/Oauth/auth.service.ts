@@ -3,7 +3,6 @@ import { PrismaService } from "src/prisma.service";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
 
-
 @Injectable()
 export class  AuthService {
     constructor(
@@ -13,7 +12,6 @@ export class  AuthService {
     ) {}
 
     async login(user) {
-        console.log("login")
         return("login ok ! User = " + JSON.stringify(user))
     }
 
@@ -27,7 +25,7 @@ export class  AuthService {
             if (user) {
                 try {
                     this.providerService.updateUserToken(user.ID, "google", userData.user.accessToken, userData.user.refreshToken)
-                    return this.login(userData.user)
+                    return userData.user
                 }
                 catch(error) {
                     throw new Error(error)
@@ -39,7 +37,7 @@ export class  AuthService {
                 if (newUser) {
                     try {
                         this.providerService.updateUserToken(newUser.ID, "google", userData.user.accessToken, userData.user.refreshToken)
-                        return this.login(userData.user)
+                        return userData.user
                     }
                     catch(error) {
                         throw new Error(error)

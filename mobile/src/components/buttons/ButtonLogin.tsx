@@ -1,13 +1,13 @@
 import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, View, StyleSheet, Pressable, Text} from 'react-native';
-import {Colors} from '../../Style';
+import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-    marginTop: 25,
+    marginTop: 20,
     paddingHorizontal: 24,
   },
   buttonStyle: {
@@ -24,12 +24,12 @@ const Styles = StyleSheet.create({
   },
 });
 
-const Button: React.FC<
+const ButtonLogin: React.FC<
   PropsWithChildren<{
     title: string;
     width: number;
-    email?: string;
-    pwd?: string;
+    email: string;
+    pwd: string;
   }>
 > = ({title, width, email, pwd}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,4 +62,4 @@ const Button: React.FC<
   );
 };
 
-export default Button;
+export default ButtonLogin;

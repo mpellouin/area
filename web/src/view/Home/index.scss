@@ -1,0 +1,201 @@
+@import "../../scss/_vars.scss";
+
+.homepage {
+    width: 100%;
+
+    background-color: $bg-white-theme;
+    display: flex;
+    flex-direction: column;
+
+    .firstPart {
+        width: 100%;
+        left: 0px;
+        display: flex;
+        margin: 45px 0 45px 20px;
+
+
+        @media screen and (max-width: 1200px) {
+            align-items: center;
+            margin-top: 137px;
+        }
+        .img1 {
+            @media screen and (max-width: 1200px) {
+                display: none;
+            }
+        }
+        .firstPartTexts {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+
+            .mainText {
+                @media screen and (max-width: 1200px) {
+                    left: auto;
+                }
+                font-family: $font-family;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 37px;
+                line-height: 43px;
+                text-align: center;
+
+                margin: 22px;
+                
+                color: $text-white-theme;
+            }
+            .secondaryText {
+                @media screen and (max-width: 1200px) {
+                    left: auto;
+                }
+                font-family: $font-family;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 21px;
+                text-align: center;
+
+                margin: 22px;
+                
+                color: $text-white-theme;
+            }
+        }
+    }
+    .secondPart {
+        width: 100%;
+        height: 960px;
+        background: rgba(34, 37, 37, 0.1);
+        z-index: 2;
+
+        .img2 {
+            position: relative;
+            left: 60%;
+            top: 100px;
+
+            // margin: 104px 0 103px 0;
+            width: 552px;
+            height: 513px;
+        }
+
+        .thirdText {
+            position: relative;
+            top: 320px;
+            left: 200px;
+            // width: 785px;
+            // height: 86px;
+
+            font-family: $font-family;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 37px;
+            line-height: 43px;
+
+            color: $text-white-theme;
+            z-index: 4;
+        }
+        .fourthText {
+            position: relative;
+            top: 415px;
+            left: 614px;
+
+            font-family: $font-family;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 21px;
+
+            color: $text-white-theme;
+        }
+    }
+    .thirdPart {
+        width: 100%;
+        height: 960px;
+
+        .fifthText {
+            @media screen and (max-width: 1200px) {
+                left: 40%;
+            }
+            position: absolute;
+            width: 325px;
+            height: 86px;
+            left: 60%;
+            top: 1876px;
+            
+            font-family: $font-family;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 37px;
+            line-height: 43px;
+            text-align: center;
+            
+            color: $text-white-theme;
+        }
+
+        .img3 {
+            position: absolute;
+            width: 613px;
+            height: 483px;
+            left: 5%;
+            top: 1738px;
+        }
+    }
+    .teamPart {
+        position: absolute;
+        width: 1440px;
+        height: 520px;
+        top: 2460px;
+        background-color: cornflowerblue;
+        display: flex;
+        flex-direction: column;
+
+        .teamTitle {
+            display: flex;
+            font-family: $font-family;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 64px;
+            line-height: 75px;
+            justify-content: center;
+
+            color: $black;
+            background-color: $design-white-theme;
+        }
+        .teamMembers {
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: column;
+            align-items: center;
+        }
+        .members {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: row;
+        }
+        
+        .teamFrame {
+            display: flex;
+            width: 170px;
+            height: 170px;
+            background-color: $design-white-theme;
+            border-radius: 20px;
+            border: 1px solid $black;
+        }
+    }
+}
+
+.loginBack {
+    position: absolute;
+    bottom: 24px;
+    left: 0px;
+    z-index: 0;
+    user-select: none;
+}
+
+.loginBackFiles {
+    position: absolute;
+    top: 48px;
+    right: 96px;
+    z-index: 0;
+    user-select: none;
+}
