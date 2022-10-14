@@ -8,12 +8,14 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Colors} from '../../../Style';
-import ButtonBack from '../../components/buttons/ButtonBack';
-import ButtonResetPasswd from '../../components/buttons/ButtonResetPasswd';
-import Separator from '../../components/Separator';
-import ResetPasswordSvg from '../../components/svg/ResetPasswordSvg';
-import Title from '../../components/Title';
+import {Colors} from '../../../../Style';
+
+import ButtonBack from '../../../components/buttons/ButtonBack';
+import Separator from '../../../components/Separator';
+import ResetPasswordSvg from '../../../components/svg/ResetPasswordSvg';
+import Title from '../../../components/Title';
+
+import ButtonResetPasswd from './ButtonResetPasswd';
 
 const Styles = StyleSheet.create({
   container: {

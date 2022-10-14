@@ -18,8 +18,9 @@ import {Colors} from '../../../../Style';
 import SignUpSvg from '../../../components/svg/SignUpSvg';
 import Title from '../../../components/Title';
 import Separator from '../../../components/Separator';
-import ButtonRegister from '../../../components/buttons/ButtonRegister';
 import ButtonBack from '../../../components/buttons/ButtonBack';
+
+import ButtonRegister from './ButtonRegister';
 import AuthRegister from './AuthRegister';
 
 const Styles = StyleSheet.create({
