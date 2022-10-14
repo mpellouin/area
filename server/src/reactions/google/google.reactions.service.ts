@@ -25,4 +25,29 @@ export class GoogleReactionsService {
     res.subscribe(data => {});
     return res;
   }
+
+  async buildNewEventObservable(body: {startTime: string, endTime: string, accessToken: string, reaCalendarId: string, summary: string, description: string}) {
+    const res =  await this.http.post(`https://www.googleapis.com/calendar/v3/calendars/${body.reaCalendarId}/events`,
+                {"key": process.env.GOOGLE_API_KEY,
+                "start": {
+                    "dateTime": body.startTime,
+                    "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                    "dateTime": body.endTime,
+                    "timeZone": "America/Los_Angeles"
+                },
+                    "summary": body.summary,
+                    "description": body.description},
+                {
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "Accept" : "application/json",
+                        "Authorization" : "Bearer " + body.accessToken
+                    },
+                }
+        );
+    res.subscribe(data => {});
+    return res;
+  }
 }

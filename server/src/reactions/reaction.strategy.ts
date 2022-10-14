@@ -26,7 +26,10 @@ export class ReactionService {
         if (id == 2) {
             return await this.discordService.buildSendMessageObservable(body);
         }
-        if (id < 1 && id > 2)
+        if (id == 3) {
+            return await this.googleService.buildNewEventObservable(body);
+        }
+        if (id < 1 && id > 3)
             return undefined;
     }
 }
