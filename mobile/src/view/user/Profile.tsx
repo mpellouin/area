@@ -1,7 +1,9 @@
+import React, {PropsWithChildren} from 'react';
+import {View, StyleSheet, Text, useColorScheme} from 'react-native';
+
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import React, {PropsWithChildren} from 'react';
-import {View, StyleSheet, Text, useColorScheme, Linking} from 'react-native';
+
 import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({

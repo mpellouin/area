@@ -13,7 +13,14 @@ import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
 import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
-import User from './src/view/User/User';
+import User from './src/view/user/User';
+
+import UserProfile from './src/view/user/params/UserProfile';
+import Appearance from './src/view/user/params/Appearance';
+import UserServices from './src/view/user/params/UserServices';
+import HelpCenter from './src/view/user/params/HelpCenter';
+import AboutArea from './src/view/user/params/AboutArea';
+import AboutUs from './src/view/user/params/AboutUs';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +71,48 @@ const App = () => {
             <Stack.Screen
               name="User"
               component={User}
+              options={{
+                animation: 'none',
+              }}
+            />
+            <Stack.Screen
+              name="UserProfile"
+              component={UserProfile}
+              options={{
+                animation: 'none',
+              }}
+            />
+            <Stack.Screen
+              name="Appearance"
+              component={Appearance}
+              options={{
+                animation: 'none',
+              }}
+            />
+            <Stack.Screen
+              name="UserServices"
+              component={UserServices}
+              options={{
+                animation: 'none',
+              }}
+            />
+            <Stack.Screen
+              name="HelpCenter"
+              component={HelpCenter}
+              options={{
+                animation: 'none',
+              }}
+            />
+            <Stack.Screen
+              name="AboutArea"
+              component={AboutArea}
+              options={{
+                animation: 'none',
+              }}
+            />
+            <Stack.Screen
+              name="AboutUs"
+              component={AboutUs}
               options={{
                 animation: 'none',
               }}
