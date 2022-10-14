@@ -11,22 +11,32 @@ export class GoogleActionsService {
       return undefined;
     const observable = new Observable((observer) => {
       let newestEvent = 0;
+      this.httpService
+        .get(`https://www.googleapis.com/calendar/v3/calendars/${body.calendarId}/events?timeMin=${new Date().toISOString()}&timeMax=${(new Date(Date.now() + (60000 * 60))).toISOString()}&key=${process.env.GOOGLE_API_KEY}`, {
+          headers: {
+            Authorization: `Bearer ${body.accessToken}`,
+          },
+        }).subscribe((response) => {
+          if (response.data.items.length > 0) {
+            newestEvent = response.data.items[0].id;
+          }
+        });
       setInterval(() => {
         console.log("Fetching GCalendar events");
         this.httpService
-        .get(`https://www.googleapis.com/calendar/v3/calendars/${body.calendarId}/events?timeMin=${new Date().toISOString()}&timeMax=${new Date(Date.now() + (60000 * 60))}&key=${process.env.GOOGLE_CLIENT_ID}`, {
+        .get(`https://www.googleapis.com/calendar/v3/calendars/${body.calendarId}/events?timeMin=${new Date().toISOString()}&timeMax=${(new Date(Date.now() + (60000 * 60))).toISOString()}&key=${process.env.GOOGLE_API_KEY}`, {
           headers: {
             Authorization: `Bearer ${body.accessToken}`,
           },
         })
         .subscribe((response) => {
             console.log(response.data);
-          if (response.data.items.length > 0 && response.data.items[0].id > newestEvent) {
+          if (response.data.items.length > 0 && response.data.items[0].id != newestEvent) {
             observer.next(response.data);
             newestEvent = response.data.items[0].id;
           }
         });
-        }, 20000);
+        }, 60000);
     });
     return observable;
   }
