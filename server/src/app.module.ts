@@ -10,13 +10,21 @@ import { AuthService } from './Oauth/auth.service';
 import { AuthController } from './Oauth/auth.controller';
 import { HttpModule } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
-import { ReactionController } from './reactions/reaction.controller';
 import { ReactionService } from './reactions/reaction.strategy';
 import { ProviderService } from './providers/provider.service';
+import { TwitterActionsService } from "./actions/twitter/twitter.actions.service";
+import { GoogleReactionsService } from "./reactions/google/google.reactions.service";
+import { DiscordReactionsService } from './reactions/discord/discord.reactions.service';
+import { FlightService } from './actions/flight/flight.service';
+import { GoogleActionsService } from './actions/google/google.actions.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), HttpModule],
-  controllers: [AppController, userController, AuthController, ReactionController],
-  providers: [AppService, UserService, PrismaService, GoogleStrategy, AuthService, ReactionService, ActionsService, ProviderService],
+  controllers: [AppController, userController, AuthController],
+  providers: [AppService, UserService, PrismaService,
+              GoogleStrategy, AuthService, ReactionService,
+              ActionsService, ProviderService, TwitterActionsService,
+              GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
+              FlightService],
 })
 export class AppModule {}

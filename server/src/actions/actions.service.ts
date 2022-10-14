@@ -1,10 +1,16 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { FlightService } from './flight/flight.service';
+import { GoogleActionsService } from './google/google.actions.service';
+import { TwitterActionsService } from "./twitter/twitter.actions.service";
 
 @Injectable()
 export class ActionsService {
-    constructor(private readonly httpService: HttpService) {}
+    constructor(private readonly httpService: HttpService,
+                private readonly twitterService: TwitterActionsService,
+                private readonly flightService: FlightService,
+                private readonly googleService: GoogleActionsService) {}
 
     async factory(id: number, body: any): Promise<Observable<any>> {
         let observable: Observable<any> | undefined = undefined;
@@ -16,68 +22,17 @@ export class ActionsService {
 
     async factoryHelper(id: number, body: any): Promise<Observable<any> | undefined> {
         if (id == 1) {
-            return await this.buildNewTweetObservable(body);
+          return await this.twitterService.buildNewTweetObservable(body);
         }
         if (id == 2) {
-            return await this.buildNewFollowerObservable(body);
+          return await this.twitterService.buildNewFollowerObservable(body);
+        }
+        if (id == 3) {
+          return await this.flightService.buildNearbyFlightObservable(body);
+        }
+        if (id == 4) {
+          return await this.googleService.buildNewEventObservable(body);
         }
       return undefined;
     }
-
-    async buildNewTweetObservable(body: any): Promise<Observable<any> | undefined> {
-        if (!body?.twitterAccount)
-            return undefined;
-        const observable = new Observable((observer) => {
-          let latestTweet = 0;
-          setInterval(() => {
-            console.log("Fetching tweets");
-            this.httpService
-              .get(`https://api.twitter.com/2/tweets/search/recent?query=from%3A${body.twitterAccount}&start_time=${(new Date(Date.now() - 30000)).toISOString()}&max_results=10`, {
-                headers: {
-                  Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
-                },
-              })
-              .subscribe((response) => {
-                if (response.data.meta.result_count > 0 && response.data.data[0].id > latestTweet) {
-                  observer.next(response.data);
-                  latestTweet = response.data.data[0].id;
-                }
-              });
-          }, 20000);
-        });
-        return observable;
-    }
-
-    async buildNewFollowerObservable(body: any): Promise<Observable<any> | undefined> {
-        if (!body?.twitterId) {
-          return undefined;
-        }
-        let followingCount = -1;
-        await this.httpService.get(`https://api.twitter.com/2/users/${body.twitterId}?user.fields=public_metrics`, {
-          headers: {
-            Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
-          },
-        }).subscribe((response) => {
-          followingCount = response.data?.data?.public_metrics?.followers_count ?? 0;
-        });
-        const observable = new Observable((observer) => {
-          setInterval(() => {
-            console.log("fetching followers: old = " + followingCount)
-            this.httpService
-            .get(`https://api.twitter.com/2/users/${body.twitterId}?user.fields=public_metrics`, {
-              headers: {
-                Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
-              },
-            })
-            .subscribe((response) => {
-              if ((response.data.data.public_metrics?.followers_count ?? followingCount) > followingCount) {
-                observer.next(response.data);
-              }
-              followingCount = response.data?.data?.public_metrics?.followers_count;
-            })
-          }, 20000)
-        });
-      return observable;
-    }
-
 }
