@@ -7,18 +7,19 @@ import {Colors} from './Style';
 
 import Login from './src/view/signFiles/login/Login';
 import Register from './src/view/signFiles/register/Register';
+import ForgotPassword from './src/view/signFiles/forgotPasswd/ForgotPassword';
+import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
+
 import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
-import User from './src/view/User';
-import ForgotPassword from './src/view/signFiles/ForgotPassword';
-import ResetPassword from './src/view/signFiles/ResetPassword';
+import User from './src/view/User/User';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const isLoggedIn = null;
+  const isLoggedIn = 'undefined';
 
   return (
     <NavigationContainer>

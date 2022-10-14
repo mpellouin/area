@@ -1,12 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import Navbar from '../components/Navbar';
+import Credit from '../../components/Credit';
+import Navbar from '../../components/Navbar';
+import Profile from './Profile';
 
 const Styles = StyleSheet.create({
   container: {
     height: '100%',
   },
-  navbar: {
+  end: {
     flex: 1,
     justifyContent: 'flex-end',
   },
@@ -15,8 +17,9 @@ const Styles = StyleSheet.create({
 const User = () => {
   return (
     <View style={Styles.container}>
-      <Text>User</Text>
-      <View style={Styles.navbar}>
+      <Profile email={'lisa.glaziou@epitech.eu'} />
+      <View style={Styles.end}>
+        <Credit />
         <Navbar page={'User'} />
       </View>
     </View>
