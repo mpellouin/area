@@ -41,7 +41,7 @@ const Auth = () => {
             <View>
                 <Button
                     title="google"
-                    onPress={() => openURL("http://51.178.29.26:8080/auth/google")}
+                    onPress={() => openURL("http://areaserver-env.eba-z4qzp6hu.eu-west-3.elasticbeanstalk.com/auth/google")}
                 />
             </View>
         )}
