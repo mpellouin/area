@@ -9,6 +9,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd server && npm install && npm run start"
+    "start": "cd server && npm install && npx prisma generate && npm run start"
   }
 }
