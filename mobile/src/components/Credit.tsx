@@ -10,10 +10,11 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
+    paddingTop: 10,
+    marginBottom: 15,
     paddingRight: 10,
     paddingLeft: 10,
+    borderTopWidth: 1,
   },
 });
 
@@ -21,7 +22,13 @@ const Credit = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View style={Styles.container}>
+    <View
+      style={[
+        Styles.container,
+        {
+          borderTopColor: isDarkMode ? Colors.minorD : Colors.minorW,
+        },
+      ]}>
       <Text
         style={{
           color: isDarkMode ? Colors.textDOpacity : Colors.textWOpacity,

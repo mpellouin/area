@@ -16,7 +16,6 @@ import Activity from './src/view/Activity';
 import User from './src/view/user/User';
 
 import UserProfile from './src/view/user/params/UserProfile';
-import Appearance from './src/view/user/params/Appearance';
 import UserServices from './src/view/user/params/UserServices';
 import HelpCenter from './src/view/user/params/HelpCenter';
 import AboutArea from './src/view/user/params/AboutArea';
@@ -78,13 +77,6 @@ const App = () => {
             <Stack.Screen
               name="UserProfile"
               component={UserProfile}
-              options={{
-                animation: 'none',
-              }}
-            />
-            <Stack.Screen
-              name="Appearance"
-              component={Appearance}
               options={{
                 animation: 'none',
               }}

@@ -1,14 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import ButtonBack from '../../../components/buttons/ButtonBack';
 
 import Credit from '../../../components/Credit';
+import TitleApp from '../../../components/TitleApp';
 
 const Styles = StyleSheet.create({
   container: {
     height: '100%',
-  },
-  containerScrollView: {
-    // justifyContent: 'space-between',
   },
   end: {
     flex: 1,
@@ -18,10 +17,12 @@ const Styles = StyleSheet.create({
 
 const AboutUs = () => {
   return (
-    <ScrollView style={Styles.containerScrollView}>
-      <Text>ABOUT US</Text>
-      <Credit />
-    </ScrollView>
+    <View style={Styles.container}>
+      <TitleApp title="About Us" path="User" />
+      <View style={Styles.end}>
+        <Credit />
+      </View>
+    </View>
   );
 };
 

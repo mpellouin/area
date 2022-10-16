@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {View, StyleSheet, Text, useColorScheme, Pressable} from 'react-native';
+import {View, StyleSheet, Text, Pressable, useColorScheme} from 'react-native';
 
 import {faAngleRight, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -73,11 +73,21 @@ const ButtonParams: React.FC<
             {title}
           </Text>
         </View>
-        <FontAwesomeIcon
-          icon={faAngleRight}
-          size={25}
-          color={isDarkMode ? Colors.textD : Colors.textW}
-        />
+        {component ? (
+          <FontAwesomeIcon
+            icon={faAngleRight}
+            size={25}
+            color={isDarkMode ? Colors.textD : Colors.textW}
+          />
+        ) : (
+          <Text
+            style={[
+              Styles.text,
+              {color: isDarkMode ? Colors.textD : Colors.textW},
+            ]}>
+            {isDarkMode ? 'Dark ' : 'Light '} theme
+          </Text>
+        )}
       </Pressable>
     </View>
   );

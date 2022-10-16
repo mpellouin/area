@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, useColorScheme} from 'react-native';
+import {View, StyleSheet, useColorScheme} from 'react-native';
 
 import {
   faInfoCircle,
   faPalette,
   faQuestionCircle,
   faStream,
-  faUserCircle,
   faUserCog,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,7 +33,6 @@ const Styles = StyleSheet.create({
 
 const User = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <View
       style={[
@@ -45,17 +43,13 @@ const User = () => {
         <Profile email={'lisa.glaziou@epitech.eu'} />
         <ButtonParams
           icon={faUserCog}
-          title={'User Profile'}
+          title={'My Profile'}
           component={'UserProfile'}
         />
-        <ButtonParams
-          icon={faPalette}
-          title={'Appearance'}
-          component={'Appearance'}
-        />
+        <ButtonParams icon={faPalette} title={'Appearance'} />
         <ButtonParams
           icon={faStream}
-          title={'My services'}
+          title={'My Services'}
           component={'UserServices'}
         />
         <ButtonParams
@@ -70,7 +64,7 @@ const User = () => {
         />
         <ButtonParams
           icon={faInfoCircle}
-          title={'About us'}
+          title={'About Us'}
           component={'AboutUs'}
         />
 

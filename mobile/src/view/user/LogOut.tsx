@@ -8,14 +8,13 @@ import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 58,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     alignContent: 'center',
     paddingLeft: 40,
-    borderBottomWidth: 1,
     borderTopWidth: 1,
   },
   text: {
@@ -33,7 +32,6 @@ const LogOut = () => {
       style={[
         Styles.container,
         {
-          borderBottomColor: isDarkMode ? Colors.minorD : Colors.minorW,
           borderTopColor: isDarkMode ? Colors.minorD : Colors.minorW,
         },
       ]}>
