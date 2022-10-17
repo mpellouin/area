@@ -9,6 +9,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         super({
             clientID: env.GOOGLE_CLIENT_ID,
             clientSecret: env.GOOGLE_CLIENT_SECRET,
+            client_secret: env.GOOGLE_CLIENT_SECRET,
             callbackURL: env.BASE_URL + "/auth/google/redirect",
             response_type: ['token'],
             scope: ['profile', 'email',
