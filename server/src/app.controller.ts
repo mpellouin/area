@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Ip, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Param, Post, Request, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AppService } from './app.service';
+import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AboutType } from './types/about';
 import { AreaStatusType } from './types/status';
 
@@ -17,13 +19,14 @@ export class AppController {
     return this.appService.getAboutJson(ip);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post("login")
-  userLogin(@Body() body): AreaStatusType {
-    return this.appService.userLogin(body);
+  userLogin(@Request() req): Promise<any> {
+    return req.user;
   }
 
   @Post("register")
-  userRegister(@Body() body): AreaStatusType {
+  userRegister(@Body() body): Promise<any> {
     return this.appService.userRegister(body);
   }
 

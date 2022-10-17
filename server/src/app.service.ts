@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import { AboutType } from './types/about';
 import { AreaAuthType, AreaStatusType } from './types/status';
-import { genSaltSync, hashSync } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-import { HttpService } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
+import { LocalStrategy } from './auth/local.strategy';
+import { UserService } from './user/user.service';
 
 @Injectable()
 export class AppService {
   constructor(private readonly actionsService: ActionsService,
-              private readonly reactionsService: ReactionService) {}
+              private readonly reactionsService: ReactionService,
+              private readonly localStrategy: LocalStrategy,
+              private readonly userService: UserService) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -59,32 +60,11 @@ export class AppService {
     };
   }
 
-  userLogin(body): AreaAuthType {
-    if (!body?.email || !body?.password) {
-      return {
-        error: true,
-        code: 400,
-        message: "Missing email or password",
-        token: "null",
-      };
-    }
-    // check if email exists in db
-    // if not return an error
-    // else retrieve user
-    const salt = genSaltSync(10);
-    const hash = hashSync(body.password, salt);
-
-    // check if password is correct else return an error
-
-    return {
-      error: false,
-      code: 200,
-      message: "User logged in",
-      token: sign({ email: body.email }, process.env.SECRET),
-    };
+  userLogin(req): any {
+    return req.user;
   }
 
-  userRegister(body): AreaAuthType {
+  async userRegister(body): Promise<any> {
     if (!body?.email || !body?.password) {
       return {
         error: true,
@@ -93,17 +73,13 @@ export class AppService {
         token: "null",
       };
     }
-    // Check db if email already registered if it is return an error
-    const salt = genSaltSync(10);
-    const hash = hashSync(body.password, salt);
-    // Save user in db with email and hash as password
-
-    return {
-      error: false,
-      code: 200,
-      message: "User registered",
-      token: sign({ email: body.email }, process.env.SECRET),
-    };
+    const userSearch = await this.userService.users({where: {email: body.email}});
+    if (userSearch.length > 0) {
+      throw new Error("User already exists");
+    }
+    const user = await this.localStrategy.register(body.email, body.password);
+    console.log(user);
+    return this.localStrategy.validate(user.email, user.password);
   }
 
   subscribeToService(serviceId: number): AreaStatusType {
