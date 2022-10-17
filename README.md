@@ -39,7 +39,7 @@ The project must implement a software suite that functions similar to that of [I
 
 ## How to launch the project
 #### Run the following commands to launch the three parts of the project
-*** docker-compose build && docker-compose up ***
+``` docker-compose build && docker-compose up ```
 
 ## Services and Widgets implemented
 #### - GMAIL
