@@ -19,16 +19,19 @@ The project must implement a software suite that functions similar to that of [I
 ## How to launch the project
 
 ## Services and Widgets implemented
-- GMAIL
-  - Actions :
-    - New Mail
-  - Reactions :
-    - Send Mail to X
-- TWITTER
-- DISCORD
-- FLIGHT TRACKER
-- TWITCH
-- CALENDAR
+#### - GMAIL
+  - Get a new Mail
+#### - TWITTER
+  - Get new tweets from User
+  - Get all the new followers
+#### - FLIGHT TRACKER
+  - Get the flights from City in a 50 km radius
+
+#### - TWITCH
+  - Get new followed channel live
+
+#### - CALENDAR
+  - Get events of a calendar in less than 1 hour
 
 ## API documentation
 
