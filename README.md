@@ -13,17 +13,42 @@ The project must implement a software suite that functions similar to that of [I
 3. The back-end is located under `api/`
 
 ## Technologies used
+- Docker
+
+- API:
+  - NestJS
+  - Passport
+  - SQlight
+  - Prisma
+  - AWS elastic beanstalk
+  - Swagger
+ 
+- Desktop | Web application:
+  - React
+  - Typescript
+  - Scss
+
+- Mobile application :
+  - ReactNative
+  - Typescript
+  - Metro
+  - Gradlew 
 
 ## Prerequisites
+- Docker
 
 ## How to launch the project
+#### Run the following commands to launch the three parts of the project
+`` docker-compose build && docker-compose up ``
 
 ## Services and Widgets implemented
 #### - GMAIL
   - Get a new Mail
+
 #### - TWITTER
   - Get new tweets from User
   - Get all the new followers
+
 #### - FLIGHT TRACKER
   - Get the flights from City in a 50 km radius
 
@@ -34,6 +59,7 @@ The project must implement a software suite that functions similar to that of [I
   - Get events of a calendar in less than 1 hour
 
 ## API documentation
+Find our documentation under `doc/`
 
 ## Postman
 
