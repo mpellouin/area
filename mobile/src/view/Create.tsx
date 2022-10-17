@@ -1,6 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, useColorScheme} from 'react-native';
+
 import Navbar from '../components/Navbar';
+
+import {Colors} from '../../Style';
 
 const Styles = StyleSheet.create({
   container: {
@@ -13,8 +16,14 @@ const Styles = StyleSheet.create({
 });
 
 const Create = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
-    <View style={Styles.container}>
+    <View
+      style={[
+        {backgroundColor: isDarkMode ? Colors.backgroundD : Colors.backgroundW},
+        Styles.container,
+      ]}>
       <Text>Create</Text>
       <View style={Styles.navbar}>
         <Navbar page={'Create'} />

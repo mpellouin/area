@@ -16,9 +16,10 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors} from '../../../../Style';
 
 import Title from '../../../components/Title';
-import ButtonLogin from '../../../components/buttons/ButtonLogin';
 import Separator from '../../../components/Separator';
 import LoginSvg from '../../../components/svg/LoginSvg';
+
+import ButtonLogin from './ButtonLogin';
 import AuthLogin from './AuthLogin';
 
 const Styles = StyleSheet.create({
