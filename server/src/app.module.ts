@@ -20,14 +20,18 @@ import { GoogleActionsService } from './actions/google/google.actions.service';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
-  imports: [ConfigModule.forRoot(), HttpModule, PassportModule],
+  imports: [ConfigModule.forRoot(), HttpModule, PassportModule, JwtModule.register({
+    secret: process.env.SECRET,
+  })],
   controllers: [AppController, userController, AuthController],
   providers: [AppService, UserService, PrismaService,
               GoogleStrategy, LocalStrategy, OAuthService, ReactionService,
               ActionsService, ProviderService, TwitterActionsService,
               GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
-              FlightService, AuthService],
+              FlightService, AuthService, JwtService, JwtStrategy],
 })
 export class AppModule {}

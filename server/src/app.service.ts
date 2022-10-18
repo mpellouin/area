@@ -1,17 +1,17 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AboutType } from './types/about';
-import { AreaAuthType, AreaStatusType } from './types/status';
+import { AreaStatusType } from './types/status';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
-import { LocalStrategy } from './auth/local.strategy';
 import { UserService } from './user/user.service';
+import { AuthService } from './auth/auth.service';
 
 @Injectable()
 export class AppService {
   constructor(private readonly actionsService: ActionsService,
               private readonly reactionsService: ReactionService,
-              private readonly localStrategy: LocalStrategy,
-              private readonly userService: UserService) {}
+              private readonly userService: UserService,
+              private readonly authService: AuthService) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -60,26 +60,20 @@ export class AppService {
     };
   }
 
-  userLogin(req): any {
-    return req.user;
+  userLogin(user): any {
+    return this.authService.loginUser(user);
   }
 
-  async userRegister(body): Promise<any> {
-    if (!body?.email || !body?.password) {
-      return {
-        error: true,
-        code: 400,
-        message: "Missing email or password",
-        token: "null",
-      };
+  async userRegister(req): Promise<any> {
+    if (!req.body?.email || !req.body?.password) {
+      throw new Error("Missing email or password");
     }
-    const userSearch = await this.userService.users({where: {email: body.email}});
+    const userSearch = await this.userService.users({where: {email: req.body.email}});
     if (userSearch.length > 0) {
       throw new Error("User already exists");
     }
-    const user = await this.localStrategy.register(body.email, body.password);
-    console.log(user);
-    return this.localStrategy.validate(user.email, user.password);
+    const user = await this.authService.registerUser(req.body.email, req.body.password);
+    return this.authService.loginUser(user);
   }
 
   subscribeToService(serviceId: number): AreaStatusType {
