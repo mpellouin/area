@@ -3,6 +3,7 @@ import './index.scss'
 import Header from "../../components/Header";
 import CreateAreaModal from "./CreateAreaModal";
 import { useNavigate } from "react-router-dom";
+import getAreas from "../../ApiFunctions/getAreas";
 
 const buttons = [
   {
@@ -23,13 +24,30 @@ const AreaPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const fetchAreas = async () => {
+            try {
+                const res = await getAreas();
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchAreas().then((res) => {
+            setAreas(res);
+        })
+    }, [])
+
+    useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const accessToken = urlParams.get('token');
         if (accessToken) {
             localStorage.setItem('accessToken', accessToken);
         } else {
-            navigate('/login');
+            if (!localStorage.getItem('accessToken') && !localStorage.getItem('jwt')) {
+                console.log("back to login");
+                navigate('/login')
+            }
         }
     }, [navigate])
 
@@ -44,7 +62,7 @@ const AreaPage = () => {
                 {areas.map((area : any) =>
                     <div className="areaPageItem">
                         <div className="areaPageItemName">{area.name}</div>
-                        <div className="areaPageItemDescription">{area.description}</div>
+                        <div className="areaPageItemDescription">{area.description ?? " lorem "}</div>
                     </div>
                 )}
             </div>

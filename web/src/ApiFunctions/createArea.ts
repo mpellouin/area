@@ -4,7 +4,8 @@ const createArea = async (areaData: any) => {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'mode': 'no-cors'
+      'mode': 'no-cors',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     },
     body: JSON.stringify(areaData),
   });
