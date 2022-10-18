@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Ip, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Area } from '@prisma/client';
 import { AppService } from './app.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -39,8 +40,14 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Post("createArea/:actionId/:reactionId")
-  async poc(@Body() body, @Param('actionId') actionId : number,
-                          @Param('reactionId') reactionID: number): Promise<AreaStatusType> {
-    return this.appService.createArea(body, actionId, reactionID);
+  async poc(@Request() req, @Param('actionId') actionId : string,
+                          @Param('reactionId') reactionID: string): Promise<AreaStatusType> {
+    return this.appService.createArea(req, actionId, reactionID);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("areas")
+  async getAreas(@Request() req): Promise<Area[]> {
+    return this.appService.getAreas(req);
   }
 }

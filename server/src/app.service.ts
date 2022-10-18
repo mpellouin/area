@@ -5,13 +5,16 @@ import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
+import { AreaService } from './area/area.service';
+import { Area } from '@prisma/client';
 
 @Injectable()
 export class AppService {
   constructor(private readonly actionsService: ActionsService,
               private readonly reactionsService: ReactionService,
               private readonly userService: UserService,
-              private readonly authService: AuthService) {}
+              private readonly authService: AuthService,
+              private readonly areaService: AreaService) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -84,21 +87,32 @@ export class AppService {
     };
   }
 
-  async createArea(body, actionId: number, reactionId: number): Promise<AreaStatusType> {
-    const twitterAccount = body?.twitterAccount;
+  async createArea(req, actionId: string, reactionId: string): Promise<AreaStatusType> {
     try {
-      const observable = await this.actionsService.factory(actionId, body);
+      const observable = await this.actionsService.factory(parseInt(actionId), req.body);
       console.log("observable created");
-      observable.subscribe((data: any) => {this.reactionsService.factory(reactionId, body)});
+      observable.subscribe((data: any) => {this.reactionsService.factory(parseInt(reactionId), req.body)});
     } catch (e) {
       console.log(e);
+      throw new Error("Error while creating area");
     }
+
+    await this.areaService.createArea({
+      actionID: parseInt(actionId),
+      reactionID: parseInt(reactionId),
+      name: req.body.name,
+      user: {connect: {ID: req.user.id}},
+    });
 
     return {
       error: false,
       code: 200,
-      message: "Twitter account: " + twitterAccount,
+      message: "Observable created",
     };
+  }
+
+  async getAreas(req): Promise<Area[]> {
+    return this.areaService.findMany({where: {user: {ID: req.user.id}}});
   }
 
 }

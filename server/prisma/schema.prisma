@@ -30,4 +30,7 @@ model Area {
   ID Int @id @default(autoincrement())
   user User @relation(fields: [userID], references: [ID])
   userID Int
+  name String
+  actionID Int
+  reactionID Int
 }
