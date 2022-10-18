@@ -6,7 +6,7 @@ import { userController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { PrismaService } from './prisma.service';
 import { GoogleStrategy } from './Oauth/google.strategy';
-import { AuthService } from './Oauth/auth.service';
+import { OAuthService } from './Oauth/auth.service';
 import { AuthController } from './Oauth/auth.controller';
 import { HttpModule } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
@@ -17,14 +17,21 @@ import { GoogleReactionsService } from "./reactions/google/google.reactions.serv
 import { DiscordReactionsService } from './reactions/discord/discord.reactions.service';
 import { FlightService } from './actions/flight/flight.service';
 import { GoogleActionsService } from './actions/google/google.actions.service';
+import { AuthService } from './auth/auth.service';
+import { LocalStrategy } from './auth/local.strategy';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
-  imports: [ConfigModule.forRoot(), HttpModule],
+  imports: [ConfigModule.forRoot(), HttpModule, PassportModule, JwtModule.register({
+    secret: process.env.SECRET,
+  })],
   controllers: [AppController, userController, AuthController],
   providers: [AppService, UserService, PrismaService,
-              GoogleStrategy, AuthService, ReactionService,
+              GoogleStrategy, LocalStrategy, OAuthService, ReactionService,
               ActionsService, ProviderService, TwitterActionsService,
               GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
-              FlightService],
+              FlightService, AuthService, JwtService, JwtStrategy],
 })
 export class AppModule {}
