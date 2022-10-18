@@ -101,7 +101,7 @@ export class AppService {
       actionID: parseInt(actionId),
       reactionID: parseInt(reactionId),
       name: req.body.name,
-      user: {connect: {ID: req.user.id}},
+      user: {connect: {ID: req.user.ID}},
     });
 
     return {

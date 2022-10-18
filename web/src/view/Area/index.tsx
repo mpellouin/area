@@ -21,9 +21,11 @@ const buttons = [
 const AreaPage = () => {
     const [areas, setAreas] = useState([])
     const [isCreateMode , setIsCreateMode] = useState(false)
+    const [forceRefresh, setForceRefresh] = useState(true)
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (forceRefresh === false) return;
         const fetchAreas = async () => {
             try {
                 const res = await getAreas();
@@ -35,7 +37,8 @@ const AreaPage = () => {
         fetchAreas().then((res) => {
             setAreas(res);
         })
-    }, [])
+        setForceRefresh(false);
+    }, [forceRefresh])
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -55,7 +58,7 @@ const AreaPage = () => {
     <div className="areaPage">
         <Header buttons={buttons}/>
         {isCreateMode && 
-            <CreateAreaModal />}
+            <CreateAreaModal setIsOpened={setIsCreateMode} setForceRefresh={setForceRefresh}/>}
         <div className="areaPageContent">
             <div className="areaPageTitle">Areas list</div>
             <div className="areaPageList">
