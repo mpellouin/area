@@ -18,14 +18,14 @@ The project must implement a software suite that functions similar to that of [I
 - API:
   - NestJS
   - Passport
-  - SQlight
+  - SQLite
   - Prisma
   - AWS elastic beanstalk
   - Swagger
  
 - Desktop | Web application:
   - React
-  - Typescript
+  - TypeScript
   - Scss
 
 - Mobile application :
@@ -70,7 +70,7 @@ Back-End | API | Database:
 - [Maxence Pellouin](https://github.com/mpellouin)
 - [Laurent Cazette](https://github.com/Laurent-cazette)
 
-Desktop | Web application :
+Web application :
 - [Justine Trupheme](https://github.com/Flackho)
 - [Florian Gibault](https://github.com/Fgib)
 
