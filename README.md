@@ -23,7 +23,7 @@ The project must implement a software suite that functions similar to that of [I
   - AWS elastic beanstalk
   - Swagger
  
-- Desktop | Web application:
+- Web application:
   - React
   - TypeScript
   - Scss
