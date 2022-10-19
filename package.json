@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "devDependencies": {},
-  "engines" : { 
+  "engines" : {
     "npm" : ">=8.0.0 <9.0.0",
     "node" : ">=16.0.0 <17.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd server && npm install && npx prisma generate && export $(cat /opt/elasticbeanstalk/deployment/env | xargs) &&  npm run start"
+    //"start": "cd server && npm install && npx prisma generate &&  npm run start"
+    "start": "echo start"
   }
 }
