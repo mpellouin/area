@@ -30,7 +30,7 @@ The project must implement a software suite that functions similar to that of [I
 
 - Mobile application :
   - ReactNative
-  - Typescript
+  - TypeScript
   - Metro
   - Gradlew 
 
