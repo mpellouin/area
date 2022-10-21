@@ -7,8 +7,13 @@ import getAreas from "../../ApiFunctions/getAreas";
 
 const buttons = [
   {
-      name: "HOME",
-      path: "/",
+      name: "SERVICES",
+      path: "/services",
+      isButton: false
+  },
+  {
+      name: "AREAS",
+      path: "/areas",
       isButton: false
   },
   {
