@@ -102,6 +102,7 @@ export class AppService {
       reactionID: parseInt(reactionId),
       name: req.body.name,
       user: {connect: {ID: req.user.ID}},
+      parameters: JSON.stringify(req.body),
     });
 
     return {

@@ -33,4 +33,5 @@ model Area {
   name String
   actionID Int
   reactionID Int
+  parameters String? @default("{}")
 }
