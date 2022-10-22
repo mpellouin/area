@@ -23,6 +23,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { AreaService } from './area/area.service';
+import { ServicesService } from './services/services.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), HttpModule, PassportModule, JwtModule.register({
@@ -33,6 +34,7 @@ import { AreaService } from './area/area.service';
               GoogleStrategy, LocalStrategy, OAuthService, ReactionService,
               ActionsService, ProviderService, TwitterActionsService,
               GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
-              FlightService, AuthService, JwtService, JwtStrategy, AreaService],
+              FlightService, AuthService, JwtService, JwtStrategy, AreaService,
+              ServicesService],
 })
 export class AppModule {}
