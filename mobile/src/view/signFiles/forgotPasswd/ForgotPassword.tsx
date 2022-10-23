@@ -1,5 +1,3 @@
-import {faAt} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -9,6 +7,9 @@ import {
   Text,
   TextInput,
 } from 'react-native';
+
+import {faAt} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {Colors} from '../../../../Style';
 
