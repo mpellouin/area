@@ -4,48 +4,25 @@ import { View, Linking, Pressable, StyleSheet, Button, SafeAreaView } from "reac
 import {Colors} from '../../../Style';
 
 const Auth = () => {
-    const [uri, setURL] = useState("")
+    Linking.addEventListener('url', handleUrl)
 
-    useEffect(() => {
-
-        Linking.addEventListener("url", (url) => handleOpenUrl(url.url));
-        Linking.getInitialURL().then((url: any) => {
-        if (url) {
-            console.log("url = ", url);
-        }
-        });
-        return () => {
-        Linking.removeAllListeners("url");
-        };
-    }, []);
-
-    const handleOpenUrl = (url: string) => {
-        console.log(url)
+    function handleUrl(event: any) {
+        console.log(event)
+        Linking.removeAllListeners('url')
     }
 
-    const openURL = (url: string) => {
-        setURL(url)
-    }
+    const openBrowser = (url: string) => {
+        Linking.openURL(url)
+      };
 
     return (
-        <>
-        {uri != "" ? (
-            <SafeAreaView style={{ flex: 1 }}>
-            <WebView
-                originWhitelist={['*']}
-                userAgent={"Chrome/18.0.1025.133 Mobile Safari/535.19"}
-                source={{ uri }}
+        <View>
+            <Button
+                title="google"
+                onPress={() =>  openBrowser("http://area.eu-west-3.elasticbeanstalk.com/auth/google")}
             />
-            </SafeAreaView>
-        ) : (
-            <View>
-                <Button
-                    title="google"
-                    onPress={() => openURL("http://areaserver-env.eba-z4qzp6hu.eu-west-3.elasticbeanstalk.com/auth/google")}
-                />
-            </View>
-        )}
-    </>
+        </View>
     )
 }
+
 export default Auth;

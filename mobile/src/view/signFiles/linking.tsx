@@ -1,14 +1,12 @@
-const config = {
-    screens: {
-      Homepage: {
-        path: 'auth/google/callback',
-      },
-    },
-  };
+
 
   const linking = {
-    prefixes: ['area://app'],
-    config,
+    prefixes: ["area://", 'http://localhost:8081'],
+    config: {
+      screens: {
+        User: ''
+      }
+    }
   };
 
   export default linking;
