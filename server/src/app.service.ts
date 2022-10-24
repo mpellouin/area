@@ -6,7 +6,9 @@ import { ReactionService } from './reactions/reaction.strategy';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
 import { AreaService } from './area/area.service';
-import { Area } from '@prisma/client';
+import { Actions, Area, Reactions, Service } from '@prisma/client';
+import { ServicesService } from './services/services.service';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class AppService {
@@ -14,51 +16,44 @@ export class AppService {
               private readonly reactionsService: ReactionService,
               private readonly userService: UserService,
               private readonly authService: AuthService,
-              private readonly areaService: AreaService) {}
+              private readonly areaService: AreaService,
+              private readonly servicesService: ServicesService,
+              private readonly prismaService: PrismaService) {}
 
   getHello(): string {
     return 'Hello World!';
   }
 
-  getAboutJson(ip: any): AboutType {
+  async getAboutJson(ip: any): Promise<AboutType> {
+    const dbServices = await this.servicesService.findMany({});
+    const services = Promise.all(dbServices.map(async (service) => {
+      const actions = await this.prismaService.actions.findMany({where: {serviceID: service.ID}}) as Actions[];
+      const reactions = await this.prismaService.reactions.findMany({where: {serviceID: service.ID}}) as Reactions[];
+      console.log(dbServices)
+      return {
+        name: service.name,
+        actions: actions.map((action) => {
+          return {
+            name: action.name,
+            description: action.description,
+          };
+        }),
+        reactions: reactions.map((reaction) => {
+          return {
+            name: reaction.name,
+            description: reaction.description,
+          };
+        }),
+      }
+    }));
+
     return {
       client: {
         host: ip,
       },
       server: {
         current_time: Date.now(),
-        services: [
-          {
-            name: "service example",
-            actions: [
-              {
-                name: "action1",
-                description: "action1 description",
-              },
-            ],
-            reactions: [
-              {
-                name: "reaction1",
-                description: "reaction1 description",
-              },
-            ],
-          },
-          {
-            name: "service2",
-            actions: [
-              {
-                name: "action1",
-                description: "action1 description",
-              },
-            ],
-            reactions: [
-              {
-                name: "reaction1",
-                description: "reaction1 description",
-              },
-            ],
-          },
-        ],
+        services: await services,
       },
     };
   }
@@ -102,6 +97,7 @@ export class AppService {
       reactionID: parseInt(reactionId),
       name: req.body.name,
       user: {connect: {ID: req.user.ID}},
+      parameters: JSON.stringify(req.body),
     });
 
     return {

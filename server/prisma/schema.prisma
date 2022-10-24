@@ -33,4 +33,28 @@ model Area {
   name String
   actionID Int
   reactionID Int
+  parameters String? @default("{}")
+}
+
+model Actions {
+  ID Int @id @default(autoincrement())
+  name String
+  description String
+  serviceID Int
+  service Service @relation(fields: [serviceID], references: [ID])
+}
+
+model Reactions {
+  ID Int @id @default(autoincrement())
+  name String
+  description String
+  serviceID Int
+  service Service @relation(fields: [serviceID], references: [ID])
+}
+
+model Service {
+  ID Int @id @default(autoincrement())
+  name String
+  actions Actions[]
+  reactions Reactions[]
 }

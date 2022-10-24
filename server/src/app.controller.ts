@@ -17,7 +17,7 @@ export class AppController {
   }
 
   @Get("about.json")
-  getAboutJson(@Ip() ip): AboutType {
+  getAboutJson(@Ip() ip): Promise<AboutType> {
     return this.appService.getAboutJson(ip);
   }
 
