@@ -24,11 +24,19 @@
         </intent-filter>
         <intent-filter>
           <action android:name="android.intent.action.VIEW" />
+
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="http" />
-          <data android:scheme="https" />
-          <data android:host="area.eu-west-3.elasticbeanstalk.com" />
+
+          <data android:scheme="area" android:host="com.area"/>
+        </intent-filter>
+        <intent-filter android:autoVerify="true">
+          <action android:name="android.intent.action.VIEW" />
+
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+
+          <data android:host="lisolescargot.netlify.app" android:scheme="http"/>
         </intent-filter>
       </activity>
     </application>

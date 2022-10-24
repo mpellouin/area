@@ -1,10 +1,16 @@
-
-
   const linking = {
-    prefixes: ["area://", 'http://localhost:8081'],
+    prefixes: ["area://", 'https://lisolescargot.netlify.app'],
     config: {
       screens: {
-        User: ''
+        Login: 'Login',
+        Register: 'Register',
+        Auth: 'Auth',
+        ForgotPassword: 'ForgotPassword',
+        ResetPassword: 'ResetPassword',
+        Homepage: '',
+        Create: 'Create',
+        Activity: 'Activity',
+        User: 'Areas'
       }
     }
   };
