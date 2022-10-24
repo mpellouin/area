@@ -18,7 +18,7 @@ export class OAuthController {
     async loginWithGoogleRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
         const user = await this.authService.loggingWithGoogle(req, body)
         if (user) {
-            res.redirect("http://letest.com/Areas?token=" + user.accessToken )
+            res.redirect("http://lisolescargot.netlify.app/Areas?token=" + user.accessToken )
         }
     }
 }
