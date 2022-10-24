@@ -39,9 +39,20 @@ const Login = () => {
     };
 
     const loginWithGoogle = async () => {
-        console.log('login with google');
-        window.location.replace('http://localhost:8080/auth/google');
+        console.log("login with google");
+        poptastic("http://localhost:8080/auth/google")
     };
+
+    function poptastic(url: any) {
+        var newWindow = window.open(url, 'name', 'height=600,width=450') as Window;
+        newWindow.focus();
+        window.addEventListener('message', (event) => {
+            if (event.data !== "failure") {
+                navigate("/areas");
+            }
+        }
+        )
+      }
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
@@ -107,7 +118,7 @@ const Login = () => {
                         </div>
                         <hr className="lineText" data-content="Or sign with" />
                         <div className="alternateLogins">
-                            <button onClick={() => loginWithGoogle()}>
+                            <button type="button" onClick={() => loginWithGoogle()}>
                                 <img src="logo_google.svg" alt="Google" />
                             </button>
                         </div>
