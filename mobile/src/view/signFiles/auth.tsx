@@ -1,7 +1,6 @@
 import { WebView } from "react-native-webview";
 import React, { useState, useEffect } from "react";
 import { View, Linking, Button, Alert} from "react-native";
-import { URL, URLSearchParams } from 'react-native-url-polyfill';
 import {Colors} from '../../../Style';
 import { useNavigation } from "@react-navigation/native";
 
