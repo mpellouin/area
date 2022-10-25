@@ -9,12 +9,15 @@ import {
   Text,
   TextInput,
 } from 'react-native';
-import {Colors} from '../../../Style';
-import ButtonBack from '../../components/buttons/ButtonBack';
-import ButtonForgotPasswd from '../../components/buttons/ButtonForgotPasswd';
-import Separator from '../../components/Separator';
-import ForgotPasswordSvg from '../../components/svg/ForgotPasswordSvg';
-import Title from '../../components/Title';
+
+import {Colors} from '../../../../Style';
+
+import ButtonBack from '../../../components/buttons/ButtonBack';
+import Separator from '../../../components/Separator';
+import ForgotPasswordSvg from '../../../components/svg/ForgotPasswordSvg';
+import Title from '../../../components/Title';
+
+import ButtonForgotPasswd from './ButtonForgotPasswd';
 
 const Styles = StyleSheet.create({
   container: {
@@ -89,12 +92,7 @@ const ForgotPassword = () => {
             maxLength={28}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <ButtonForgotPasswd title={'Submit'} width={160} email={email} />
     </ScrollView>

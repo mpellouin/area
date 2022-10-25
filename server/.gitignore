@@ -4,3 +4,4 @@ package-lock.json
 dist
 yarn.lock
 AreaKey.pem
+prisma/dev.db

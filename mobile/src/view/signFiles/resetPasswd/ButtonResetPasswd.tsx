@@ -1,6 +1,6 @@
 import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, View, StyleSheet, Pressable, Text} from 'react-native';
-import {Colors} from '../../../Style';
+import {Colors} from '../../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
@@ -24,14 +24,14 @@ const Styles = StyleSheet.create({
   },
 });
 
-const ButtonLogin: React.FC<
+const ButtonResetPasswd: React.FC<
   PropsWithChildren<{
     title: string;
     width: number;
-    email: string;
     pwd: string;
+    confirm: string;
   }>
-> = ({title, width, email, pwd}) => {
+> = ({title, width, pwd, confirm}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -53,7 +53,7 @@ const ButtonLogin: React.FC<
           },
         ]}
         onPress={() => {
-          console.log(email);
+          console.log(confirm);
           console.log(pwd);
         }}>
         <Text style={Styles.textStyle}>{title}</Text>
@@ -62,4 +62,4 @@ const ButtonLogin: React.FC<
   );
 };
 
-export default ButtonLogin;
+export default ButtonResetPasswd;

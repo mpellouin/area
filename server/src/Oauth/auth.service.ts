@@ -4,7 +4,7 @@ import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
 
 @Injectable()
-export class  AuthService {
+export class OAuthService {
     constructor(
         private userService: UserService,
         private providerService: ProviderService,

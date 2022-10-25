@@ -1,5 +1,6 @@
 import React, {type PropsWithChildren} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, useColorScheme, View} from 'react-native';
+import {Colors} from '../../Style';
 
 const Styles = StyleSheet.create({
   separator: {
@@ -14,11 +15,12 @@ const Styles = StyleSheet.create({
 const Separator: React.FC<
   PropsWithChildren<{
     width: number;
-    color: string;
     marginTop: number;
     marginLeft: number;
   }>
-> = ({width, color, marginTop, marginLeft}) => {
+> = ({width, marginTop, marginLeft}) => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <View
       style={[
@@ -27,7 +29,7 @@ const Separator: React.FC<
           width: width,
           marginTop: marginTop,
           marginLeft: marginLeft,
-          borderBottomColor: color,
+          borderBottomColor: isDarkMode ? '#A9A9A9' : Colors.textWOpacity,
         },
       ]}
     />

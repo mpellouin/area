@@ -8,12 +8,14 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Colors} from '../../../Style';
-import ButtonBack from '../../components/buttons/ButtonBack';
-import ButtonResetPasswd from '../../components/buttons/ButtonResetPasswd';
-import Separator from '../../components/Separator';
-import ResetPasswordSvg from '../../components/svg/ResetPasswordSvg';
-import Title from '../../components/Title';
+import {Colors} from '../../../../Style';
+
+import ButtonBack from '../../../components/buttons/ButtonBack';
+import Separator from '../../../components/Separator';
+import ResetPasswordSvg from '../../../components/svg/ResetPasswordSvg';
+import Title from '../../../components/Title';
+
+import ButtonResetPasswd from './ButtonResetPasswd';
 
 const Styles = StyleSheet.create({
   container: {
@@ -77,12 +79,7 @@ const ResetPassword = () => {
             maxLength={35}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <View style={Styles.containerBottom}>
         <View style={Styles.containerInput}>
@@ -104,12 +101,7 @@ const ResetPassword = () => {
             maxLength={32}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <ButtonResetPasswd
         title={'Submit'}

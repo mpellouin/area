@@ -15,12 +15,14 @@ import {useNavigation} from '@react-navigation/native';
 import { Button as ReactButton } from 'react-native';
 import Auth from './auth';
 
-import {Colors} from '../../../Style';
+import {Colors} from '../../../../Style';
 
-import Title from '../../components/Title';
-import ButtonLogin from '../../components/buttons/ButtonLogin';
-import Separator from '../../components/Separator';
-import LoginSvg from '../../components/svg/LoginSvg';
+import Title from '../../../components/Title';
+import Separator from '../../../components/Separator';
+import LoginSvg from '../../../components/svg/LoginSvg';
+
+import ButtonLogin from './ButtonLogin';
+import AuthLogin from './AuthLogin';
 
 const Styles = StyleSheet.create({
   container: {
@@ -115,12 +117,7 @@ const Login = () => {
             maxLength={28}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textD : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
       <View>
         <View style={Styles.containerInput}>
@@ -142,12 +139,7 @@ const Login = () => {
             maxLength={32}
           />
         </View>
-        <Separator
-          marginTop={10}
-          marginLeft={45}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={270}
-        />
+        <Separator marginTop={10} marginLeft={45} width={270} />
         <Text
           style={[
             Styles.forgotPasswordInput,
@@ -161,12 +153,7 @@ const Login = () => {
       </View>
       <ButtonLogin title="Login" width={160} email={email} pwd={pwd} />
       <View style={Styles.separator}>
-        <Separator
-          marginTop={15}
-          marginLeft={0}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={137.5}
-        />
+        <Separator marginTop={15} marginLeft={0} width={137.5} />
         <Text
           style={{
             color: isDarkMode ? Colors.textD : Colors.textW,
@@ -174,35 +161,18 @@ const Login = () => {
           }}>
           OR
         </Text>
-        <Separator
-          marginTop={15}
-          marginLeft={0}
-          color={isDarkMode ? Colors.textDOpacity : Colors.textWOpacity}
-          width={137.5}
-        />
+        <Separator marginTop={15} marginLeft={0} width={137.5} />
       </View>
       <View style={Styles.containerAuth}>
-        <View
-          style={[
-            Styles.containerRectangle,
-            {
-              borderColor: isDarkMode ? Colors.textD : Colors.textW,
-            },
-          ]}></View>
-        <View
-          style={[
-            Styles.containerRectangle,
-            {
-              borderColor: isDarkMode ? Colors.textD : Colors.textW,
-            },
-          ]}></View>
-        <View
-          style={[
-            Styles.containerRectangle,
-            {
-              borderColor: isDarkMode ? Colors.textD : Colors.textW,
-            },
-          ]}></View>
+        <View>
+          <AuthLogin title={'Google'} />
+        </View>
+        <View>
+          <AuthLogin title={'Github'} />
+        </View>
+        <View>
+          <AuthLogin title={'Twitter'} />
+        </View>
       </View>
       <View style={Styles.registerInput}>
         <Text
