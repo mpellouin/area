@@ -24,17 +24,18 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { AreaService } from './area/area.service';
 import { ServicesService } from './services/services.service';
+import { ProviderController } from './providers/provider.controller';
 
 @Module({
   imports: [ConfigModule.forRoot(), HttpModule, PassportModule, JwtModule.register({
     secret: process.env.SECRET,
   })],
-  controllers: [AppController, userController, AuthController],
+  controllers: [AppController, userController, AuthController, ProviderController],
   providers: [AppService, UserService, PrismaService,
               GoogleStrategy, LocalStrategy, OAuthService, ReactionService,
               ActionsService, ProviderService, TwitterActionsService,
               GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
               FlightService, AuthService, JwtService, JwtStrategy, AreaService,
-              ServicesService],
+              ServicesService, ProviderService],
 })
 export class AppModule {}
