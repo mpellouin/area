@@ -17,6 +17,10 @@ import Auth from './src/view/signFiles/auth';
 import linking from './src/view/signFiles/linking';
 import User from './src/view/user/User';
 
+import Tutorial1 from './src/view/tutorial/Tutorial1';
+import Tutorial2 from './src/view/tutorial/Tutorial2';
+import Tutorial3 from './src/view/tutorial/Tutorial3';
+
 import UserProfile from './src/view/user/params/UserProfile';
 import UserServices from './src/view/user/params/UserServices';
 import HelpCenter from './src/view/user/params/HelpCenter';
@@ -48,6 +52,30 @@ const App = () => {
           </>
         ) : (
           <>
+            <Stack.Screen
+              name="Tutorial1"
+              component={Tutorial1}
+              options={{
+                animation: 'fade_from_bottom',
+              }}
+            />
+            <Stack.Screen
+              name="Tutorial2"
+              component={Tutorial2}
+              options={{
+                animation: 'fade_from_bottom',
+              }}
+            />
+            <Stack.Screen
+              name="Tutorial3"
+              component={Tutorial3}
+              options={{
+                animation: 'fade_from_bottom',
+                gestureEnabled: false,
+                headerLeft: () => <></>,
+                headerBackVisible: false,
+              }}
+            />
             <Stack.Screen
               name="Homepage"
               component={Homepage}
