@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { Provider, Prisma, User } from "@prisma/client";
+import { Provider, Prisma} from "@prisma/client";
 import { PrismaService } from "src/prisma.service";
-import internal from "stream";
 
 @Injectable()
 export class ProviderService {
     constructor(private prisma: PrismaService) {}
+
     async updateUserToken(userID: number, providerName: string, accessToken: string = "null", refreshToken: string) {
         const userProviders = await this.getUserProviders({where: {userID : userID, Name : providerName}})
         const provider = userProviders[0]

@@ -11,7 +11,6 @@ import { AuthController } from './Oauth/auth.controller';
 import { HttpModule } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
-import { ProviderService } from './providers/provider.service';
 import { TwitterActionsService } from "./actions/twitter/twitter.actions.service";
 import { GoogleReactionsService } from "./reactions/google/google.reactions.service";
 import { DiscordReactionsService } from './reactions/discord/discord.reactions.service';
@@ -25,6 +24,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
 import { AreaService } from './area/area.service';
 import { ServicesService } from './services/services.service';
 import { ProviderController } from './providers/provider.controller';
+import { ProviderService } from './providers/provider.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), HttpModule, PassportModule, JwtModule.register({
@@ -33,7 +33,7 @@ import { ProviderController } from './providers/provider.controller';
   controllers: [AppController, userController, AuthController, ProviderController],
   providers: [AppService, UserService, PrismaService,
               GoogleStrategy, LocalStrategy, OAuthService, ReactionService,
-              ActionsService, ProviderService, TwitterActionsService,
+              ActionsService, TwitterActionsService,
               GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
               FlightService, AuthService, JwtService, JwtStrategy, AreaService,
               ServicesService, ProviderService],
