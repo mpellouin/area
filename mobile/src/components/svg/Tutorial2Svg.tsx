@@ -25,7 +25,7 @@ function Tutorial2Svg({props}: AppProps) {
         cx={60.5}
         cy={312.5}
         r={41.5}
-        fill={isDarkMode ? Colors.majorD : Colors.minorW}
+        fill={isDarkMode ? Colors.majorD : Colors.majorW}
       />
       <Path
         transform="matrix(-1 0 0 1 41.5 263)"
@@ -116,7 +116,7 @@ function Tutorial2Svg({props}: AppProps) {
         />
         <Path
           d="M363.927 97.015h-17.366a8.577 8.577 0 01-8.567-8.567V71.082a8.579 8.579 0 018.567-8.567h17.366a8.575 8.575 0 018.567 8.567v17.366a8.574 8.574 0 01-8.567 8.567z"
-          fill={isDarkMode ? Colors.majorD : Colors.minorW}
+          fill={isDarkMode ? Colors.majorD : Colors.majorW}
         />
         <Path
           d="M316.932 107.253l.011-.001a2.128 2.128 0 001.863-2.364l-1.392-11.797a15.876 15.876 0 00-1.969-6.006 16.13 16.13 0 00-9.415-7.467 15.884 15.884 0 00-6.344-.547c-8.713 1.014-11.453 3.46-13.941 17.613-2.487 14.152 1.394 11.814 1.394 11.814.033.285.123.559.265.808.278.485.732.844 1.268 1.003.275.081.563.105.848.072 10.644.406 21.409.927 27.414-3.128h-.002z"
