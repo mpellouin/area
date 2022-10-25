@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { AboutType } from './types/about';
-import { AreaStatusType } from './types/status';
+import { AreaAuthType, AreaStatusType } from './types/status';
+import { genSaltSync, hashSync } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { HttpService } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
 import { UserService } from './user/user.service';

@@ -13,6 +13,8 @@ import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
 import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
+import Auth from './src/view/signFiles/auth';
+import linking from './src/view/signFiles/linking';
 import User from './src/view/user/User';
 
 import UserProfile from './src/view/user/params/UserProfile';
@@ -28,7 +30,7 @@ const App = () => {
   const isLoggedIn = 'undefined';
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={isDarkMode ? Colors.backgroundD : Colors.backgroundW}

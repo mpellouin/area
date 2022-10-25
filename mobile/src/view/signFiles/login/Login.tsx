@@ -12,6 +12,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAt, faUnlock} from '@fortawesome/free-solid-svg-icons';
 
 import {useNavigation} from '@react-navigation/native';
+import { Button as ReactButton } from 'react-native';
+import Auth from './auth';
 
 import {Colors} from '../../../../Style';
 
@@ -186,6 +188,14 @@ const Login = () => {
             }}>
             {' '}
             Register
+          </Text>
+          <Text
+            style={{color: isDarkMode ? Colors.majorD : Colors.majorW}}
+            onPress={() => {
+              navigation.navigate('Auth');
+            }}>
+            {' '}
+            Auth
           </Text>
         </Text>
       </View>
