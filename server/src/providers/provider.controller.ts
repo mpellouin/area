@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Post, Body, Put, Delete} from '@nestjs/common';
-import { ProviderService } from './Provider.service';
+import { ProviderService } from './provider.service';
 import { Provider as ProviderModel} from '@prisma/client';
 
 @Controller("Provider")
