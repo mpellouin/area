@@ -6,8 +6,6 @@ import { userController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { PrismaService } from './prisma.service';
 import { GoogleStrategy } from './Oauth/google.strategy';
-import { OAuthService } from './Oauth/auth.service';
-import { AuthController } from './Oauth/auth.controller';
 import { HttpModule } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
@@ -23,19 +21,26 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { AreaService } from './area/area.service';
 import { ServicesService } from './services/services.service';
-import { ProviderController } from './providers/provider.controller';
-import { ProviderService } from './providers/provider.service';
+import { ProviderModule } from './providers/provider.module';
+import { UserModule } from './user/user.module';
+import { OauthModule } from './Oauth/oauth.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), HttpModule, PassportModule, JwtModule.register({
-    secret: process.env.SECRET,
-  })],
-  controllers: [AppController, userController, AuthController, ProviderController],
+  imports: [
+    ConfigModule.forRoot(),
+    HttpModule,
+    PassportModule,
+    JwtModule.register({secret: process.env.SECRET}),
+    ProviderModule,
+    UserModule,
+    OauthModule
+],
+  controllers: [AppController],
   providers: [AppService, UserService, PrismaService,
-              GoogleStrategy, LocalStrategy, OAuthService, ReactionService,
+              GoogleStrategy, LocalStrategy, ReactionService,
               ActionsService, TwitterActionsService,
               GoogleReactionsService, GoogleActionsService, DiscordReactionsService,
               FlightService, AuthService, JwtService, JwtStrategy, AreaService,
-              ServicesService, ProviderService],
+              ServicesService],
 })
 export class AppModule {}

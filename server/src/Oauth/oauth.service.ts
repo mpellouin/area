@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma.service";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
 
@@ -8,7 +7,6 @@ export class OAuthService {
     constructor(
         private userService: UserService,
         private providerService: ProviderService,
-        private prismaService: PrismaService
     ) {}
 
     async login(user) {
