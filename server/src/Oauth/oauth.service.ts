@@ -52,11 +52,8 @@ export class OAuthService {
     }
 
     async refreshGoogleToken(userID: number) {
-        const users = await this.userService.users({where: {ID: userID}})
-        const userData = users[0]
-        const providers = await this.providerService.getUserProviders({where: {userID: userData.ID}})
+        const providers = await this.providerService.getUserProviders({where: {userID: userID}})
         const providerData = providers[0]
-        console.log(providerData.refreshToken)
 
         const result = from (await this.httpService.post(
             "https://www.googleapis.com/oauth2/v4/token",

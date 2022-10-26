@@ -39,11 +39,11 @@ export class ProviderService {
   }): Promise<Provider[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.provider.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
+        skip,
+        take,
+        cursor,
+        where,
+        orderBy,
     });
     }
 }
