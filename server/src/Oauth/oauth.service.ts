@@ -1,12 +1,18 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { BadRequestException, Inject, Injectable, Param } from "@nestjs/common";
+import { env } from "process";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
+import { AxiosResponse } from 'axios';
+import { map } from 'rxjs/operators';
+import { from } from "rxjs";
 
 @Injectable()
 export class OAuthService {
     constructor(
         private userService: UserService,
         private providerService: ProviderService,
+        private httpService: HttpService
     ) {}
 
     async login(user) {
@@ -43,5 +49,26 @@ export class OAuthService {
                 }
             }
         }
+    }
+
+    async refreshGoogleToken(userID: number) {
+        const users = await this.userService.users({where: {ID: userID}})
+        const userData = users[0]
+        const providers = await this.providerService.getUserProviders({where: {userID: userData.ID}})
+        const providerData = providers[0]
+        console.log(providerData.refreshToken)
+
+        const result = from (await this.httpService.post(
+            "https://www.googleapis.com/oauth2/v4/token",
+            {
+                client_id: env.GOOGLE_CLIENT_ID,
+                client_secret: env.GOOGLE_CLIENT_SECRET,
+                refresh_token: providerData.refreshToken,
+                grant_type: "refresh_token"
+            }
+        ))
+        result.subscribe((data) => {
+            this.providerService.updateUserToken(userID, "google", data.data.access_token)
+        })
     }
 }

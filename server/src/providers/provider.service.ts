@@ -6,7 +6,7 @@ import { PrismaService } from "src/prisma.service";
 export class ProviderService {
     constructor(private prisma: PrismaService) {}
 
-    async updateUserToken(userID: number, providerName: string, accessToken: string = "null", refreshToken: string) {
+    async updateUserToken(userID: number, providerName: string, accessToken: string = "null", refreshToken?: string) {
         const userProviders = await this.getUserProviders({where: {userID : userID, Name : providerName}})
         const provider = userProviders[0]
         if (provider) {
@@ -14,7 +14,7 @@ export class ProviderService {
                 where: {ID: userID, },
                 data: {
                     Providers: {
-                        update: {where: {ID : provider.ID} , data: {Name: providerName, accessToken: accessToken, refreshToken: refreshToken}}
+                        update: {where: {ID : provider.ID}, data: {Name: providerName, accessToken: accessToken, ...(refreshToken && {refreshToken})}}
                     }
                 }
             })
