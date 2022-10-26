@@ -13,7 +13,6 @@ import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
 import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
-import Auth from './src/view/signFiles/auth';
 import linking from './src/view/signFiles/linking';
 import User from './src/view/user/User';
 
@@ -31,7 +30,7 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const isLoggedIn = 'undefined';
+  const isLoggedIn = undefined;
 
   return (
     <NavigationContainer linking={linking}>

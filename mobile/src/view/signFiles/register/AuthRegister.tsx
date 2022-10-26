@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Linking,
   Pressable,
   StyleSheet,
   useColorScheme,
   View,
-  Modal,
+  Alert,
 } from 'react-native';
-
-import {WebView} from 'react-native-webview';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -39,30 +37,7 @@ type AppProps = {
 const AuthRegister = ({title}: AppProps) => {
   const navigation = useNavigation();
   const isDarkMode = useColorScheme() === 'dark';
-
   const [isPressed, setIsPressed] = useState(false);
-
-  const [uri, setURL] = useState('');
-
-  useEffect(() => {
-    Linking.addEventListener('url', url => handleOpenUrl(url.url));
-    Linking.getInitialURL().then((url: any) => {
-      if (url) {
-        console.log(url);
-      }
-    });
-    return () => {
-      Linking.removeAllListeners('url');
-    };
-  }, []);
-
-  const handleOpenUrl = (url: string) => {
-    console.log(url);
-  };
-
-  const openURL = (url: string) => {
-    setURL(url);
-  };
 
   const IconChoice = (name: string) => {
     switch (name) {
@@ -81,39 +56,57 @@ const AuthRegister = ({title}: AppProps) => {
     }
   };
 
+  Linking.addEventListener('url', handleUrl);
+
+  async function handleUrl(event: {url: string; param: string}) {
+    try {
+      const accessToken = await getSearchParamFromURL(event.url, 'token');
+      if (accessToken != null) {
+        navigation.navigate('Homepage');
+        Linking.removeAllListeners('url');
+      } else {
+        Alert.alert('An error occured while signin you');
+      }
+    } catch (err) {
+      throw 'An error occured: ' + err;
+    }
+  }
+
+  const openBrowser = (url: string) => {
+    Linking.openURL(url);
+  };
+
+  const getSearchParamFromURL = (url: string, param: string) => {
+    const include = url.includes(param);
+    if (!include) return null;
+    const params = url.split(/([?,=])/);
+    const index = params.indexOf(param);
+    const value = params[index + 2];
+    return value;
+  };
+
   return (
-    <>
-      {uri != '' ? (
-        <Modal>
-          <WebView
-            originWhitelist={['*']}
-            source={{uri}}
-            userAgent={'Chrome/18.0.1025.133 Mobile Safari/535.19'}
-          />
-        </Modal>
-      ) : (
-        <Pressable
-          onPress={() => {
-            openURL('http://51.178.29.26:8080/auth/google');
-          }}>
-          <View
-            style={[
-              Styles.container,
-              {
-                borderColor: isDarkMode
-                  ? isPressed
-                    ? Colors.minorD
-                    : '#A9A9A9'
-                  : isPressed
-                  ? Colors.minorW
-                  : Colors.textW,
-              },
-            ]}>
-            {IconChoice(title)}
-          </View>
-        </Pressable>
-      )}
-    </>
+    <Pressable
+      onPress={() => {
+        setIsPressed(!isPressed);
+        openBrowser('http://area.eu-west-3.elasticbeanstalk.com/auth/google');
+      }}>
+      <View
+        style={[
+          Styles.container,
+          {
+            borderColor: isDarkMode
+              ? isPressed === true
+                ? Colors.minorD
+                : '#A9A9A9'
+              : isPressed === true
+              ? Colors.minorW
+              : Colors.textW,
+          },
+        ]}>
+        {IconChoice(title)}
+      </View>
+    </Pressable>
   );
 };
 
