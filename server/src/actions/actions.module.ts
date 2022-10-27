@@ -11,4 +11,4 @@ import { TwitterActionsService } from "./twitter/twitter.actions.service";
     providers: [ActionsService, GoogleActionsService, TwitterActionsService, FlightService],
     exports: [ActionsService, GoogleActionsService, TwitterActionsService, FlightService]
 })
-export class ReactionModule {}
+export class ActionModule {}

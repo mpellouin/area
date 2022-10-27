@@ -6,4 +6,4 @@ import { AreaService } from "./area.service";
     providers: [AreaService],
     exports: [AreaService]
 })
-export class ReactionModule {}
+export class AreaModule {}
