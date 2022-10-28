@@ -1,8 +1,10 @@
 import { useState } from "react";
+import './index.scss'
 import { Link, useNavigate } from "react-router-dom";
+
 import loginUser from "../../ApiFunctions/loginUser";
 import Header from "../../components/Header";
-import './index.scss'
+import Loader from "../../components/Loader";
 
 const buttons = [
     {
@@ -21,6 +23,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passIsShown, setPassIsShown] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const loginWithGoogle = async () => {
@@ -30,8 +33,8 @@ const Login = () => {
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
-        //TODO: loader
         try {
+            setIsLoading(true);
             const res = await loginUser({email, password});
             if (res.access_token) {
                 localStorage.setItem('jwt', res.access_token);
@@ -43,8 +46,9 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
-        //TODO: Remove loader
     }
 
     return (
@@ -68,11 +72,8 @@ const Login = () => {
                         </div>
                         <hr className="lineText" data-content="Or sign with"/>
                         <div className="alternateLogins">
-                            <button onClick={() => loginWithGoogle()}>
+                            <button onClick={() => loginWithGoogle()}> { isLoading && <Loader /> }
                                 <img src="logo_google.svg" alt="Google" />
-                            </button>
-                            <button className="facebookLogin">
-                                <img src="logo_apple.svg" alt="Apple" />
                             </button>
                         </div>
                         <Link className='registerText' to='/register'>

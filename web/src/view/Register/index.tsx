@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../../components/Header";
 import './index.scss'
+
+import Header from "../../components/Header";
 import googleAuth from "../../ApiFunctions/googleAuth";
 import registerUser from "../../ApiFunctions/registerUser";
+import Loader from "../../components/Loader";
 
 const buttons = [
     {
@@ -24,6 +26,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [passIsShown, setPassIsShown] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const loginWithGoogle = async () => {
@@ -33,8 +36,8 @@ const Register = () => {
 
     const handleRegister = async (e: any) => {
         e.preventDefault();
-        //TODO: loader
         try {
+            setIsLoading(true);
             const res = await registerUser({email, password});
             if (res.access_token) {
                 localStorage.setItem('jwt', res.access_token);
@@ -46,8 +49,9 @@ const Register = () => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
-        //TODO: Remove loader
     }
 
     return (
@@ -62,11 +66,8 @@ const Register = () => {
                             <h1>REGISTER</h1>
                         </div>
                         <div className="alternateLogins">
-                            <button onClick={loginWithGoogle}>
+                            <button onClick={loginWithGoogle}> { isLoading && <Loader /> }
                                 <img src="logo_google.svg" alt="Google" />
-                            </button>
-                            <button className="facebookLogin">
-                                <img src="logo_apple.svg" alt="Apple" />
                             </button>
                         </div>
                         <hr className="lineText" data-content="Or sign with"/>
@@ -76,7 +77,7 @@ const Register = () => {
                                 <input type="password" name="passwordConfirmation" id="passwordConfirmationInput" placeholder="Password confirmation *" unselectable="on" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}/>
                         </div>
                         <div className="formFooter">
-                            <button onClick={handleRegister}>Register</button>
+                            <button onClick={handleRegister}>{ isLoading && <Loader /> }Register</button>
                         </div>
 
                         <Link className='registerText' to='/login'>

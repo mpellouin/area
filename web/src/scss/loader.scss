@@ -1,0 +1,43 @@
+@import './_vars.scss';
+
+.loader {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(10px) contrast(20);
+    z-index: 9999999999999999;
+
+    .cercle-1, .cercle-2 {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .cercle-1 {
+            left: 20%;
+            animation: movement-l 1.5s ease infinite;
+            background: $links-white-theme;
+        }
+        .cercle-2 {
+            left: 80%;
+            animation: movement-r 1.5s ease infinite;
+            background: $design-white-theme;
+        }
+    }
+    @keyframes movement-l {
+        0% { left: 20%; }
+        50% { left: 50%; }
+        100% { left: 20%; }
+    }
+    @keyframes movement-r {
+        0% { left: 80%; }
+        50% { left: 50%; }
+        100% { left: 80%; }
+    }
+}

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import './index.scss'
+
 import createArea from "../../ApiFunctions/createArea";
+import Loader from "../../components/Loader";
 
 interface AreaParam {
     id: number,
@@ -104,6 +106,7 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened} : any) => {
     const [reactionId, setReactionId] = useState(0);
     const [actionParams, setActionParams] = useState<{[key: string]: string}>({});
     const [reactionParams, setReactionParams] = useState<{[key: string]: string}>({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const submitArea = async () => {
         console.log("creating area");
@@ -117,12 +120,15 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened} : any) => {
         }
         console.log(area);
         try {
+            setIsLoading(true);
             const res = await createArea(area);
             console.log(res);
             setForceRefresh(true);
             setIsOpened(false);
         } catch (e) {
             console.log(e);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -168,7 +174,7 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened} : any) => {
                 </div>
             </div>
             <div className="areaModalButtons">
-                <button className="areaModalButtonsCreate" onClick={() => submitArea()}>Create</button>
+                <button className="areaModalButtonsCreate" onClick={() => submitArea()}> { isLoading && <Loader /> }Create</button>
             </div>
         </div>
     </div>
