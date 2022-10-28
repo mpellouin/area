@@ -5,7 +5,7 @@ import { OAuthService } from "./oauth.service";
 
 @Controller("auth")
 export class OAuthController {
-    constructor (private authService: OAuthService) {}
+    constructor (private oauthService: OAuthService) {}
 
     @UseGuards(AuthGuard("google"))
     @Get("google")
@@ -16,9 +16,14 @@ export class OAuthController {
     @UseGuards(AuthGuard("google"))
     @Get("google/redirect")
     async loginWithGoogleRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
-        const user = await this.authService.loggingWithGoogle(req, body)
+        const user = await this.oauthService.loggingWithGoogle(req, body)
         if (user) {
             res.redirect("http://lisolescargot.netlify.app/Areas?token=" + user.accessToken )
         }
+    }
+
+    @Get("google/refresh")
+    async refreshGoogleAccessToken(@Body() body: {userID: number}) {
+        return await this.oauthService.refreshGoogleToken(body.userID)
     }
 }

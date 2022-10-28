@@ -1,14 +1,18 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma.service";
+import { HttpService } from "@nestjs/axios";
+import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, Param } from "@nestjs/common";
+import { env } from "process";
 import { ProviderService } from "src/providers/provider.service";
 import { UserService } from "src/user/user.service";
+import { AxiosResponse } from 'axios';
+import { map } from 'rxjs/operators';
+import { from } from "rxjs";
 
 @Injectable()
 export class OAuthService {
     constructor(
         private userService: UserService,
         private providerService: ProviderService,
-        private prismaService: PrismaService
+        private httpService: HttpService
     ) {}
 
     async login(user) {
@@ -44,6 +48,30 @@ export class OAuthService {
                     }
                 }
             }
+        }
+    }
+
+    async refreshGoogleToken(userID: number): Promise<{message: string, status: HttpStatus}> {
+        if(!userID) {throw new HttpException("No userID provided", HttpStatus.BAD_REQUEST)}
+
+        const providerData = (await this.providerService.getUserProviders({where: {userID: userID}})).find(Boolean)
+        if(!providerData) {throw new HttpException("No provider found", HttpStatus.INTERNAL_SERVER_ERROR)}
+        try {
+            const result = from (await this.httpService.post(
+                "https://www.googleapis.com/oauth2/v4/token",
+                {
+                    client_id: env.GOOGLE_CLIENT_ID,
+                    client_secret: env.GOOGLE_CLIENT_SECRET,
+                    refresh_token: providerData.refreshToken,
+                    grant_type: "refresh_token"
+                }
+            ))
+            result.subscribe((data) => {
+                this.providerService.updateUserToken(userID, "google", data.data.access_token)
+            })
+            return {message: "User Access Token refreshed", status: HttpStatus.OK}
+        } catch(err) {
+            throw new HttpException("An error occured : " + err, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 }
