@@ -1,20 +1,32 @@
-import { Controller, Get, Param, Post, Body, Put, Delete} from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards, Request} from '@nestjs/common';
 import { Service as ServiceModel} from '@prisma/client';
-import { servicesService } from './services.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ServicesService } from './services.service';
 
 @Controller("Services")
 export class servicesController {
     constructor(
-        private servicesService: servicesService
+        private servicesService: ServicesService
     ) {}
 
+    @UseGuards(JwtAuthGuard)
     @Get("")
     async getServices(): Promise<ServiceModel[]> {
-        return this.servicesService.getServices();
+        return this.servicesService.findMany({});
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(":id")
-    async getService(@Param("id") id: number): Promise<ServiceModel> {
-        return this.servicesService.getService(id);
+    async getService(@Param("id") id: string): Promise<ServiceModel> {
+        const test = await this.servicesService.findMany({where :{ID: parseInt(id)}});
+        console.log(test);
+        return test[0];
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Post("subscribe/:id")
+    async subscribeService(@Param("id") id: string, @Request() req: any): Promise<ServiceModel> {
+        return this.servicesService.subscribe(parseInt(id), req);
+    }
+
 }

@@ -3,62 +3,8 @@ import { PrismaService } from '../prisma.service';
 import { Service, Prisma } from '@prisma/client';
 
 @Injectable()
-export class ServicesService implements OnModuleInit{
+export class ServicesService {
   constructor(private prisma: PrismaService) {}
-
-    async onModuleInit() {
-        await this.prisma.$connect();
-        const services = await this.prisma.service.findMany();
-        if (services.length !== 0) return;
-        this.createService({
-            name: 'GMAIL',
-            actions: {},
-            reactions: {
-                create: [
-                    {
-                        name: 'Send mail to X',
-                        description: 'Send an email using your GMAIL address to X',
-                    }
-                ]
-            },
-        });
-        this.createService({
-            name: 'DISCORD',
-            actions: {},
-            reactions: {
-                create: [
-                    {
-                        name: 'Send message to discord webhook',
-                        description: 'Send amessage to your discord webhook',
-                    }
-                ]
-            },
-        });
-        this.createService({
-            name: 'TWITTER',
-            actions: {
-                create: [
-                    {
-                        name: 'New tweet from X',
-                        description: 'Trigger an action when a new tweet is posted by X',
-                    }
-                ]
-            },
-            reactions: {
-                create: [
-                    {
-                        name: 'Like tweet id X',
-                        description: 'Like the tweet with the id X',
-                    },
-                    {
-                        name: 'Tweet message X',
-                        description: 'Tweet the message X',
-                    }
-                ]
-            },
-        });
-        // TODO: Complete the services
-    }
 
   async findMany(params: {
     skip?: number;
@@ -98,5 +44,24 @@ export class ServicesService implements OnModuleInit{
     return this.prisma.service.delete({
       where,
     });
+  }
+
+  async subscribe(serviceId: number, req: any): Promise<Service> {
+    const service = await this.prisma.service.findUnique({
+      where: { ID: serviceId },
+    });
+    if (!service) {
+      throw new Error('Service not found');
+    }
+    const user = await this.prisma.user.findUnique({
+      where: { ID: req.user.ID },
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if (await this.prisma.service.findMany({where: {ID: serviceId}})) {
+      throw new Error('Service not found');
+    }
+    return 
   }
 }
