@@ -23,12 +23,12 @@
     .cercle-1 {
         left: 20%;
         animation: movement-l 3s ease infinite;
-        background: white;
+        background: #F45D48;
     }
     .cercle-2 {
         left: 80%;
         animation: movement-r 3s ease infinite;
-        background: lightgray;
+        background: #FFFFFE;
     }
     @keyframes movement-l {
         0% { left: 40%; }
