@@ -82,6 +82,7 @@
         height: 50px;
         background-color: #fffffe;
         padding: 6px 0px 0px 0px;
+        position: relative;
 
         button {
             width: 200px;
@@ -96,6 +97,11 @@
     
                 &:hover {
                     background-color: rgba($color: $links-white-theme, $alpha: 0.7);
+                }
+
+                &:disabled {
+                    background-color: rgba($color: $links-white-theme, $alpha: 1);
+                    cursor: not-allowed;
                 }
             }
     }
