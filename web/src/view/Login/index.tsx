@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import loginUser from "../../ApiFunctions/loginUser";
 import Header from "../../components/Header";
 import './index.scss'
 
@@ -20,10 +21,30 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passIsShown, setPassIsShown] = useState(false);
+    const navigate = useNavigate();
 
     const loginWithGoogle = async () => {
         console.log("login with google");
         window.location.replace("http://localhost:8080/auth/google")
+    }
+
+    const handleLogin = async (e: any) => {
+        e.preventDefault();
+        //TODO: loader
+        try {
+            const res = await loginUser({email, password});
+            if (res.access_token) {
+                localStorage.setItem('jwt', res.access_token);
+                navigate("/areas");
+            } else {
+                setEmail('');
+                setPassword('');
+                // TODO: show error message
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        //TODO: Remove loader
     }
 
     return (
@@ -33,7 +54,7 @@ const Login = () => {
                 <img className="loginBack" src="LoginBack.svg" alt="loginBack" />
                 <img className="loginBackFiles" src="LoginBackFiles.svg" alt="loginBackRight" />
                 <div className="formContainer">
-                    <div className="form">
+                    <form className="form">
                         <div className="formHeader">
                             <h1>LOG IN</h1>
                         </div>
@@ -43,7 +64,7 @@ const Login = () => {
                                 <label htmlFor="passwordInput"><b>Forgot password?</b></label>
                         </div>
                         <div className="formFooter">
-                            <button>Sign In</button>
+                            <button onClick={handleLogin}>Sign In</button>
                         </div>
                         <hr className="lineText" data-content="Or sign with"/>
                         <div className="alternateLogins">
@@ -57,7 +78,7 @@ const Login = () => {
                         <Link className='registerText' to='/register'>
                             <p>Don't have an account? <b>Register now!</b></p>
                         </Link>
-                    </div>
+                    </form>
                 </div>
             </div>
         </>

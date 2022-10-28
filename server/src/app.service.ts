@@ -1,109 +1,80 @@
 import { Injectable } from '@nestjs/common';
 import { AboutType } from './types/about';
 import { AreaAuthType, AreaStatusType } from './types/status';
-import { genSaltSync, hashSync } from 'bcrypt';
+import { genSaltSync, hashSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { HttpService } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
+import { UserService } from './user/user.service';
+import { AuthService } from './auth/auth.service';
+import { AreaService } from './area/area.service';
+import { Actions, Area, Reactions, Service } from '@prisma/client';
+import { ServicesService } from './services/services.service';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class AppService {
   constructor(private readonly actionsService: ActionsService,
-              private readonly reactionsService: ReactionService) {}
+              private readonly reactionsService: ReactionService,
+              private readonly userService: UserService,
+              private readonly authService: AuthService,
+              private readonly areaService: AreaService,
+              private readonly servicesService: ServicesService,
+              private readonly prismaService: PrismaService) {}
 
   getHello(): string {
     return 'Hello World!';
   }
 
-  getAboutJson(ip: any): AboutType {
+  async getAboutJson(ip: any): Promise<AboutType> {
+    const dbServices = await this.servicesService.findMany({});
+    const services = Promise.all(dbServices.map(async (service) => {
+      const actions = await this.prismaService.actions.findMany({where: {serviceID: service.ID}}) as Actions[];
+      const reactions = await this.prismaService.reactions.findMany({where: {serviceID: service.ID}}) as Reactions[];
+      console.log(dbServices)
+      return {
+        name: service.name,
+        actions: actions.map((action) => {
+          return {
+            name: action.name,
+            description: action.description,
+          };
+        }),
+        reactions: reactions.map((reaction) => {
+          return {
+            name: reaction.name,
+            description: reaction.description,
+          };
+        }),
+      }
+    }));
+
     return {
       client: {
         host: ip,
       },
       server: {
         current_time: Date.now(),
-        services: [
-          {
-            name: "service example",
-            actions: [
-              {
-                name: "action1",
-                description: "action1 description",
-              },
-            ],
-            reactions: [
-              {
-                name: "reaction1",
-                description: "reaction1 description",
-              },
-            ],
-          },
-          {
-            name: "service2",
-            actions: [
-              {
-                name: "action1",
-                description: "action1 description",
-              },
-            ],
-            reactions: [
-              {
-                name: "reaction1",
-                description: "reaction1 description",
-              },
-            ],
-          },
-        ],
+        services: await services,
       },
     };
   }
 
-  userLogin(body): AreaAuthType {
-    if (!body?.email || !body?.password) {
-      return {
-        error: true,
-        code: 400,
-        message: "Missing email or password",
-        token: "null",
-      };
-    }
-    // check if email exists in db
-    // if not return an error
-    // else retrieve user
-    const salt = genSaltSync(10);
-    const hash = hashSync(body.password, salt);
-
-    // check if password is correct else return an error
-
-    return {
-      error: false,
-      code: 200,
-      message: "User logged in",
-      token: sign({ email: body.email }, process.env.SECRET),
-    };
+  userLogin(user): any {
+    return this.authService.loginUser(user);
   }
 
-  userRegister(body): AreaAuthType {
-    if (!body?.email || !body?.password) {
-      return {
-        error: true,
-        code: 400,
-        message: "Missing email or password",
-        token: "null",
-      };
+  async userRegister(req): Promise<any> {
+    if (!req.body?.email || !req.body?.password) {
+      throw new Error("Missing email or password");
     }
-    // Check db if email already registered if it is return an error
-    const salt = genSaltSync(10);
-    const hash = hashSync(body.password, salt);
-    // Save user in db with email and hash as password
-
-    return {
-      error: false,
-      code: 200,
-      message: "User registered",
-      token: sign({ email: body.email }, process.env.SECRET),
-    };
+    const userSearch = await this.userService.users({where: {email: req.body.email}});
+    if (userSearch.length > 0) {
+      throw new Error("User already exists");
+    }
+    const user = await this.authService.registerUser(req.body.email, req.body.password);
+    return this.authService.loginUser(user);
   }
 
   subscribeToService(serviceId: number): AreaStatusType {
@@ -114,21 +85,33 @@ export class AppService {
     };
   }
 
-  async createArea(body, actionId: number, reactionId: number): Promise<AreaStatusType> {
-    const twitterAccount = body?.twitterAccount;
+  async createArea(req, actionId: string, reactionId: string): Promise<AreaStatusType> {
     try {
-      const observable = await this.actionsService.factory(actionId, body);
+      const observable = await this.actionsService.factory(parseInt(actionId), req.body);
       console.log("observable created");
-      observable.subscribe((data: any) => {this.reactionsService.factory(reactionId, body)});
+      observable.subscribe((data: any) => {this.reactionsService.factory(parseInt(reactionId), req.body)});
     } catch (e) {
       console.log(e);
+      throw new Error("Error while creating area");
     }
+
+    await this.areaService.createArea({
+      actionID: parseInt(actionId),
+      reactionID: parseInt(reactionId),
+      name: req.body.name,
+      user: {connect: {ID: req.user.ID}},
+      parameters: JSON.stringify(req.body),
+    });
 
     return {
       error: false,
       code: 200,
-      message: "Twitter account: " + twitterAccount,
+      message: "Observable created",
     };
+  }
+
+  async getAreas(req): Promise<Area[]> {
+    return this.areaService.findMany({where: {user: {ID: req.user.id}}});
   }
 
 }

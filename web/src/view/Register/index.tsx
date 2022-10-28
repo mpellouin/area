@@ -4,6 +4,7 @@ import { useState } from "react";
 import Header from "../../components/Header";
 import './index.scss'
 import googleAuth from "../../ApiFunctions/googleAuth";
+import registerUser from "../../ApiFunctions/registerUser";
 
 const buttons = [
     {
@@ -27,17 +28,26 @@ const Register = () => {
 
     const loginWithGoogle = async () => {
         console.log("login with google");
+        window.location.replace("http://localhost:8080/auth/google")
+    }
+
+    const handleRegister = async (e: any) => {
+        e.preventDefault();
+        //TODO: loader
         try {
-            const res = await googleAuth();
-            if (res.status <= 299) {
-                console.log(res);
-                navigate('/areas');
+            const res = await registerUser({email, password});
+            if (res.access_token) {
+                localStorage.setItem('jwt', res.access_token);
+                navigate("/areas");
             } else {
-                throw new Error("Error");
+                setEmail('');
+                setPassword('');
+                // TODO: show error message
             }
         } catch (error) {
             console.log(error);
         }
+        //TODO: Remove loader
     }
 
     return (
@@ -52,7 +62,7 @@ const Register = () => {
                             <h1>REGISTER</h1>
                         </div>
                         <div className="alternateLogins">
-                            <button>
+                            <button onClick={loginWithGoogle}>
                                 <img src="logo_google.svg" alt="Google" />
                             </button>
                             <button className="facebookLogin">
@@ -66,7 +76,7 @@ const Register = () => {
                                 <input type="password" name="passwordConfirmation" id="passwordConfirmationInput" placeholder="Password confirmation *" unselectable="on" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}/>
                         </div>
                         <div className="formFooter">
-                            <button>Register</button>
+                            <button onClick={handleRegister}>Register</button>
                         </div>
 
                         <Link className='registerText' to='/login'>
