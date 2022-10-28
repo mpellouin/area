@@ -15,7 +15,7 @@ model User {
   Providers Provider[]
   Area Area[]
   googleID String? @default("null")
-  Services Service[]
+  services String @default("")
 }
 
 model Provider {
@@ -58,6 +58,4 @@ model Service {
   name String
   actions Actions[]
   reactions Reactions[]
-  users User @relation(fields: [userID], references: [ID])
-  userID Int
 }
