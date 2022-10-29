@@ -42,20 +42,6 @@ function Home() {
         <img className="ifThen_vector" src="IfThen_vector.svg" alt="ifThen" />
         <img className="vector_break" src="Vector_6.svg" alt="Vector_6" />
       </div>
-      {/* <div className="teamPart">
-        <div className="teamTitle">TEAM</div>
-        <div className="teamMembers">
-          <div className="members">
-            <div className="teamFrame"></div>
-            <div className="teamFrame"></div>
-            <div className="teamFrame"></div>
-          </div>
-          <div className="members">
-            <div className="teamFrame"></div>
-            <div className="teamFrame"></div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

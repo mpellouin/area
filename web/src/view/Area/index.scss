@@ -181,6 +181,9 @@
                     background-color: $text-white-theme;
                     color: $bg-white-theme;
                 }
+                &disabled {
+                    cursor: not-allowed;
+                }
             }
         }
 
