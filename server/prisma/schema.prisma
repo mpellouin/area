@@ -15,6 +15,7 @@ model User {
   Providers Provider[]
   Area Area[]
   googleID String? @default("null")
+  services String @default("")
 }
 
 model Provider {

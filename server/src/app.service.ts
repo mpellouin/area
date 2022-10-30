@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { AboutType } from './types/about';
-import { AreaAuthType, AreaStatusType } from './types/status';
-import { genSaltSync, hashSync } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { HttpService } from '@nestjs/axios';
+import { AreaStatusType } from './types/status';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
 import { AreaService } from './area/area.service';
-import { Actions, Area, Reactions, Service } from '@prisma/client';
+import { Area } from '@prisma/client';
 import { ServicesService } from './services/services.service';
 import { PrismaService } from './prisma.service';
 
@@ -28,27 +25,6 @@ export class AppService {
   }
 
   async getAboutJson(ip: any): Promise<AboutType> {
-    const dbServices = await this.servicesService.findMany({});
-    const services = Promise.all(dbServices.map(async (service) => {
-      const actions = await this.prismaService.actions.findMany({where: {serviceID: service.ID}}) as Actions[];
-      const reactions = await this.prismaService.reactions.findMany({where: {serviceID: service.ID}}) as Reactions[];
-      console.log(dbServices)
-      return {
-        name: service.name,
-        actions: actions.map((action) => {
-          return {
-            name: action.name,
-            description: action.description,
-          };
-        }),
-        reactions: reactions.map((reaction) => {
-          return {
-            name: reaction.name,
-            description: reaction.description,
-          };
-        }),
-      }
-    }));
 
     return {
       client: {
@@ -56,8 +32,39 @@ export class AppService {
       },
       server: {
         current_time: Date.now(),
-        services: await services,
-      },
+        services: [{
+          name: "Discord",
+          actions: [],
+          reactions: [{
+            name: "Send message",
+            description: "Send a message to a discord channel",
+          }],
+        },
+        {
+          name: "Twitter",
+          actions: [],
+          reactions: [{
+            name: "Send tweet",
+            description: "Send a tweet to a twitter account",
+          }],
+        },
+        {
+          name: "GMail",
+          actions: [],
+          reactions: [{
+            name: "Send mail",
+            description: "Send a mail to a gmail account",
+          }],
+        },
+        {
+          "name": "Google Calendar",
+          "actions": [],
+          "reactions": [{
+            "name": "Create event",
+            "description": "Create an event in a google calendar",
+          }]
+        }],
+      }
     };
   }
 
