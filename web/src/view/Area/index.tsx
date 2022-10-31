@@ -70,14 +70,13 @@ const AreaPage = () => {
                 {areas.map((area : any) =>
                     <div className="areaPageItem">
                         <div className="areaPageItemName">{area.name}</div>
-                        <div className="areaPageItemDescription">{area.description ?? " lorem "}</div>
                     </div>
                 )}
             </div>
             <div className="areaPageCreate">
                 <button className="areaPageCreateButton" onClick={() => setIsCreateMode(true)}>Create new area</button>
             </div>
-        </div>
+        </div><br />
     </div>
   );
 }
