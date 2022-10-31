@@ -1,6 +1,6 @@
 export type AreaStatusType = {
     error: boolean,
-    code: number,
+    status: number,
     message: string,
 };
 

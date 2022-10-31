@@ -6,6 +6,7 @@ import { UserService } from "src/user/user.service";
 import { AxiosResponse } from 'axios';
 import { map } from 'rxjs/operators';
 import { from } from "rxjs";
+import { AreaStatusType } from "src/types/status";
 
 @Injectable()
 export class OAuthService {
@@ -51,7 +52,7 @@ export class OAuthService {
         }
     }
 
-    async refreshGoogleToken(userID: number): Promise<{message: string, status: HttpStatus}> {
+    async refreshGoogleToken(userID: number): Promise<AreaStatusType> {
         if(!userID) {throw new HttpException("No userID provided", HttpStatus.BAD_REQUEST)}
 
         const providerData = (await this.providerService.getUserProviders({where: {userID: userID}})).find(Boolean)
@@ -69,9 +70,18 @@ export class OAuthService {
             result.subscribe((data) => {
                 this.providerService.updateUserToken(userID, "google", data.data.access_token)
             })
-            return {message: "User Access Token refreshed", status: HttpStatus.OK}
+            return {message: "User Access Token refreshed", status: HttpStatus.OK, error: false}
         } catch(err) {
             throw new HttpException("An error occured : " + err, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    async refreshUserAccessToken(userID: number, provider: string): Promise<AreaStatusType> {
+        switch(provider) {
+        case "google":
+            return await this.refreshGoogleToken(userID)
+        default:
+            return {error: false, status: HttpStatus.OK, message: `Acess token for ${provider} provider refreshed`}
         }
     }
 }

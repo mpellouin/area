@@ -1,9 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { AboutType } from './types/about';
 import { AreaAuthType, AreaStatusType } from './types/status';
-import { genSaltSync, hashSync } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { HttpService } from '@nestjs/axios';
 import { ActionsService } from './actions/actions.service';
 import { ReactionService } from './reactions/reaction.strategy';
 import { UserService } from './user/user.service';
@@ -12,6 +9,9 @@ import { AreaService } from './area/area.service';
 import { Actions, Area, Reactions, Service } from '@prisma/client';
 import { ServicesService } from './services/services.service';
 import { PrismaService } from './prisma.service';
+import { AxiosResponse } from "axios";
+import { Observable } from 'rxjs';
+import { OAuthService } from './Oauth/oauth.service';
 
 @Injectable()
 export class AppService {
@@ -21,7 +21,8 @@ export class AppService {
               private readonly authService: AuthService,
               private readonly areaService: AreaService,
               private readonly servicesService: ServicesService,
-              private readonly prismaService: PrismaService) {}
+              private readonly prismaService: PrismaService,
+              private readonly oauthService: OAuthService) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -80,16 +81,24 @@ export class AppService {
   subscribeToService(serviceId: number): AreaStatusType {
     return {
       error: false,
-      code: 200,
+      status: 200,
       message: "Subscribed to service " + serviceId,
     };
   }
 
-  async createArea(req, actionId: string, reactionId: string): Promise<AreaStatusType> {
+  async createArea(req, actionId: string, reactionId: string, retryMode?: boolean): Promise<AreaStatusType> {
     try {
-      const observable = await this.actionsService.factory(parseInt(actionId), req.body);
+      const observable : Observable<AxiosResponse<any, any>> = await this.actionsService.factory(parseInt(actionId), req.body);
       console.log("observable created");
-      observable.subscribe((data: any) => {this.reactionsService.factory(parseInt(reactionId), req.body)});
+      observable.subscribe(async () => {
+        let response : Observable<AxiosResponse<any, any>> = await this.reactionsService.factory(parseInt(reactionId), req.body)
+        response.subscribe(res => {
+          if (res.data.status != HttpStatus.OK && !retryMode) {
+            this.oauthService.refreshUserAccessToken(req.body.userID, req.body)
+            this.createArea(req, actionId, reactionId, true)
+          }
+        })
+      });
     } catch (e) {
       console.log(e);
       throw new Error("Error while creating area");
@@ -105,7 +114,7 @@ export class AppService {
 
     return {
       error: false,
-      code: 200,
+      status: 200,
       message: "Observable created",
     };
   }
