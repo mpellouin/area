@@ -31,6 +31,11 @@ const Login = () => {
         window.location.replace("http://localhost:8080/auth/google")
     }
 
+    const togglePassword = (e : any) => {
+        e.preventDefault();
+        setPassIsShown(!passIsShown);
+    }
+
     const handleLogin = async (e: any) => {
         e.preventDefault();
         try {
@@ -66,6 +71,7 @@ const Login = () => {
                                 <input type="email" name="email" id="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                                 <input type={passIsShown ? 'text' : 'password'} name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                 <label htmlFor="passwordInput"><b>Forgot password?</b></label>
+                                <button onClick={togglePassword}>{passIsShown ? 'Hide' : 'Show'}</button>
                         </div>
                         <div className="formFooter">
                             <button onClick={handleLogin} disabled={isLoading}>{ isLoading && <Loader /> }Sign In</button>
