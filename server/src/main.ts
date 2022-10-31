@@ -1,10 +1,11 @@
-import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { env } from 'process';
-import { AppModule } from './app.module';
+import {NestFactory} from '@nestjs/core';
+import {NestExpressApplication} from '@nestjs/platform-express';
+import {env} from 'process';
+import {AppModule} from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  await app.listen(process.env.PORT || 8080);
+    const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    app.enableCors();
+    await app.listen(process.env.PORT || 8080);
 }
 bootstrap();
