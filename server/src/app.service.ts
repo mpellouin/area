@@ -105,14 +105,18 @@ export class AppService {
 
     async createArea(req, actionId: string, reactionId: string): Promise<AreaStatusType> {
         try {
-            const observable = await this.actionsService.factory(parseInt(actionId), req.body);
+            const observable = await this.actionsService.factory(parseInt(actionId), req.body, req);
             console.log('observable created');
             observable.subscribe((data: any) => {
                 this.reactionsService.factory(parseInt(reactionId), req.body);
             });
         } catch (e) {
             console.log(e);
-            throw new Error('Error while creating area');
+            return {
+                error: true,
+                code: 400,
+                message: 'Error while creating area',
+            };
         }
 
         await this.areaService.createArea({
