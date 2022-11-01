@@ -7,6 +7,7 @@ import {
   View,
   Alert,
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -17,6 +18,7 @@ import {Colors} from '../../../../Style';
 
 import GoogleSvg from '../../../components/svg/GoogleSvg';
 import TwitterSvg from '../../../components/svg/TwitterSvg';
+import {setItem} from '../../../components/storage/localStorage';
 
 const Styles = StyleSheet.create({
   container: {
@@ -61,8 +63,9 @@ const AuthRegister = ({title}: AppProps) => {
   async function handleUrl(event: {url: string; param: string}) {
     try {
       const accessToken = await getSearchParamFromURL(event.url, 'token');
-      if (accessToken != null) {
-        navigation.navigate('Homepage');
+      if (accessToken !== null) {
+        setItem('isLoggedIn', 'True');
+        RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {
         Alert.alert('An error occured while signin you');
