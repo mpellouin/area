@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, useColorScheme} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,7 +13,6 @@ import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
 import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
-import Auth from './src/view/signFiles/auth';
 import linking from './src/view/signFiles/linking';
 import User from './src/view/user/User';
 
@@ -27,11 +26,26 @@ import HelpCenter from './src/view/user/params/HelpCenter';
 import AboutArea from './src/view/user/params/AboutArea';
 import AboutUs from './src/view/user/params/AboutUs';
 
+import {getItem, removeItem} from './src/components/storage/localStorage';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const isLoggedIn = 'undefined';
+  const isTutorial = undefined;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    getItem('isLoggedIn')
+      .then(data => data)
+      .then(value => {
+        if (value !== null) {
+          setIsLoading(true);
+          setIsLoggedIn(true);
+        } else setIsLoggedIn(false);
+      });
+  }, []);
 
   return (
     <NavigationContainer linking={linking}>
@@ -43,14 +57,14 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {!isLoggedIn ? (
+        {isLoggedIn === false ? (
           <>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
           </>
-        ) : (
+        ) : isTutorial ? (
           <>
             <Stack.Screen
               name="Tutorial1"
@@ -76,6 +90,9 @@ const App = () => {
                 headerBackVisible: false,
               }}
             />
+          </>
+        ) : (
+          <>
             <Stack.Screen
               name="Homepage"
               component={Homepage}
