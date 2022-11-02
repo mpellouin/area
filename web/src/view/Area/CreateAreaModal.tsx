@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import './index.scss'
+import {useState} from 'react';
+import './index.scss';
 
 import createArea from '../../ApiFunctions/createArea';
 import Loader from '../../components/Loader';
@@ -148,21 +148,6 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
     const [reactionParams, setReactionParams] = useState<{[key: string]: string}>({});
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        const closeModal = (e : any) => {
-            if (e.key === "Escape")
-                setIsOpened(false);
-        }
-        window.addEventListener("keydown", closeModal)
-        return () => { window.removeEventListener("keydown", closeModal) }
-    })
-
-    useEffect(() => {
-        if (setIsOpened) {
-            document.body.style.overflow = "hidden";
-        }
-    }, [setIsOpened])
-
     const submitArea = async () => {
         console.log('creating area');
         const area = {
@@ -187,30 +172,12 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
         }
     };
 
-  return (
-    <div className="areaModal" onClick={() => setIsOpened(false)}>
-        <div className="areaModalContent" onClick={(e) => {e.stopPropagation()}}>
-            <button type="button" className="areaCloseButton" onClick={() => setIsOpened(false)}>X</button>
-            <div className="areaModalTitle">Create new area</div>
-            <div className="areaModalGeneral">
-                <input className="areaModalGeneralName" placeholder="Name" maxLength={32} value={name} onChange={(e) => setName(e.target.value)}/>
-            </div>
-            <div className="flexRow">
-                <div className="areaModalActions">
-                    <div className="areaModalActionsTitle">Actions</div>
-                    <div className="areaModalActionsList">
-                        <select className="areaModalActionsListSelect" value={actionId} onChange={(e) => setActionId(parseInt(e.target.value))}>
-                            <option defaultChecked/>
-                            {actionsList.map((action) =>
-                                <option key={action.id} value={action.id}>{action.name}</option>
-                            )}
-                        </select>
-                    </div>
-                    <div className="areaModalParams">
-                        {actionsList.find((param : any) => param.id === actionId)?.params.map((param : any) =>
-                            <input key={param.name} className="areaModalActionsParamsInput" placeholder={param.placeholder} value={actionParams[param.name] ?? ""} onChange={(e) => setActionParams({...actionParams, [param.name]: e.target.value})}/>
-                        )}
-                    </div>
+    return (
+        <div className="areaModal">
+            <div className="areaModalContent">
+                <div className="areaModalTitle">Create new area</div>
+                <div className="areaModalGeneral">
+                    <input className="areaModalGeneralName" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="flexRow">
                     <div className="areaModalActions">
@@ -244,15 +211,45 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
                                 ))}
                         </div>
                     </div>
-                    <div className="areaModalParams">
-                        {reactionsList.find((param : any) => param.id === reactionId)?.params.map((param : any) =>
-                            <input type={param?.type ?? "text"} key={param.name} className="areaModalReactionsParamsInput" placeholder={param.placeholder} value={reactionParams[param.name] ?? ""} onChange={(e) => setReactionParams({...reactionParams, [param.name]: e.target.value})}/>
-                        )}
+                    <div className="areaModalReactions">
+                        <div className="areaModalReactionsTitle">Reactions</div>
+                        <div className="areaModalReactionsList">
+                            <select
+                                className="areaModalReactionsListSelect"
+                                value={reactionId}
+                                onChange={(e) => setReactionId(parseInt(e.target.value))}>
+                                <option defaultChecked />
+                                {reactionsList
+                                    .filter((reaction) => user.services.includes(reaction.serviceId))
+                                    .map((reaction) => (
+                                        <option key={reaction.id} value={reaction.id}>
+                                            {reaction.name}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                        <div className="areaModalParams">
+                            {reactionsList
+                                .find((param: any) => param.id === reactionId)
+                                ?.params.map((param: any) => (
+                                    <input
+                                        type={param?.type ?? 'text'}
+                                        key={param.name}
+                                        className="areaModalReactionsParamsInput"
+                                        placeholder={param.placeholder}
+                                        value={reactionParams[param.name] ?? ''}
+                                        onChange={(e) => setReactionParams({...reactionParams, [param.name]: e.target.value})}
+                                    />
+                                ))}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="areaModalButtons">
-                <button className="areaModalButtonsCreate" onClick={() => submitArea()} disabled={isLoading}> { isLoading && <Loader /> }Create</button>
+                <div className="areaModalButtons">
+                    <button className="areaModalButtonsCreate" onClick={() => submitArea()}>
+                        {' '}
+                        {isLoading && <Loader />}Create
+                    </button>
+                </div>
             </div>
         </div>
     );

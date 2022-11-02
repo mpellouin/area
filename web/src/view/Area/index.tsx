@@ -71,26 +71,28 @@ const AreaPage = () => {
         }
     }, [navigate]);
 
-  return (
-    <div className="areaPage">
-        <Header buttons={buttons}/>
-        {isCreateMode && 
-            <CreateAreaModal setIsOpened={setIsCreateMode} setForceRefresh={setForceRefresh}/>}
-        <div className="areaPageContent">
-            <div className="areaPageTitle">Areas list</div>
-            <div className="areaPageList">
-                {areas.map((area : any) =>
-                    <div className="areaPageItem">
-                        <div className="areaPageItemName">{area.name}</div>
-                    </div>
-                )}
+    return (
+        <div className="areaPage">
+            <Header buttons={buttons} />
+            {isCreateMode && <CreateAreaModal setIsOpened={setIsCreateMode} setForceRefresh={setForceRefresh} user={user} />}
+            <div className="areaPageContent">
+                <div className="areaPageTitle">Areas list</div>
+                <div className="areaPageList">
+                    {areas.map((area: any) => (
+                        <div className="areaPageItem">
+                            <div className="areaPageItemName">{area.name}</div>
+                            <div className="areaPageItemDescription">{area.description ?? ' lorem '}</div>
+                        </div>
+                    ))}
+                </div>
+                <div className="areaPageCreate">
+                    <button className="areaPageCreateButton" onClick={() => setIsCreateMode(true)}>
+                        Create new area
+                    </button>
+                </div>
             </div>
-            <div className="areaPageCreate">
-                <button className="areaPageCreateButton" onClick={() => setIsCreateMode(true)}>Create new area</button>
-            </div>
-        </div><br />
-    </div>
-  );
-}
+        </div>
+    );
+};
 
 export default AreaPage;
