@@ -32,7 +32,7 @@ export class ActionsService {
             return await this.flightService.buildNearbyFlightObservable(body);
         }
         if (id == 4 && (await this.services.verifySubscription(3, req))) {
-            return await this.googleService.buildNewEventObservable(body);
+            return await this.googleService.buildNewEventObservable(body, req.user.ID);
         }
         throw new Error('Unknown Action ID or Service not subscribed');
     }
