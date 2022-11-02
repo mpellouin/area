@@ -1,38 +1,39 @@
-import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { FlightService } from './flight/flight.service';
-import { GoogleActionsService } from './google/google.actions.service';
-import { TwitterActionsService } from "./twitter/twitter.actions.service";
+import {HttpService} from '@nestjs/axios';
+import {Injectable} from '@nestjs/common';
+import {Observable} from 'rxjs';
+import {ServicesService} from 'src/services/services.service';
+import {FlightService} from './flight/flight.service';
+import {GoogleActionsService} from './google/google.actions.service';
+import {TwitterActionsService} from './twitter/twitter.actions.service';
 
 @Injectable()
 export class ActionsService {
-    constructor(private readonly httpService: HttpService,
-                private readonly twitterService: TwitterActionsService,
-                private readonly flightService: FlightService,
-                private readonly googleService: GoogleActionsService) {}
+    constructor(
+        private readonly twitterService: TwitterActionsService,
+        private readonly flightService: FlightService,
+        private readonly googleService: GoogleActionsService,
+        private readonly services: ServicesService,
+    ) {}
 
-    async factory(id: number, body: any): Promise<Observable<any>> {
+    async factory(id: number, body: any, req: any): Promise<Observable<any>> {
         let observable: Observable<any> | undefined = undefined;
-        observable = await this.factoryHelper(id, body)
-        if (observable === undefined)
-            throw new Error("Unknown action");
+        observable = await this.factoryHelper(id, body, req);
         return observable;
     }
 
-    async factoryHelper(id: number, body: any): Promise<Observable<any> | undefined> {
-        if (id == 1) {
-          return await this.twitterService.buildNewTweetObservable(body);
+    async factoryHelper(id: number, body: any, req: any): Promise<Observable<any>> {
+        if (id == 1 && (await this.services.verifySubscription(1, req))) {
+            return await this.twitterService.buildNewTweetObservable(body);
         }
-        if (id == 2) {
-          return await this.twitterService.buildNewFollowerObservable(body);
+        if (id == 2 && (await this.services.verifySubscription(1, req))) {
+            return await this.twitterService.buildNewFollowerObservable(body);
         }
-        if (id == 3) {
-          return await this.flightService.buildNearbyFlightObservable(body);
+        if (id == 3 && (await this.services.verifySubscription(4, req))) {
+            return await this.flightService.buildNearbyFlightObservable(body);
         }
-        if (id == 4) {
-          return await this.googleService.buildNewEventObservable(body);
+        if (id == 4 && (await this.services.verifySubscription(3, req))) {
+            return await this.googleService.buildNewEventObservable(body);
         }
-      return undefined;
+        throw new Error('Unknown Action ID or Service not subscribed');
     }
 }

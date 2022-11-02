@@ -47,7 +47,6 @@ export class ServicesService {
         const user = await this.prisma.user.findUnique({
             where: {ID: req.user.ID},
         });
-        console.log(req.user, user, serviceId);
         if (user.services.includes(serviceId.toString())) {
             return;
         } else {
@@ -74,5 +73,12 @@ export class ServicesService {
                 },
             });
         }
+    }
+
+    async verifySubscription(serviceId: number, req: any): Promise<boolean> {
+        const user = await this.prisma.user.findUnique({
+            where: {ID: req.user.ID},
+        });
+        return user.services.includes(serviceId.toString());
     }
 }
