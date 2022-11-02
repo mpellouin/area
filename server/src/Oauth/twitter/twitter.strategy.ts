@@ -11,25 +11,15 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
             consumerKey: env.TWITTER_CONSUMER_KEY,
             consumerSecret: env.TWITTER_CONSUMER_SECRET,
             callbackURL: env.BASE_URL + "/auth/twitter/redirect",
+            scope: [
+              "follows.read",
+              "tweet.read",
+              "users.read",
+              "offline.access"
+            ],
         });
     }
-    authorizationParams(): { [key: string]: string; } {
-      return ({
-        access_type: 'offline',
-        prompt: 'consent'
-      });
-    };
-    async validate(
-        accessToken: string, refreshToken: string, profile: any, done: verifyCallback): Promise<any> {
-        const { name, emails, id } = profile;
-        const user = {
-          email: emails[0].value,
-          firstName: name.givenName,
-          lastName: name.familyName,
-          id,
-          accessToken,
-          refreshToken
-        };
-        done(null, user);
+    async validate(accessToken, refreshToken, profile, done): Promise<any> {
+        return done(null, profile, accessToken, refreshToken);
       }
 }
