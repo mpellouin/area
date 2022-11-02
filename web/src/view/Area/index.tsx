@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from "react";
-import './index.scss'
-import Header from "../../components/Header";
-import CreateAreaModal from "./CreateAreaModal";
-import { useNavigate } from "react-router-dom";
-import getAreas from "../../ApiFunctions/getAreas";
+import React, {useEffect, useState} from 'react';
+import './index.scss';
+import Header from '../../components/Header';
+import CreateAreaModal from './CreateAreaModal';
+import {useNavigate} from 'react-router-dom';
+import getAreas from '../../ApiFunctions/getAreas';
+import {getUser} from '../../ApiFunctions/getUser';
 
 const buttons = [
-  {
-      name: "SERVICES",
-      path: "/services",
-      isButton: false
-  },
-  {
-      name: "AREAS",
-      path: "/areas",
-      isButton: false
-  },
-  {
-      name: "LOG OUT",
-      path: "/",
-      isButton: true
-  }
-]
+    {
+        name: 'SERVICES',
+        path: '/services',
+        isButton: false,
+    },
+    {
+        name: 'AREAS',
+        path: '/areas',
+        isButton: false,
+    },
+    {
+        name: 'LOG OUT',
+        path: '/',
+        isButton: true,
+    },
+];
 
 const AreaPage = () => {
-    const [areas, setAreas] = useState([])
-    const [isCreateMode , setIsCreateMode] = useState(false)
-    const [forceRefresh, setForceRefresh] = useState(true)
+    const [areas, setAreas] = useState([]);
+    const [isCreateMode, setIsCreateMode] = useState(false);
+    const [forceRefresh, setForceRefresh] = useState(true);
+    const [user, setUser] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,12 +40,22 @@ const AreaPage = () => {
             } catch (error) {
                 console.log(error);
             }
-        }
+        };
         fetchAreas().then((res) => {
             setAreas(res);
-        })
+        });
         setForceRefresh(false);
-    }, [forceRefresh])
+    }, [forceRefresh]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const user = await getUser();
+            return user[0];
+        };
+        fetchUser().then((user) => {
+            setUser(user);
+        });
+    }, []);
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -53,11 +65,11 @@ const AreaPage = () => {
             localStorage.setItem('accessToken', accessToken);
         } else {
             if (!localStorage.getItem('accessToken') && !localStorage.getItem('jwt')) {
-                console.log("back to login");
-                navigate('/login')
+                console.log('back to login');
+                navigate('/login');
             }
         }
-    }, [navigate])
+    }, [navigate]);
 
   return (
     <div className="areaPage">

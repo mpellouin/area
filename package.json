@@ -1,0 +1,14 @@
+{
+  "name": "b-dev-500-lyn-5-1-area-maxence.pellouin",
+  "version": "1.0.0",
+  "description": "",
+  "devDependencies": {},
+  "engines" : {
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=16.0.0 <17.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd server && npm install && npx prisma generate &&  npm run start"
+  }
+}

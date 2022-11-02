@@ -8,14 +8,13 @@ import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
-    height: 58,
+    height: 60,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     alignContent: 'center',
     paddingLeft: 40,
-    borderTopWidth: 1,
   },
   text: {
     paddingLeft: 50,
@@ -28,13 +27,7 @@ const LogOut = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View
-      style={[
-        Styles.container,
-        {
-          borderTopColor: isDarkMode ? Colors.minorD : Colors.minorW,
-        },
-      ]}>
+    <View style={Styles.container}>
       <FontAwesomeIcon
         icon={faRightFromBracket}
         size={25}

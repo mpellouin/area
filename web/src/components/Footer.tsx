@@ -4,7 +4,7 @@ import '../scss/footer.scss';
 function Footer() {
     return (
         <div className="footer-div">
-            <br/>
+            <br />
             ON AREA LA | 2022
         </div>
     );

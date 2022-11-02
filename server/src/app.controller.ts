@@ -6,6 +6,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AboutType } from './types/about';
 import { AreaStatusType } from './types/status';
+import { RealIP } from 'nestjs-real-ip';
 
 @Controller()
 export class AppController {
@@ -17,7 +18,7 @@ export class AppController {
   }
 
   @Get("about.json")
-  getAboutJson(@Ip() ip): AboutType {
+  getAboutJson(@RealIP() ip: string): Promise<AboutType> {
     return this.appService.getAboutJson(ip);
   }
 

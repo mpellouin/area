@@ -1,19 +1,24 @@
+@import '_vars.scss';
+
 .card {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    border: double #F45D48;
+    border: double #f45d48;
     position: relative;
     user-select: none;
     display: flex;
     flex-direction: column;
+    transition: 0.1s ease-in height, 0.1s ease-in width;
+    padding: 0px 0px 40px 0px;
 
     &:hover {
-        transform: scale(1.04);
-        transition: 0.5s ease-in;
-        box-shadow: 12px 12px 5px 2px rgba(34, 37, 37, 0.1);
+        transform: scale(1.01);
+        transition: 0.1s ease-in;
+        box-shadow: 6px 6px 2px 1px rgba(34, 37, 37, 0.1);
     }
     .card-image {
+        padding-top: 12px;
         position: relative;
         user-select: none;
         justify-content: center;
@@ -35,5 +40,27 @@
         text-align: center;
         justify-content: center;
         align-items: center;
+        padding: 0px 6px;
+    }
+
+    .card-button {
+        background-color: $links-white-theme;
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+        position: absolute;
+        bottom: 6px;
+        margin: 0% calc(50% - 120px / 2);
+    }
+
+    .card-button-subbed {
+        background-color: red;
     }
 }
