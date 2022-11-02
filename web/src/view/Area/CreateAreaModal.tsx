@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 import './index.scss';
 
 import createArea from '../../ApiFunctions/createArea';
@@ -150,19 +149,23 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const closeModal = (e : any) => {
-            if (e.key === "Escape")
-                setIsOpened(false);
-        }
-        window.addEventListener("keydown", closeModal)
-        return () => { window.removeEventListener("keydown", closeModal) }
-    })
+        const closeModal = (e: any) => {
+            if (e.key === 'Escape') setIsOpened(false);
+        };
+        window.addEventListener('keydown', closeModal);
+        return () => {
+            window.removeEventListener('keydown', closeModal);
+        };
+    });
 
     useEffect(() => {
         if (setIsOpened) {
-            document.body.style.overflow = "hidden";
+            document.body.style.overflow = 'hidden';
         }
-    }, [setIsOpened])
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [setIsOpened]);
 
     const submitArea = async () => {
         console.log('creating area');
@@ -188,24 +191,44 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
         }
     };
 
-  return (
-    <div className="areaModal" onClick={() => setIsOpened(false)}>
-        <div className="areaModalContent" onClick={(e) => {e.stopPropagation()}}>
-            <button type="button" className="areaCloseButton" onClick={() => setIsOpened(false)}>X</button>
-            <div className="areaModalTitle">Create new area</div>
-            <div className="areaModalGeneral">
-                <input className="areaModalGeneralName" placeholder="Name" maxLength={32} value={name} onChange={(e) => setName(e.target.value)}/>
-            </div>
-            <div className="flexRow">
-                <div className="areaModalActions">
-                    <div className="areaModalActionsTitle">Actions</div>
-                    <div className="areaModalActionsList">
-                        <select className="areaModalActionsListSelect" value={actionId} onChange={(e) => setActionId(parseInt(e.target.value))}>
-                            <option defaultChecked/>
-                            {actionsList.map((action) =>
-                                <option key={action.id} value={action.id}>{action.name}</option>
-                            )}
-                        </select>
+    return (
+        <div className="areaModal" onClick={() => setIsOpened(false)}>
+            <div
+                className="areaModalContent"
+                onClick={(e) => {
+                    e.stopPropagation();
+                }}>
+                <button type="button" className="areaCloseButton" onClick={() => setIsOpened(false)}>
+                    X
+                </button>
+                <div className="areaModalTitle">Create new area</div>
+                <div className="areaModalGeneral">
+                    <input
+                        className="areaModalGeneralName"
+                        placeholder="Name"
+                        maxLength={32}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+                <div className="flexRow">
+                    <div className="areaModalActions">
+                        <div className="areaModalActionsTitle">Actions</div>
+                        <div className="areaModalActionsList">
+                            <select
+                                className="areaModalActionsListSelect"
+                                value={actionId}
+                                onChange={(e) => setActionId(parseInt(e.target.value))}>
+                                <option defaultChecked />
+                                {actionsList
+                                    .filter((reaction) => user.services.includes(reaction.serviceId))
+                                    .map((action) => (
+                                        <option key={action.id} value={action.id}>
+                                            {action.name}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
                     </div>
                     <div className="areaModalReactions">
                         <div className="areaModalReactionsTitle">Reactions</div>
@@ -240,12 +263,14 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="areaModalButtons">
-                <button className="areaModalButtonsCreate" onClick={() => submitArea()} disabled={isLoading}> { isLoading && <Loader /> }Create</button>
+                <div className="areaModalButtons">
+                    <button className="areaModalButtonsCreate" onClick={() => submitArea()} disabled={isLoading}>
+                        {' '}
+                        {isLoading && <Loader />}Create
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
     );
 };
 
