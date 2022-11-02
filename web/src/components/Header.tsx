@@ -25,8 +25,8 @@ function Header({buttons} : any) {
                 </Link>
             </div>
             <div className='navbar'>
-                {buttons.map((btn : any, i : number) => 
-                    <Link className='navbar-item' to={btn.path} key={i}>
+                {buttons.map((btn : any) => 
+                    <Link className='navbar-item' to={btn.path}>
                         <button className={'navbar-isNotButton  ' + (btn.isButton ? 'navbar-button' : 'navbar-isNotButton')}>
                             {btn.name}
                         </button>
