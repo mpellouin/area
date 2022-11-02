@@ -21,19 +21,27 @@ const buttons = [
 
 const Login = () => {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passIsShown, setPassIsShown] = useState(false);
+    // const [passIsShown, setPassIsShown] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+    const [password, setPassword] = useState('');
+    const [passwordType, setPasswordType] = useState('password');
+    const handlePasswordChange = (e: any) => {
+        setPassword(e.target.value);
+    }
+    const togglePassword = (e : any) => {
+        e.preventDefault();
+        if (passwordType === 'password') {
+            setPasswordType('text');
+            return;
+        }
+        setPasswordType('password');
+    }
 
     const loginWithGoogle = async () => {
         console.log("login with google");
         window.location.replace("http://localhost:8080/auth/google")
-    }
-
-    const togglePassword = (e : any) => {
-        e.preventDefault();
-        setPassIsShown(!passIsShown);
     }
 
     const handleLogin = async (e: any) => {
@@ -69,9 +77,8 @@ const Login = () => {
                         </div>
                         <div className="formBody">
                                 <input type="email" name="email" id="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                <input type={passIsShown ? 'text' : 'password'} name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                                <label htmlFor="passwordInput"><b>Forgot password?</b></label>
-                                <button onClick={togglePassword}>{passIsShown ? 'Hide' : 'Show'}</button>
+                                <input type={passwordType} name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={handlePasswordChange}/>
+                                <button className="buttonPassword" onClick={togglePassword}>{passwordType === "password" ? <img src="bxs_hide.png" className="buttonHidePassword"/> : <img src="bxs_show.png" className="buttonShowPassword"/>}</button>
                         </div>
                         <div className="formFooter">
                             <button onClick={handleLogin} disabled={isLoading}>{ isLoading && <Loader /> }Sign In</button>

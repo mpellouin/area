@@ -59,6 +59,43 @@
                 position: absolute;
                 top: 0px;
             }
+
+            .buttonPassword {
+                outline: none;
+                border: none;
+                background-color: transparent;
+                
+                .buttonHidePassword {
+                    position: absolute;
+                    top: 58px;
+                    right: 10px;
+                    width: 30px;
+                    height: 28px;
+                    outline: none;
+                    border: none;
+                    cursor: pointer;
+                    user-select: none;
+
+                    &:focus {
+                        outline: none;
+                    } 
+                }   
+                .buttonShowPassword {
+                    position: absolute;
+                    top: 62px;
+                    right: 10px;
+                    width: 30px;
+                    height: 20px;
+                    outline: none;
+                    border: none;
+                    cursor: pointer;
+                    user-select: none;
+
+                    &:focus {
+                        outline: none;
+                    } 
+                }
+            }
         }
     }
 
