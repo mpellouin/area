@@ -26,7 +26,7 @@ import HelpCenter from './src/view/user/params/HelpCenter';
 import AboutArea from './src/view/user/params/AboutArea';
 import AboutUs from './src/view/user/params/AboutUs';
 
-import {getItem, removeItem} from './src/components/storage/localStorage';
+import {getItem} from './src/components/storage/localStorage';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,14 +34,12 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const isTutorial = undefined;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getItem('isLoggedIn')
       .then(data => data)
       .then(value => {
         if (value !== null) {
-          setIsLoading(true);
           setIsLoggedIn(true);
         } else setIsLoggedIn(false);
       });

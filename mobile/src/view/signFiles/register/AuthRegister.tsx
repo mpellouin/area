@@ -37,7 +37,6 @@ type AppProps = {
 };
 
 const AuthRegister = ({title}: AppProps) => {
-  const navigation = useNavigation();
   const isDarkMode = useColorScheme() === 'dark';
   const [isPressed, setIsPressed] = useState(false);
 
