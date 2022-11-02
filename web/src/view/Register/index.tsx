@@ -77,7 +77,7 @@ const Register = () => {
                                 <input type="password" name="passwordConfirmation" id="passwordConfirmationInput" placeholder="Password confirmation *" unselectable="on" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}/>
                         </div>
                         <div className="formFooter">
-                            <button onClick={handleRegister}>{ isLoading && <Loader /> }Register</button>
+                            <button onClick={handleRegister} disabled={isLoading || (password !== passwordConfirmation)}>{ isLoading && <Loader /> }Register</button>
                         </div>
 
                         <Link className='registerText' to='/login'>

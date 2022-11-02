@@ -78,10 +78,9 @@ const AreaPage = () => {
             <div className="areaPageContent">
                 <div className="areaPageTitle">Areas list</div>
                 <div className="areaPageList">
-                    {areas.map((area: any) => (
-                        <div className="areaPageItem">
+                    {areas.map((area: any, i: number) => (
+                        <div key={i} className="areaPageItem">
                             <div className="areaPageItemName">{area.name}</div>
-                            <div className="areaPageItemDescription">{area.description ?? ' lorem '}</div>
                         </div>
                     ))}
                 </div>
@@ -91,6 +90,7 @@ const AreaPage = () => {
                     </button>
                 </div>
             </div>
+            <br />
         </div>
     );
 };
