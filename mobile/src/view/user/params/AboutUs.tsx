@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, useColorScheme, Image} from 'react-native';
+import {View, Text, StyleSheet, useColorScheme, ScrollView} from 'react-native';
 
 import {Colors} from '../../../../Style';
 
@@ -21,7 +21,7 @@ const Styles = StyleSheet.create({
     alignSelf: 'center',
   },
   end: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'flex-end',
   },
 });
@@ -30,7 +30,7 @@ const AboutUs = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View
+    <ScrollView
       style={[
         Styles.container,
         {backgroundColor: isDarkMode ? Colors.backgroundD : Colors.backgroundW},
@@ -76,7 +76,7 @@ const AboutUs = () => {
       <View style={Styles.end}>
         <Credit />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

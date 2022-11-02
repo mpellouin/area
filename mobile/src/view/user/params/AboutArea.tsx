@@ -4,6 +4,7 @@ import {View, StyleSheet, Text, useColorScheme} from 'react-native';
 import {Colors} from '../../../../Style';
 
 import Credit from '../../../components/Credit';
+import SeparatorColor from '../../../components/SeparatorColor';
 import TitleApp from '../../../components/TitleApp';
 
 const Styles = StyleSheet.create({
@@ -29,6 +30,7 @@ const AboutArea = () => {
   return (
     <View style={Styles.container}>
       <TitleApp title="About AREA" path="User" />
+      <SeparatorColor width={360} marginTop={0} marginLeft={0} />
       <Text
         style={[
           Styles.text,
