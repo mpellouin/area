@@ -1,10 +1,11 @@
 import {Injectable, OnModuleDestroy, OnModuleInit} from '@nestjs/common';
 import {PrismaService} from '../prisma.service';
 import {Service, Prisma, User} from '@prisma/client';
+import {ProviderService} from 'src/providers/provider.service';
 
 @Injectable()
 export class ServicesService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService, private providerService: ProviderService) {}
 
     async findMany(params: {
         skip?: number;
@@ -50,6 +51,11 @@ export class ServicesService {
         if (user.services.includes(serviceId.toString())) {
             return;
         } else {
+            if (serviceId === 2 || serviceId === 3) {
+                const providers = await this.prisma.provider.findMany({
+                    where: {user: {ID: req.user.ID}, Name: 'Google'},
+                });
+            }
             return this.prisma.user.update({
                 where: {ID: req.user.ID},
                 data: {

@@ -8,12 +8,14 @@ function Card({name, description, image, isSubbed, service, forceRefresh}: any) 
 
     const handleCardClick = async () => {
         setIsLoading(true);
+        let res;
         try {
             if (isSubbed) {
-                await serviceUnsubscribe(service);
+                res = await serviceUnsubscribe(service);
             } else {
-                await serviceSubscribe(service);
+                res = await serviceSubscribe(service);
             }
+            console.log(res);
         } catch (e) {
             console.log(e);
         } finally {

@@ -1,12 +1,10 @@
 import {HttpService} from '@nestjs/axios';
-import {BadRequestException, HttpException, HttpStatus, Inject, Injectable, Param} from '@nestjs/common';
+import {BadRequestException, HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {env} from 'process';
 import {ProviderService} from 'src/providers/provider.service';
 import {UserService} from 'src/user/user.service';
-import {AxiosResponse} from 'axios';
-import {map} from 'rxjs/operators';
 import {from} from 'rxjs';
-import {AreaStatusType} from 'src/types/status';
+import {AreaStatusType} from "src/types/status";
 
 @Injectable()
 export class OAuthService {
@@ -20,7 +18,7 @@ export class OAuthService {
         console.log(userData.user);
         if (!userData.user) throw new BadRequestException();
         if (body) {
-            let users = await this.userService.users({where: {googleID: userData.user.id}});
+            let users = await this.userService.users({where: {email: userData.user.email}});
             let user = users[0];
             console.log(userData.user.id);
             if (user) {
@@ -56,8 +54,7 @@ export class OAuthService {
             throw new HttpException('No userID provided', HttpStatus.BAD_REQUEST);
         }
 
-        const stringUserID: string = userID.toString();
-        const providerData = (await this.providerService.getUserProviders({where: {userID: parseInt(stringUserID)}})).find(Boolean);
+        const providerData = (await this.providerService.getUserProviders({where: {userID: userID}})).find(Boolean);
         if (!providerData) {
             throw new HttpException('No provider found', HttpStatus.INTERNAL_SERVER_ERROR);
         }
