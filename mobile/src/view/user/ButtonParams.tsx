@@ -47,18 +47,22 @@ const ButtonParams: React.FC<
         onPress={() => {
           if (component) navigation.navigate(component);
         }}
-        style={({pressed}) => [
-          {
-            backgroundColor: isDarkMode
-              ? pressed
-                ? Colors.textWOpacity
-                : Colors.backgroundD
-              : pressed
-              ? Colors.textDOpacity
-              : Colors.backgroundW,
-          },
-          Styles.containerPressable,
-        ]}>
+        style={
+          component
+            ? ({pressed}) => [
+                {
+                  backgroundColor: isDarkMode
+                    ? pressed
+                      ? Colors.textWOpacity
+                      : Colors.backgroundD
+                    : pressed
+                    ? Colors.textDOpacity
+                    : Colors.backgroundW,
+                },
+                Styles.containerPressable,
+              ]
+            : Styles.containerPressable
+        }>
         <View style={Styles.containerTitle}>
           <FontAwesomeIcon
             icon={icon}

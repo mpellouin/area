@@ -7,22 +7,22 @@ import { OAuthService } from "./oauth.service";
 @Controller("auth")
 @ApiTags("Oauth routes")
 export class OAuthController {
-    constructor (private oauthService: OAuthService) {}
+    constructor(private oauthService: OAuthService) {}
 
     @UseGuards(AuthGuard("google"))
     @Get("google")
     @ApiOperation({description: "This route is used to login with google or register it as a provider", summary: "login with google"})
     async loginWithGoogle() {
-        console.log("someone is trying to login with google")
+        console.log('someone is trying to login with google');
     }
 
     @UseGuards(AuthGuard("google"))
     @Get("google/redirect")
     @ApiOperation({description: "This route is the callback of the auth/google route", summary: "login with google callback"})
     async loginWithGoogleRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
-        const user = await this.oauthService.loggingWithGoogle(req, body)
+        const user = await this.oauthService.loggingWithGoogle(req, body);
         if (user) {
-            res.redirect("http://lisolescargot.netlify.app/Areas?token=" + user.accessToken )
+            res.redirect('http://lisolescargot.netlify.app/Areas?token=' + user.accessToken);
         }
     }
 

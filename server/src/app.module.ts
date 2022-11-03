@@ -13,7 +13,7 @@ import { ProviderModule } from './providers/provider.module';
 import { UserModule } from './user/user.module';
 import { OauthModule } from './Oauth/oauth.module';
 import { ReactionModule } from './reactions/reaction.module';
-import { ServiceModule } from './services/service.module';
+import { ServiceModule } from './services/services.module';
 import { PrismaService } from './prisma.service';
 import { ActionModule } from './actions/actions.module';
 import { AreaModule } from './area/area.module';

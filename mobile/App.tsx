@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, useColorScheme} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,9 +13,12 @@ import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
 import Homepage from './src/view/Homepage';
 import Create from './src/view/Create';
 import Activity from './src/view/Activity';
-import Auth from './src/view/signFiles/auth';
 import linking from './src/view/signFiles/linking';
 import User from './src/view/user/User';
+
+import Tutorial1 from './src/view/tutorial/Tutorial1';
+import Tutorial2 from './src/view/tutorial/Tutorial2';
+import Tutorial3 from './src/view/tutorial/Tutorial3';
 
 import UserProfile from './src/view/user/params/UserProfile';
 import UserServices from './src/view/user/params/UserServices';
@@ -23,11 +26,24 @@ import HelpCenter from './src/view/user/params/HelpCenter';
 import AboutArea from './src/view/user/params/AboutArea';
 import AboutUs from './src/view/user/params/AboutUs';
 
+import {getItem} from './src/components/storage/localStorage';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const isLoggedIn = 'undefined';
+  const isTutorial = undefined;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    getItem('isLoggedIn')
+      .then(data => data)
+      .then(value => {
+        if (value !== null) {
+          setIsLoggedIn(true);
+        } else setIsLoggedIn(false);
+      });
+  }, []);
 
   return (
     <NavigationContainer linking={linking}>
@@ -39,12 +55,39 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {!isLoggedIn ? (
+        {isLoggedIn === false ? (
           <>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          </>
+        ) : isTutorial ? (
+          <>
+            <Stack.Screen
+              name="Tutorial1"
+              component={Tutorial1}
+              options={{
+                animation: 'fade_from_bottom',
+              }}
+            />
+            <Stack.Screen
+              name="Tutorial2"
+              component={Tutorial2}
+              options={{
+                animation: 'fade_from_bottom',
+              }}
+            />
+            <Stack.Screen
+              name="Tutorial3"
+              component={Tutorial3}
+              options={{
+                animation: 'fade_from_bottom',
+                gestureEnabled: false,
+                headerLeft: () => <></>,
+                headerBackVisible: false,
+              }}
+            />
           </>
         ) : (
           <>
