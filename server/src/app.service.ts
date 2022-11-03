@@ -98,7 +98,7 @@ export class AppService {
     subscribeToService(serviceId: number): AreaStatusType {
         return {
             error: false,
-            code: 200,
+            status: 200,
             message: 'Subscribed to service ' + serviceId,
         };
     }
@@ -114,7 +114,7 @@ export class AppService {
             console.log(e);
             return {
                 error: true,
-                code: 400,
+                status: 400,
                 message: 'Error while creating area',
             };
         }
@@ -129,7 +129,7 @@ export class AppService {
 
         return {
             error: false,
-            code: 200,
+            status: 200,
             message: 'Observable created',
         };
     }

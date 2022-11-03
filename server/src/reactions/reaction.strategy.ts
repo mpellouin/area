@@ -19,17 +19,20 @@ export class ReactionService {
         return observable;
     }
 
-    async factoryHelper(id: number, body: any): Promise<Observable<any>> {
-        if (id == 1 && (await this.services.verifySubscription(2, body))) {
-            body.apiKey = process.env.GOOGLE_CLIENT_ID;
-            return await this.googleService.buildSendMailObservable(body);
+    async factoryHelper(id: number, body: any): Promise<Observable<any> | undefined> {
+        let response : any
+
+        switch(id) {
+            case 1:
+                body.apiKey = process.env.GOOGLE_CLIENT_ID;
+                response = await this.googleService.buildSendMailObservable(body);
+            case 2:
+                response = await this.discordService.buildSendMessageObservable(body);
+            case 3:
+                response = await this.googleService.buildNewEventObservable(body);
+            default:
+                response = undefined
         }
-        if (id == 2 && (await this.services.verifySubscription(0, body))) {
-            return await this.discordService.buildSendMessageObservable(body);
-        }
-        if (id == 3 && (await this.services.verifySubscription(3, body))) {
-            return await this.googleService.buildNewEventObservable(body);
-        }
-        throw new Error('Unknown Reaction ID or Service not subscribed');
+        return response;
     }
 }
