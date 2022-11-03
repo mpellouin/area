@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {serviceSubscribe, serviceUnsubscribe} from '../ApiFunctions/serviceActions';
 import '../scss/card.scss';
 import Loader from './Loader';
@@ -8,12 +8,11 @@ function Card({name, description, image, isSubbed, service, forceRefresh}: any) 
 
     const handleCardClick = async () => {
         setIsLoading(true);
-        let res;
         try {
             if (isSubbed) {
-                res = await serviceUnsubscribe(service);
+                await serviceUnsubscribe(service);
             } else {
-                res = await serviceSubscribe(service);
+                await serviceSubscribe(service);
             }
         } catch (e) {
             console.log(e);

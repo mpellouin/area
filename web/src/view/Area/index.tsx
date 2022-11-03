@@ -33,6 +33,8 @@ const AreaPage = () => {
 
     useEffect(() => {
         if (forceRefresh === false) return;
+        //TODO: fix next line
+        if (localStorage.getItem('jwt') === null) return;
         const fetchAreas = async () => {
             try {
                 const res = await getAreas();
@@ -70,6 +72,16 @@ const AreaPage = () => {
             }
         }
     }, [navigate]);
+
+    useEffect(() => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const accessToken = urlParams.get('token');
+        if (window.opener) {
+            window.opener.postMessage(accessToken);
+            window.close();
+          }
+    })
 
     return (
         <div className="areaPage">

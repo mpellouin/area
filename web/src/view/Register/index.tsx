@@ -1,10 +1,8 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import './index.scss'
 
 import Header from "../../components/Header";
-import googleAuth from "../../ApiFunctions/googleAuth";
 import registerUser from "../../ApiFunctions/registerUser";
 import Loader from "../../components/Loader";
 
@@ -25,14 +23,24 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [passIsShown, setPassIsShown] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const loginWithGoogle = async () => {
         console.log("login with google");
-        window.location.replace("http://localhost:8080/auth/google")
-    }
+        poptastic("http://localhost:8080/auth/google")
+    };
+
+    function poptastic(url: any) {
+        var newWindow = window.open(url, 'name', 'height=600,width=450') as Window;
+        newWindow.focus();
+        window.addEventListener('message', (event) => {
+            if (event.data !== "failure") {
+                navigate("/areas");
+            }
+        }
+        )
+      }
 
     const handleRegister = async (e: any) => {
         e.preventDefault();
@@ -73,7 +81,7 @@ const Register = () => {
                         <hr className="lineText" data-content="Or sign with"/>
                         <div className="formBody">
                                 <input type="email" name="email" id="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                <input type={passIsShown ? 'text' : 'password'} name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                <input type="password" name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                 <input type="password" name="passwordConfirmation" id="passwordConfirmationInput" placeholder="Password confirmation *" unselectable="on" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}/>
                         </div>
                         <div className="formFooter">

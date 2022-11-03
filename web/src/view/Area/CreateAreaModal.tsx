@@ -229,6 +229,20 @@ const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
                                     ))}
                             </select>
                         </div>
+                        <div className="areaModalParams">
+                            {actionsList
+                                .find((param: any) => param.id === actionId)
+                                ?.params.map((param: any) => (
+                                    <input
+                                        type={param?.type ?? 'text'}
+                                        key={param.name}
+                                        className="areaModalActionsParamsInput"
+                                        placeholder={param.placeholder}
+                                        value={actionParams[param.name] ?? ''}
+                                        onChange={(e) => setActionParams({...actionParams, [param.name]: e.target.value})}
+                                    />
+                                ))}
+                        </div>
                     </div>
                     <div className="areaModalReactions">
                         <div className="areaModalReactionsTitle">Reactions</div>
