@@ -5,6 +5,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import loginUser from '../../ApiFunctions/loginUser';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
+import {poptastic} from '../../helpers/poptastic';
 
 const buttons = [
     {
@@ -40,18 +41,8 @@ const Login = () => {
 
     const loginWithGoogle = async () => {
         console.log('login with google');
-        poptastic(`${process.env.REACT_APP_BASE_URL}/auth/google`);
+        poptastic(`${process.env.REACT_APP_BASE_URL}/auth/google`, navigate);
     };
-
-    function poptastic(url: any) {
-        var newWindow = window.open(url, 'name', 'height=600,width=450') as Window;
-        newWindow.focus();
-        window.addEventListener('message', (event) => {
-            if (event.data !== 'failure') {
-                navigate('/areas');
-            }
-        });
-    }
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
