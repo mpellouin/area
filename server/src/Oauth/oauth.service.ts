@@ -55,7 +55,8 @@ export class OAuthService {
     async refreshGoogleToken(userID: number): Promise<AreaStatusType> {
         if(!userID) {throw new HttpException("No userID provided", HttpStatus.BAD_REQUEST)}
 
-        const providerData = (await this.providerService.getUserProviders({where: {userID: userID}})).find(Boolean)
+        const stringUserID : string = userID.toString()
+        const providerData = (await this.providerService.getUserProviders({where: {userID: parseInt(stringUserID)}})).find(Boolean)
         if(!providerData) {throw new HttpException("No provider found", HttpStatus.INTERNAL_SERVER_ERROR)}
         try {
             const result = from (await this.httpService.post(
@@ -81,7 +82,7 @@ export class OAuthService {
         case "google":
             return await this.refreshGoogleToken(userID)
         default:
-            return {error: false, status: HttpStatus.OK, message: `Acess token for ${provider} provider refreshed`}
+            return {error: true, status: HttpStatus.BAD_REQUEST, message: `No method for the requested provider ${provider} found`}
         }
     }
 }

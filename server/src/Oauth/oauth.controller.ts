@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Redirect, Req, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Redirect, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiBody, ApiOperation, ApiProperty, ApiTags } from "@nestjs/swagger";
 import { response } from "express";
@@ -40,14 +40,14 @@ export class OAuthController {
         return {req, res}
     }
 
-    @Get("google/refresh")
+    @Get(":provider/refresh")
     @ApiOperation({description: "This route is used to refresh a User Access Token", summary: "refresh access token"})
     @ApiBody({
         schema: {
             properties: {"userID": {type: "number"}}
         }
     })
-    async refreshGoogleAccessToken(@Body() body: {userID: number}) {
-        return await this.oauthService.refreshGoogleToken(body.userID)
+    async refreshAccessToken(@Body() body: {userID: number}, @Param('provider') provider: string) {
+        return await this.oauthService.refreshUserAccessToken(body.userID, provider)
     }
 }
