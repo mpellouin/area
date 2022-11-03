@@ -43,7 +43,7 @@
             .left-sclera {
                 height:20px;
                 width:20px;
-                background-color:#FFFFFE;
+                background-color:$white;
                 border-radius:50%;
                 position:absolute;
                 top:5px;
@@ -54,7 +54,7 @@
             .left-pupil {
                 height:12px;
                 width:12px;
-                background-color:#000;
+                background-color:$black;
                 border-radius:50%;
                 position:absolute;
                 top:7px;
@@ -70,7 +70,7 @@
             .right-sclera {
                 height:20px;
                 width:20px;
-                background-color:#FFFFFE;
+                background-color:$white;
                 border-radius:50%;
                 position:absolute;
                 top:5px;
@@ -81,7 +81,7 @@
             .right-pupil {
                 height:12px;
                 width:12px;
-                background-color:#000;
+                background-color:$black;
                 border-radius:50%;
                 position:absolute;
                 top:7px;
@@ -91,7 +91,10 @@
         }
 
         @keyframes blink{
-            0%, 94% {
+            0% {
+                transform: rotateX(0);
+            }
+            94% {
                 transform: rotateX(0);
             }
             98% {
