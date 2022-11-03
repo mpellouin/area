@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Home from "./view/Home";
 import AreaPage from "./view/Area";
 import Services from "./view/Services";
+import Page404 from "./view/404";
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<Page404 />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/areas" element={<AreaPage />} />
