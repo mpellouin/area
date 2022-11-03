@@ -150,13 +150,5 @@
             right:-40px;
             transform:rotate(25deg);
         }
-  
-        .left-eye:hover.left-eye::before,.left-eye:hover.left-eye::after {
-            height:3px;
-        }
-
-        .right-eye:hover.right-eye::before,.right-eye:hover.right-eye::after {
-            height:3px;
-        }
     }
 }
