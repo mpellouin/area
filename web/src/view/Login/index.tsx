@@ -39,20 +39,19 @@ const Login = () => {
     };
 
     const loginWithGoogle = async () => {
-        console.log("login with google");
-        poptastic("http://localhost:8080/auth/google")
+        console.log('login with google');
+        poptastic('http://localhost:8080/auth/google');
     };
 
     function poptastic(url: any) {
         var newWindow = window.open(url, 'name', 'height=600,width=450') as Window;
         newWindow.focus();
         window.addEventListener('message', (event) => {
-            if (event.data !== "failure") {
-                navigate("/areas");
+            if (event.data !== 'failure') {
+                navigate('/areas');
             }
-        }
-        )
-      }
+        });
+    }
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
