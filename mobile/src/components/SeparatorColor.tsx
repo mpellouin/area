@@ -29,9 +29,7 @@ const SeparatorColor: React.FC<
           width: width,
           marginTop: marginTop,
           marginLeft: marginLeft,
-          borderBottomColor: isDarkMode
-            ? Colors.minorDOpacity
-            : Colors.minorWOpacity,
+          borderBottomColor: isDarkMode ? Colors.minorD : Colors.minorW,
         },
       ]}
     />

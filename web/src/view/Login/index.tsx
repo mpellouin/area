@@ -1,41 +1,66 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import loginUser from "../../ApiFunctions/loginUser";
-import Header from "../../components/Header";
-import './index.scss'
+import {useState} from 'react';
+import './index.scss';
+import {Link, useNavigate} from 'react-router-dom';
+
+import loginUser from '../../ApiFunctions/loginUser';
+import Header from '../../components/Header';
+import Loader from '../../components/Loader';
 
 const buttons = [
     {
-        name: "HOME",
-        path: "/",
-        isButton: false
+        name: 'HOME',
+        path: '/',
+        isButton: false,
     },
     {
-        name: "REGISTER",
-        path: "/register",
-        isButton: true
-    }
-]
+        name: 'REGISTER',
+        path: '/register',
+        isButton: true,
+    },
+];
 
 const Login = () => {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passIsShown, setPassIsShown] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    const [password, setPassword] = useState('');
+    const [passwordType, setPasswordType] = useState('password');
+    const handlePasswordChange = (e: any) => {
+        setPassword(e.target.value);
+    };
+    const togglePassword = (e: any) => {
+        e.preventDefault();
+        if (passwordType === 'password') {
+            setPasswordType('text');
+            return;
+        }
+        setPasswordType('password');
+    };
+
     const loginWithGoogle = async () => {
-        console.log("login with google");
-        window.location.replace("http://localhost:8080/auth/google")
+        console.log('login with google');
+        poptastic('http://localhost:8080/auth/google');
+    };
+
+    function poptastic(url: any) {
+        var newWindow = window.open(url, 'name', 'height=600,width=450') as Window;
+        newWindow.focus();
+        window.addEventListener('message', (event) => {
+            if (event.data !== 'failure') {
+                navigate('/areas');
+            }
+        });
     }
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
-        //TODO: loader
         try {
+            setIsLoading(true);
             const res = await loginUser({email, password});
             if (res.access_token) {
                 localStorage.setItem('jwt', res.access_token);
-                navigate("/areas");
+                navigate('/areas');
             } else {
                 setEmail('');
                 setPassword('');
@@ -43,13 +68,14 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
-        //TODO: Remove loader
-    }
+    };
 
     return (
         <>
-        <Header buttons={buttons}/>
+            <Header buttons={buttons} />
             <div className="page">
                 <img className="loginBack" src="LoginBack.svg" alt="loginBack" />
                 <img className="loginBackFiles" src="LoginBackFiles.svg" alt="loginBackRight" />
@@ -59,30 +85,52 @@ const Login = () => {
                             <h1>LOG IN</h1>
                         </div>
                         <div className="formBody">
-                                <input type="email" name="email" id="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                <input type={passIsShown ? 'text' : 'password'} name="password" id="passwordInput" placeholder="Enter Password" unselectable="on" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                                <label htmlFor="passwordInput"><b>Forgot password?</b></label>
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="Enter Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <input
+                                type={passwordType}
+                                name="password"
+                                id="passwordInput"
+                                placeholder="Enter Password"
+                                unselectable="on"
+                                value={password}
+                                onChange={handlePasswordChange}
+                            />
+                            <button className="buttonPassword" onClick={togglePassword}>
+                                {passwordType === 'password' ? (
+                                    <img src="bxs_hide.png" className="buttonHidePassword" alt="hide" />
+                                ) : (
+                                    <img src="bxs_show.png" className="buttonShowPassword" alt="show" />
+                                )}
+                            </button>
                         </div>
                         <div className="formFooter">
-                            <button onClick={handleLogin}>Sign In</button>
+                            <button onClick={handleLogin} disabled={isLoading}>
+                                {isLoading && <Loader />}Sign In
+                            </button>
                         </div>
-                        <hr className="lineText" data-content="Or sign with"/>
+                        <hr className="lineText" data-content="Or sign with" />
                         <div className="alternateLogins">
-                            <button onClick={() => loginWithGoogle()}>
+                            <button type="button" onClick={() => loginWithGoogle()}>
                                 <img src="logo_google.svg" alt="Google" />
                             </button>
-                            <button className="facebookLogin">
-                                <img src="logo_apple.svg" alt="Apple" />
-                            </button>
                         </div>
-                        <Link className='registerText' to='/register'>
-                            <p>Don't have an account? <b>Register now!</b></p>
+                        <Link className="registerText" to="/register">
+                            <p>
+                                Don't have an account? <b>Register now!</b>
+                            </p>
                         </Link>
                     </form>
                 </div>
             </div>
         </>
     );
-}
+};
 
 export default Login;

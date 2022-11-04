@@ -6,6 +6,7 @@ import {
   useColorScheme,
   View,
   Modal,
+  Alert,
 } from 'react-native';
 
 import {WebView} from 'react-native-webview';
@@ -14,6 +15,8 @@ import {useNavigation} from '@react-navigation/native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Colors} from '../../../../Style';
 import GoogleSvg from '../../../components/svg/GoogleSvg';
@@ -43,25 +46,37 @@ const AuthLogin = ({title}: AppProps) => {
 
   const [uri, setURL] = useState('');
 
-  useEffect(() => {
-    Linking.addEventListener('url', url => handleOpenUrl(url.url));
-    Linking.getInitialURL().then((url: any) => {
-      if (url) {
-        console.log(url);
-      }
-    });
-    return () => {
-      Linking.removeAllListeners('url');
-    };
-  }, []);
+  Linking.addEventListener('url', handleUrl)
 
-  const handleOpenUrl = (url: string) => {
-    console.log(url);
+  async function handleUrl(event: any) {
+    try {
+        const accessToken = await getSearchParamFromURL(event.url, "token")
+        if(accessToken != null) {
+            console.log(accessToken)
+            await AsyncStorage.setItem(`${title}accessToken`, accessToken)
+            navigation.navigate('User')
+            Linking.removeAllListeners('url')
+        } else {
+            Alert.alert("An error occured while signin you")
+        }
+    } catch (err) {
+        throw("An error occured: " + err)
+    }
+  }
+
+  const openBrowser = (url: string) => {
+      Linking.openURL(url)
   };
 
-  const openURL = (url: string) => {
-    setURL(url);
-  };
+  const getSearchParamFromURL = (url: string, param: string) => {
+      const include = url.includes(param)
+      if (!include) return null
+      const params = url.split(/([?,=])/)
+      const index = params.indexOf(param)
+      const value = params[index + 2]
+      return value
+  }
+
 
   const IconChoice = (name: string) => {
     switch (name) {
@@ -93,7 +108,7 @@ const AuthLogin = ({title}: AppProps) => {
       ) : (
         <Pressable
           onPress={() => {
-            openURL('http://51.178.29.26:8080/auth/google');
+            openBrowser(`http://area.eu-west-3.elasticbeanstalk.com/auth/${title}`);
           }}>
           <View
             style={[
