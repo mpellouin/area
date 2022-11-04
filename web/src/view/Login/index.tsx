@@ -104,9 +104,9 @@ const Login = () => {
                             />
                             <button className="buttonPassword" onClick={togglePassword}>
                                 {passwordType === 'password' ? (
-                                    <img src="bxs_hide.png" className="buttonHidePassword" alt="hide" />
-                                ) : (
                                     <img src="bxs_show.png" className="buttonShowPassword" alt="show" />
+                                ) : (
+                                    <img src="bxs_hide.png" className="buttonHidePassword" alt="hide" />
                                 )}
                             </button>
                         </div>
