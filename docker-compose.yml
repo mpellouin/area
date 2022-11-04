@@ -1,12 +1,24 @@
 version: "1.0"
 services:
-  server:
-    build: ./server
-    ports:
-      - "8080:8080"
   web:
     build: ./web
+    volumes :
+      - shared-web-mobile:/web
+    depends_on:
+      - mobile
+      - server
     ports:
-      - "8081: 8081"
+      - "8081:8081"
+  server:
+    build: ./server
+    depends_on :
+    - mobile
+    ports:
+      - "8080:8080"
   mobile:
     build: ./mobile
+    volumes :
+      - shared-web-mobile:/mobile
+
+volumes:
+    shared-web-mobile:

@@ -30,3 +30,7 @@ WORKDIR mobile
 COPY . .
 
 RUN npm i
+
+RUN cd android
+
+CMD ["./gradlew assemble"]
