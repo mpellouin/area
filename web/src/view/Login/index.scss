@@ -1,4 +1,4 @@
-@import "../../scss/_vars.scss";
+@import '../../scss/_vars.scss';
 
 .formContainer {
     display: flex;
@@ -24,10 +24,10 @@
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
         .title {
-        font-size: 24px;
-        font-weight: 500;
-        color: #333;
-        margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 20px;
         }
 
         .formBody {
@@ -64,7 +64,7 @@
                 outline: none;
                 border: none;
                 background-color: transparent;
-                
+
                 .buttonHidePassword {
                     position: absolute;
                     top: 58px;
@@ -78,8 +78,8 @@
 
                     &:focus {
                         outline: none;
-                    } 
-                }   
+                    }
+                }
                 .buttonShowPassword {
                     position: absolute;
                     top: 62px;
@@ -93,7 +93,7 @@
 
                     &:focus {
                         outline: none;
-                    } 
+                    }
                 }
             }
         }
@@ -131,16 +131,16 @@
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
-    
-                &:hover {
-                    background-color: rgba($color: $links-white-theme, $alpha: 0.7);
-                }
 
-                &:disabled {
-                    background-color: rgba($color: $links-white-theme, $alpha: 1);
-                    cursor: not-allowed;
-                }
+            &:hover {
+                background-color: rgba($color: $links-white-theme, $alpha: 0.7);
             }
+
+            &:disabled {
+                background-color: rgba($color: $links-white-theme, $alpha: 1);
+                cursor: not-allowed;
+            }
+        }
     }
 
     .alternateLogins {
@@ -161,13 +161,13 @@
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
-    
-                &:hover {
-                    background-color: rgba($color: #078080, $alpha: 0.1);
-                }
-                &disabled {
-                    cursor: not-allowed;
-                }
+
+            &:hover {
+                background-color: rgba($color: #078080, $alpha: 0.1);
+            }
+            &disabled {
+                cursor: not-allowed;
+            }
             img {
                 width: 40px;
                 height: 40px;
@@ -202,7 +202,7 @@
         color: black;
         text-align: center;
         height: 1.5em;
-        opacity: .5;
+        opacity: 0.5;
         &:before {
             content: '';
             background: linear-gradient(to right, transparent, $black, transparent);
@@ -218,7 +218,7 @@
             display: inline-block;
             color: $black;
 
-            padding: 0 .5em;
+            padding: 0 0.5em;
             line-height: 1.5em;
             color: rgba($color: $black, $alpha: 0.9);
             background-color: #fcfcfa;

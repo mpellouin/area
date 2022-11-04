@@ -80,8 +80,8 @@ const AreaPage = () => {
         if (window.opener) {
             window.opener.postMessage(accessToken);
             window.close();
-          }
-    })
+        }
+    });
 
     return (
         <div className="areaPage">
