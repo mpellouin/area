@@ -1,4 +1,4 @@
-@import "../../scss/_vars.scss";
+@import '../../scss/_vars.scss';
 
 .areaPage {
     width: 100%;
@@ -25,7 +25,7 @@
             text-align: center;
 
             margin: 22px;
-            
+
             color: $text-white-theme;
         }
 
@@ -54,7 +54,7 @@
                     text-align: center;
 
                     margin: 22px;
-                    
+
                     color: $text-white-theme;
                 }
             }
@@ -121,7 +121,6 @@
                 background-color: $bg-white-theme;
                 color: $text-white-theme;
             }
-            
         }
 
         .areaModalButtons {
@@ -183,43 +182,45 @@
             border: 1px solid #888;
             width: 80%;
             border-radius: 2px;
-            
+
             .areaCloseButton {
                 overflow: hidden;
-	            position: relative;
-	            border: none;
-	            padding: 0;
-	            width: 2em; height: 2em;
-	            border-radius: 50%;
-	            background: transparent;
-	            color: $text-white-theme;
-	            font: inherit;
-	            text-indent: 100%;
-	            cursor: pointer;
-	
-	            &:focus {
-		            outline: solid 0 transparent;
-		            box-shadow: 0 0 0 2px $black;
-	            }
-	
-	            &:hover {
-		            background: rgba($color: $links-white-theme, $alpha: 0.5);
-                    transition: 0.4s ease-in-out;
-	            }
-	
-	            &:before, &:after {
-		            position: absolute;
-		            top: 15%; 
-                    left: calc(50% - .0625em);
-		            width: .125em; 
-                    height: 70%;
-		            border-radius: .125em;
-		            transform: rotate(45deg);
-		            background: currentcolor;
-		            content: ''
-	            }
+                position: relative;
+                border: none;
+                padding: 0;
+                width: 2em;
+                height: 2em;
+                border-radius: 50%;
+                background: transparent;
+                color: $text-white-theme;
+                font: inherit;
+                text-indent: 100%;
+                cursor: pointer;
 
-	            &:after {
+                &:focus {
+                    outline: solid 0 transparent;
+                    box-shadow: 0 0 0 2px $black;
+                }
+
+                &:hover {
+                    background: rgba($color: $links-white-theme, $alpha: 0.5);
+                    transition: 0.4s ease-in-out;
+                }
+
+                &:before,
+                &:after {
+                    position: absolute;
+                    top: 15%;
+                    left: calc(50% - 0.0625em);
+                    width: 0.125em;
+                    height: 70%;
+                    border-radius: 0.125em;
+                    transform: rotate(45deg);
+                    background: currentcolor;
+                    content: '';
+                }
+
+                &:after {
                     transform: rotate(-45deg);
                 }
             }
@@ -231,9 +232,9 @@
                 font-size: 37px;
                 line-height: 43px;
                 text-align: center;
-                    
+
                 margin: 22px;
-                
+
                 color: $text-white-theme;
             }
 
@@ -255,9 +256,9 @@
                     border-radius: 5px;
 
                     border: rgba($color: $black, $alpha: 0.2) 1.5px solid;
-                    
+
                     margin: 10px;
-                    
+
                     color: $text-white-theme;
 
                     &:focus {
@@ -292,9 +293,9 @@
                     font-size: 37px;
                     line-height: 43px;
                     text-align: center;
-    
+
                     margin: 22px;
-                    
+
                     color: $text-white-theme;
                 }
 
@@ -330,9 +331,9 @@
                             font-size: 18px;
                             line-height: 21px;
                             text-align: center;
-            
+
                             margin: 22px;
-                            
+
                             color: $text-white-theme;
                         }
                     }
@@ -354,9 +355,9 @@
                     font-size: 37px;
                     line-height: 43px;
                     text-align: center;
-    
+
                     margin: 22px;
-                    
+
                     color: $text-white-theme;
                 }
 
@@ -367,13 +368,13 @@
                     align-items: center;
                     justify-content: center;
                     margin-top: 45px;
-                    
+
                     select {
                         width: 100%;
                         padding: 12px 20px;
                         margin: 8px 0;
                         display: inline-block;
-                        border: 1px solid #DDDDDD;
+                        border: 1px solid #dddddd;
                         border-radius: 6px;
                         box-sizing: border-box;
 
@@ -392,9 +393,9 @@
                             font-size: 18px;
                             line-height: 21px;
                             text-align: center;
-            
+
                             margin: 22px;
-                            
+
                             color: $text-white-theme;
                         }
                     }

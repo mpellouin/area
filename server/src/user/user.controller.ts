@@ -2,9 +2,7 @@ import {Controller, Get, Param, Post, Body, Put, Delete, Request, UseGuards} fro
 import {UserService} from './user.service';
 import {User as UserModel} from '@prisma/client';
 import {JwtAuthGuard} from 'src/auth/jwt-auth.guard';
-import { ApiTags } from '@nestjs/swagger';
-
-
+import {ApiTags} from '@nestjs/swagger';
 
 @ApiTags('User routes')
 @Controller('User')

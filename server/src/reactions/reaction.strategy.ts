@@ -20,9 +20,9 @@ export class ReactionService {
     }
 
     async factoryHelper(id: number, body: any): Promise<Observable<any> | undefined> {
-        let response : any
+        let response: any;
 
-        switch(id) {
+        switch (id) {
             case 1:
                 body.apiKey = process.env.GOOGLE_CLIENT_ID;
                 response = await this.googleService.buildSendMailObservable(body);
@@ -31,7 +31,7 @@ export class ReactionService {
             case 3:
                 response = await this.googleService.buildNewEventObservable(body);
             default:
-                response = undefined
+                response = undefined;
         }
         return response;
     }
