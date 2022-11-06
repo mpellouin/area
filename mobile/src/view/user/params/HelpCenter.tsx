@@ -17,7 +17,7 @@ const Styles = StyleSheet.create({
 const HelpCenter = () => {
   return (
     <View style={Styles.container}>
-      <TitleApp title="Help Center" path="User" />
+      <TitleApp title="Help Center" path="User" backbutton={true} />
       <View style={Styles.end}>
         <Credit />
       </View>

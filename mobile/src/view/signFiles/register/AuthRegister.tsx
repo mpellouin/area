@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import RNRestart from 'react-native-restart';
 
-import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
@@ -64,6 +64,7 @@ const AuthRegister = ({title}: AppProps) => {
       const accessToken = await getSearchParamFromURL(event.url, 'token');
       if (accessToken !== null) {
         setItem('isLoggedIn', 'True');
+        setItem(`${title}accessToken`, accessToken);
         RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {

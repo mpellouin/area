@@ -11,7 +11,7 @@ import ForgotPassword from './src/view/signFiles/forgotPasswd/ForgotPassword';
 import ResetPassword from './src/view/signFiles/resetPasswd/ResetPassword';
 
 import Homepage from './src/view/Homepage';
-import Create from './src/view/Create';
+import Create from './src/view/create/Create';
 import Activity from './src/view/Activity';
 import linking from './src/view/signFiles/linking';
 import User from './src/view/user/User';

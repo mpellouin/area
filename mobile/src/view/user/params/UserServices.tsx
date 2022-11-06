@@ -17,7 +17,7 @@ const Styles = StyleSheet.create({
 const UserServices = () => {
   return (
     <View style={Styles.container}>
-      <TitleApp title="My Services" path="User" />
+      <TitleApp title="My Services" path="User" backbutton={true} />
       <View style={Styles.end}>
         <Credit />
       </View>
