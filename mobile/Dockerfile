@@ -25,12 +25,12 @@ RUN npm install -g n
 RUN n prune
 RUN n lts
 
-WORKDIR mobile
+WORKDIR /area/mobile
 
 COPY . .
 
 RUN npm i
 
-RUN cd android
+WORKDIR /area/mobile/android
 
-CMD ["./gradlew assemble"]
+CMD ["./gradlew", "assemble"]

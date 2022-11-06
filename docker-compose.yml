@@ -1,24 +1,38 @@
-version: "1.0"
+version: '2.1'
 services:
-  web:
-    build: ./web
-    volumes :
-      - shared-web-mobile:/web
-    depends_on:
-      - mobile
-      - server
-    ports:
-      - "8081:8081"
-  server:
-    build: ./server
-    depends_on :
-    - mobile
-    ports:
-      - "8080:8080"
-  mobile:
-    build: ./mobile
-    volumes :
-      - shared-web-mobile:/mobile
+    web:
+        build: ./web
+        volumes:
+            - type: volume
+              source: shared-volume
+              target: /area
+        depends_on:
+            mobile:
+                condition: service_completed_successfully
+            server:
+                condition: service_healthy
+        ports:
+            - '8081:8081'
+    server:
+        build: ./server
+        restart: on-failure
+        healthcheck:
+            test: curl --fail http://localhost:8080 || exit 1
+            interval: 60s
+            retries: 5
+            start_period: 20s
+            timeout: 10s
+        depends_on:
+            mobile:
+                condition: service_completed_successfully
+        ports:
+            - '8080:8080'
+    mobile:
+        build: ./mobile
+        volumes:
+            - type: volume
+              source: shared-volume
+              target: /area
 
 volumes:
-    shared-web-mobile:
+    shared-volume:
