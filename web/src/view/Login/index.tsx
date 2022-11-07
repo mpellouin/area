@@ -40,7 +40,7 @@ const Login = () => {
 
     const loginWithGoogle = async () => {
         console.log('login with google');
-        poptastic('http://localhost:8080/auth/google');
+        poptastic(`${process.env.REACT_APP_BASE_URL}/auth/google`);
     };
 
     function poptastic(url: any) {
