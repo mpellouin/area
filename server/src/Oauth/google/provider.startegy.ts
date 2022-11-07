@@ -4,7 +4,7 @@ import {Strategy, verifyCallback} from 'passport-google-oauth20';
 import {env} from 'process';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+export class ProviderStrategy extends PassportStrategy(Strategy, 'google-provider') {
     constructor() {
         super({
             clientID: env.GOOGLE_CLIENT_ID,
@@ -32,12 +32,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
             prompt: 'consent',
         };
     }
+
+    authenticate(req, options) {
+        options.state = '{"provider": "google"}';
+        super.authenticate(req, options);
+    }
+
     async validate(req: any, accessToken: string, refreshToken: string, profile: any, done: verifyCallback): Promise<any> {
-        const {name, emails, id} = profile;
-        let state;
-        if (req.query.state) {
-            state = JSON.parse(req.query.state);
-        }
+        const {name, emails, id, state} = profile;
+        console.log(req, profile);
         const user = {
             email: emails[0].value,
             firstName: name.givenName,

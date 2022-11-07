@@ -17,10 +17,26 @@ export class OAuthController {
         console.log('someone is trying to login with google');
     }
 
+    @UseGuards(AuthGuard('google-provider'))
+    @Get('google/provider')
+    @ApiOperation({description: 'This route is used to get provider from google', summary: 'provider with google'})
+    async provWithGoogle() {
+        console.log('someone is trying to prov with google');
+    }
+
     @UseGuards(AuthGuard('google'))
     @Get('google/redirect')
     @ApiOperation({description: 'This route is the callback of the auth/google route', summary: 'login with google callback'})
     async loginWithGoogleRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
+        if (req.user.state) {
+            res.redirect(
+                (process.env.CLIENT_URL || 'http://localhost:8081') +
+                    '/services?token=' +
+                    req.user.accessToken +
+                    '&provider=google&refresh=' +
+                    req.user.refreshToken,
+            );
+        }
         const user = await this.oauthService.loggingWithGoogle(req, body);
         if (user) {
             const user = await this.userService.users({where: {email: body.email}});

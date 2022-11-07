@@ -2,6 +2,7 @@ import {Injectable, OnModuleDestroy, OnModuleInit} from '@nestjs/common';
 import {PrismaService} from '../prisma.service';
 import {Service, Prisma, User} from '@prisma/client';
 import {ProviderService} from 'src/providers/provider.service';
+import {AreaStatusType} from 'src/types/status';
 
 @Injectable()
 export class ServicesService {
@@ -44,7 +45,7 @@ export class ServicesService {
         });
     }
 
-    async subscribe(serviceId: number, req: any): Promise<User> {
+    async subscribe(serviceId: number, req: any): Promise<AreaStatusType> {
         const user = await this.prisma.user.findUnique({
             where: {ID: req.user.ID},
         });
@@ -52,16 +53,33 @@ export class ServicesService {
             return;
         } else {
             if (serviceId === 2 || serviceId === 3) {
+                console.log(req.user.ID);
                 const providers = await this.prisma.provider.findMany({
-                    where: {user: {ID: req.user.ID}, Name: 'Google'},
+                    where: {
+                        userID: req.user.ID,
+                    },
                 });
+                console.log(providers);
+                if (providers.length === 0) {
+                    return {
+                        error: true,
+                        message: 'You need to add a provider before subscribing to this service',
+                        status: 400,
+                        errorCode: 'NO_GOOGLE_PROVIDER',
+                    };
+                }
             }
-            return this.prisma.user.update({
+            await this.prisma.user.update({
                 where: {ID: req.user.ID},
                 data: {
                     services: user.services + serviceId.toString(),
                 },
             });
+            return {
+                error: false,
+                status: 200,
+                message: 'Successfully subscribed to service',
+            };
         }
     }
 
