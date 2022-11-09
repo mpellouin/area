@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import './index.scss';
 
 import Header from '../../components/Header';
@@ -71,6 +71,7 @@ const servicesList: serviceType[] = [
 function Services() {
     const [services, setServices] = useState(servicesList);
     const [forceRefresh, setForceRefresh] = useState(true);
+    const ref = useRef(false);
 
     useEffect(() => {
         if (!forceRefresh) return;
@@ -90,6 +91,22 @@ function Services() {
             setServices(newServices);
         });
     }, [forceRefresh, services]);
+
+    useEffect(() => {
+        if (ref.current) {
+            return;
+        }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const provider = urlParams.get('provider');
+        const accessToken = urlParams.get('token');
+        const refreshToken = urlParams.get('refresh');
+        if (window.opener) {
+            window.opener.postMessage({provider, accessToken, refreshToken});
+            ref.current = true;
+            window.close();
+        }
+    }, []);
 
     return (
         <>

@@ -95,14 +95,6 @@ export class AppService {
         return this.authService.loginUser(user);
     }
 
-    subscribeToService(serviceId: number): AreaStatusType {
-        return {
-            error: false,
-            status: 200,
-            message: 'Subscribed to service ' + serviceId,
-        };
-    }
-
     async createArea(req, actionId: string, reactionId: string): Promise<AreaStatusType> {
         try {
             const observable = await this.actionsService.factory(parseInt(actionId), req.body, req);

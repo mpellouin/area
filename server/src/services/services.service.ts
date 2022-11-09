@@ -1,10 +1,12 @@
 import {Injectable, OnModuleDestroy, OnModuleInit} from '@nestjs/common';
 import {PrismaService} from '../prisma.service';
 import {Service, Prisma, User} from '@prisma/client';
+import {ProviderService} from 'src/providers/provider.service';
+import {AreaStatusType} from 'src/types/status';
 
 @Injectable()
 export class ServicesService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService, private providerService: ProviderService) {}
 
     async findMany(params: {
         skip?: number;
@@ -43,19 +45,41 @@ export class ServicesService {
         });
     }
 
-    async subscribe(serviceId: number, req: any): Promise<User> {
+    async subscribe(serviceId: number, req: any): Promise<AreaStatusType> {
         const user = await this.prisma.user.findUnique({
             where: {ID: req.user.ID},
         });
         if (user.services.includes(serviceId.toString())) {
             return;
         } else {
-            return this.prisma.user.update({
+            if (serviceId === 2 || serviceId === 3) {
+                console.log(req.user.ID);
+                const providers = await this.prisma.provider.findMany({
+                    where: {
+                        userID: req.user.ID,
+                    },
+                });
+                console.log(providers);
+                if (providers.length === 0) {
+                    return {
+                        error: true,
+                        message: 'You need to add a provider before subscribing to this service',
+                        status: 400,
+                        errorCode: 'NO_GOOGLE_PROVIDER',
+                    };
+                }
+            }
+            await this.prisma.user.update({
                 where: {ID: req.user.ID},
                 data: {
                     services: user.services + serviceId.toString(),
                 },
             });
+            return {
+                error: false,
+                status: 200,
+                message: 'Successfully subscribed to service',
+            };
         }
     }
 

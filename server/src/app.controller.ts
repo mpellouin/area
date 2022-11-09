@@ -34,12 +34,6 @@ export class AppController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Post('subscribe/:serviceId')
-    subscribeToService(@Param('serviceId') serviceId): AreaStatusType {
-        return this.appService.subscribeToService(serviceId);
-    }
-
-    @UseGuards(JwtAuthGuard)
     @Post('createArea/:actionId/:reactionId')
     async poc(@Request() req, @Param('actionId') actionId: string, @Param('reactionId') reactionID: string): Promise<AreaStatusType> {
         return this.appService.createArea(req, actionId, reactionID);

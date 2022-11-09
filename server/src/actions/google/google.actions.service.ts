@@ -1,13 +1,22 @@
 import {HttpService} from '@nestjs/axios';
 import {Injectable} from '@nestjs/common';
 import {Observable} from 'rxjs';
+import {OAuthService} from 'src/Oauth/oauth.service';
+import {ProviderService} from 'src/providers/provider.service';
 
 @Injectable()
 export class GoogleActionsService {
-    constructor(private readonly httpService: HttpService) {}
+    constructor(
+        private readonly httpService: HttpService,
+        private readonly oauthService: OAuthService,
+        private readonly providerService: ProviderService,
+    ) {}
 
-    async buildNewEventObservable(body: any): Promise<Observable<any> | undefined> {
+    async buildNewEventObservable(body: any, userId: number): Promise<Observable<any> | undefined> {
         if (!body?.calendarId || !body?.accessToken) return undefined;
+        await this.oauthService.refreshGoogleToken(userId);
+        const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
+        console.log(user);
         const observable = new Observable((observer) => {
             let newestEvent = 0;
             this.httpService
@@ -19,7 +28,7 @@ export class GoogleActionsService {
                     }`,
                     {
                         headers: {
-                            Authorization: `Bearer ${body.accessToken}`,
+                            Authorization: `Bearer ${user[0].accessToken}`,
                         },
                     },
                 )
@@ -28,8 +37,10 @@ export class GoogleActionsService {
                         newestEvent = response.data.items[0].id;
                     }
                 });
-            setInterval(() => {
+            setInterval(async () => {
                 console.log('Fetching GCalendar events');
+                await this.oauthService.refreshGoogleToken(userId);
+                const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
                 this.httpService
                     .get(
                         `https://www.googleapis.com/calendar/v3/calendars/${
@@ -39,7 +50,7 @@ export class GoogleActionsService {
                         }`,
                         {
                             headers: {
-                                Authorization: `Bearer ${body.accessToken}`,
+                                Authorization: `Bearer ${user[0].accessToken}`,
                             },
                         },
                     )

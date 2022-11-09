@@ -1,13 +1,14 @@
-import {Body, Controller, Get, Param, Redirect, Req, Res, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Req, Res, UseGuards} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-import {ApiBody, ApiOperation, ApiProperty, ApiTags} from '@nestjs/swagger';
-import {response} from 'express';
+import {AuthService} from 'src/auth/auth.service';
+import {UserService} from 'src/user/user.service';
 import {OAuthService} from './oauth.service';
+import {ApiBody, ApiOperation, ApiTags} from '@nestjs/swagger';
 
 @Controller('auth')
 @ApiTags('Oauth routes')
 export class OAuthController {
-    constructor(private oauthService: OAuthService) {}
+    constructor(private oauthService: OAuthService, private userService: UserService, private authService: AuthService) {}
 
     @UseGuards(AuthGuard('google'))
     @Get('google')
@@ -16,13 +17,31 @@ export class OAuthController {
         console.log('someone is trying to login with google');
     }
 
+    @UseGuards(AuthGuard('google-provider'))
+    @Get('google/provider')
+    @ApiOperation({description: 'This route is used to get provider from google', summary: 'provider with google'})
+    async provWithGoogle() {
+        console.log('someone is trying to prov with google');
+    }
+
     @UseGuards(AuthGuard('google'))
     @Get('google/redirect')
     @ApiOperation({description: 'This route is the callback of the auth/google route', summary: 'login with google callback'})
     async loginWithGoogleRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
+        if (req.user.state) {
+            res.redirect(
+                (process.env.CLIENT_URL || 'http://localhost:8081') +
+                    '/services?token=' +
+                    req.user.accessToken +
+                    '&provider=google&refresh=' +
+                    req.user.refreshToken,
+            );
+        }
         const user = await this.oauthService.loggingWithGoogle(req, body);
         if (user) {
-            res.redirect(`${process.env.CLIENT_URL}/Areas?token=` + user.accessToken);
+            const user = await this.userService.users({where: {email: body.email}});
+            const jwt = await this.authService.loginUser(user[user.length - 1]);
+            res.redirect(`${process.env.CLIENT_URL}/Areas?jwt=` + jwt.access_token);
         }
     }
 
