@@ -100,7 +100,7 @@ export class AppService {
             const observable = await this.actionsService.factory(parseInt(actionId), req.body, req);
             console.log('observable created');
             observable.subscribe((data: any) => {
-                this.reactionsService.factory(parseInt(reactionId), req.body);
+                this.reactionsService.factory(req, parseInt(reactionId), req.body);
             });
         } catch (e) {
             console.log(e);

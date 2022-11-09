@@ -34,6 +34,9 @@ export class ActionsService {
         if (id == 4 && (await this.services.verifySubscription(3, req))) {
             return await this.googleService.buildNewEventObservable(body, req.user.ID);
         }
+        if (id == 5 && (await this.services.verifySubscription(2, req))) {
+            return await this.googleService.buildNewMailObservable(body, req.user.ID);
+        }
         throw new Error('Unknown Action ID or Service not subscribed');
     }
 }
