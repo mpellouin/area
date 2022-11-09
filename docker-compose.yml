@@ -11,6 +11,7 @@ services:
                 condition: service_completed_successfully
             server:
                 condition: service_healthy
+        env_file: ./web/.env
         ports:
             - '8081:8081'
     server:
@@ -25,6 +26,7 @@ services:
         depends_on:
             mobile:
                 condition: service_completed_successfully
+        env_file: ./server/.env
         ports:
             - '8080:8080'
     mobile:
