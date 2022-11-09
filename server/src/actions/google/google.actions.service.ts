@@ -65,4 +65,42 @@ export class GoogleActionsService {
         });
         return observable;
     }
+
+    async buildNewMailObservable(body: any, userId: number): Promise<Observable<any> | undefined> {
+        if (!body.actionUserId) return undefined;
+        await this.oauthService.refreshGoogleToken(userId);
+        const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
+        const observable = new Observable((observer) => {
+            let biggestEmailId = 0;
+            this.httpService
+                .get(`https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}`, {
+                    headers: {
+                        Authorization: `Bearer ${user[0].accessToken}`,
+                    },
+                })
+                .subscribe((response) => {
+                    if ((response.data?.messages.length ?? -1) > 0) {
+                        biggestEmailId = response.data.messages[0].id;
+                    }
+                });
+            setInterval(async () => {
+                await this.oauthService.refreshGoogleToken(userId);
+                const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
+                this.httpService
+                    .get(`https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}`, {
+                        headers: {
+                            Authorization: `Bearer ${user[0].accessToken}`,
+                        },
+                    })
+                    .subscribe((response) => {
+                        console.log(response.data);
+                        if ((response.data?.messages.length ?? -1) > 0 && (response.data?.messages[0].id ?? -1) > biggestEmailId) {
+                            observer.next(response.data);
+                            biggestEmailId = response.data.messages[0].id;
+                        }
+                    });
+            }, 10000);
+        });
+        return observable;
+    }
 }

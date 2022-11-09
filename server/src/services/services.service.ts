@@ -100,6 +100,7 @@ export class ServicesService {
     }
 
     async verifySubscription(serviceId: number, req: any): Promise<boolean> {
+        console.log(req.user);
         const user = await this.prisma.user.findUnique({
             where: {ID: req.user.ID},
         });
