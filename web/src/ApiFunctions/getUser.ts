@@ -1,5 +1,5 @@
 export const getUser = async () => {
-    const response = await fetch(`http://localhost:8080/user`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/user`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
