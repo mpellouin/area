@@ -179,7 +179,7 @@
             margin: auto;
             padding: 20px;
             margin-top: 100px;
-            border: 1px solid #888;
+            border: 1px solid rgba($color: $black, $alpha: 0.2);
             width: 80%;
             border-radius: 2px;
 
@@ -312,7 +312,7 @@
                         padding: 12px 20px;
                         margin: 8px 0;
                         display: inline-block;
-                        border: 1px solid #ccc;
+                        border: 1px solid rgba($color: $black, $alpha: 0.1);
                         border-radius: 5px;
                         box-sizing: border-box;
 
@@ -374,7 +374,7 @@
                         padding: 12px 20px;
                         margin: 8px 0;
                         display: inline-block;
-                        border: 1px solid #dddddd;
+                        border: 1px solid rgba($color: $black, $alpha: 0.1);
                         border-radius: 6px;
                         box-sizing: border-box;
 

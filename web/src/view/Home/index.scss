@@ -1,4 +1,4 @@
-@import '../../scss/_vars.scss';
+@import "../../scss/_vars.scss";
 
 .homepage {
     width: 100%;
@@ -16,6 +16,7 @@
         display: flex;
         margin: 100px 0 150px 20px;
 
+
         @media screen and (max-width: 1200px) {
             align-items: center;
             margin-top: 137px;
@@ -26,7 +27,7 @@
                 display: none;
             }
         }
-        .img_vector1 {
+        .img_vector1{
             width: 600px;
             height: 200px;
             display: flex;
@@ -35,7 +36,8 @@
             z-index: 7;
             position: absolute;
             user-select: none;
-            @media screen and (max-width: 1200px) {
+            @media screen and (max-width: 1200px)
+            {
                 display: none;
             }
         }
@@ -48,7 +50,8 @@
             top: 580px;
             user-select: none;
             z-index: 7;
-            @media screen and (max-width: 1200px) {
+            @media screen and (max-width: 1200px)
+            {
                 top: 400px;
             }
         }
@@ -68,7 +71,7 @@
                 font-size: 37px;
                 line-height: 43px;
                 text-align: center;
-                margin: 22px;
+                margin: 22px; 
                 color: $text-white-theme;
             }
             .secondaryText {
@@ -83,7 +86,7 @@
                 text-align: center;
 
                 margin: 22px;
-
+                
                 color: $text-white-theme;
             }
         }
@@ -99,7 +102,6 @@
             left: 60%;
             top: 100px;
 
-            // margin: 104px 0 103px 0;
             width: 552px;
             height: 513px;
             @media screen and (max-width: 1200px) {
@@ -134,8 +136,6 @@
             left: 10%;
             width: auto;
             height: auto;
-            // width: 785px;
-            // height: 86px;
 
             font-family: $font-family;
             font-style: normal;
@@ -175,14 +175,14 @@
             position: absolute;
             left: 60%;
             top: 1800px;
-
+            
             font-family: $font-family;
             font-style: normal;
             font-weight: bold;
             font-size: 37px;
             line-height: 43px;
             text-align: center;
-
+            
             color: $text-white-theme;
         }
         .ifThen_vector {
@@ -224,49 +224,6 @@
             @media screen and (max-width: 1200px) {
                 top: 1800px;
             }
-        }
-    }
-    .teamPart {
-        position: absolute;
-        width: 1440px;
-        height: 520px;
-        top: 2460px;
-        background-color: cornflowerblue;
-        display: flex;
-        flex-direction: column;
-
-        .teamTitle {
-            display: flex;
-            font-family: $font-family;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 64px;
-            line-height: 75px;
-            justify-content: center;
-
-            color: $black;
-            background-color: $design-white-theme;
-        }
-        .teamMembers {
-            display: flex;
-            justify-content: space-evenly;
-            flex-direction: column;
-            align-items: center;
-        }
-        .members {
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            flex-direction: row;
-        }
-
-        .teamFrame {
-            display: flex;
-            width: 170px;
-            height: 170px;
-            background-color: $design-white-theme;
-            border-radius: 20px;
-            border: 1px solid $black;
         }
     }
 }

@@ -1,18 +1,24 @@
 import {useState} from 'react';
 import {serviceSubscribe, serviceUnsubscribe} from '../ApiFunctions/serviceActions';
+import {poptastic} from '../helpers/poptastic';
 import '../scss/card.scss';
 import Loader from './Loader';
 
 function Card({name, description, image, isSubbed, service, forceRefresh}: any) {
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleCardClick = async () => {
+    const handleCardClick: any = async () => {
         setIsLoading(true);
+        let res;
         try {
             if (isSubbed) {
-                await serviceUnsubscribe(service);
+                res = await serviceUnsubscribe(service);
             } else {
-                await serviceSubscribe(service);
+                res = await serviceSubscribe(service);
+            }
+            if (res.error && res.errorCode === 'NO_GOOGLE_PROVIDER') {
+                poptastic((process.env.REACT_APP_SERVER_URL || 'http://localhost:8080') + '/auth/google/provider', 'google');
+                return;
             }
         } catch (e) {
             console.log(e);

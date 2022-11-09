@@ -1,5 +1,7 @@
 FROM node
 
+WORKDIR /server
+
 COPY . .
 
 RUN yarn install

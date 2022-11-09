@@ -62,11 +62,11 @@ const AreaPage = () => {
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const accessToken = urlParams.get('token');
-        if (accessToken) {
-            localStorage.setItem('accessToken', accessToken);
+        const jwt = urlParams.get('jwt');
+        if (jwt) {
+            localStorage.setItem('jwt', jwt);
         } else {
-            if (!localStorage.getItem('accessToken') && !localStorage.getItem('jwt')) {
+            if (!localStorage.getItem('jwt')) {
                 console.log('back to login');
                 navigate('/login');
             }
@@ -76,7 +76,7 @@ const AreaPage = () => {
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const accessToken = urlParams.get('token');
+        const accessToken = urlParams.get('jwt');
         if (window.opener) {
             window.opener.postMessage(accessToken);
             window.close();
