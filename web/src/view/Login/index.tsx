@@ -41,7 +41,7 @@ const Login = () => {
 
     const loginWithGoogle = async () => {
         console.log('login with google');
-        poptastic(`${process.env.REACT_APP_BASE_URL}/auth/google`, navigate);
+        poptastic(`${process.env.REACT_APP_SERVER_URL}/auth/google`, navigate);
     };
 
     const handleLogin = async (e: any) => {

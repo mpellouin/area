@@ -64,6 +64,17 @@ const actionsList: AreaParam[] = [
             },
         ],
     },
+    {
+        id: 5,
+        name: 'New message received',
+        serviceId: 2,
+        params: [
+            {
+                placeholder: 'Your authenticated gmail address',
+                name: 'actionUserId',
+            },
+        ],
+    },
 ];
 
 const reactionsList: AreaParam[] = [
