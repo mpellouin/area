@@ -3,6 +3,7 @@ import {UserService} from 'src/user/user.service';
 import {genSalt, hash} from 'bcryptjs';
 import {hashSync} from 'bcryptjs';
 import {JwtService} from '@nestjs/jwt';
+import {User} from '@prisma/client';
 
 @Injectable()
 export class AuthService {

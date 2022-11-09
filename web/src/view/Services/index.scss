@@ -1,9 +1,11 @@
+@import '../../scss/_vars.scss';
+
 .services {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
-    background-color: #f8f5f2;
+    background-color: $bg-white-theme;
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;

@@ -67,4 +67,4 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 
-#pre-commit hooks
+**/.env

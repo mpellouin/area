@@ -12,27 +12,24 @@ export class ReactionService {
         private readonly services: ServicesService,
     ) {}
 
-    async factory(id: number, body: any): Promise<Observable<any>> {
+    async factory(req: any, id: number, body: any): Promise<Observable<any>> {
         let observable: Observable<any> | undefined = undefined;
-        observable = await this.factoryHelper(id, body);
+        observable = await this.factoryHelper(req, id, body);
         if (observable === undefined) throw new Error('Unknown action');
         return observable;
     }
 
-    async factoryHelper(id: number, body: any): Promise<Observable<any> | undefined> {
-        let response: any;
-
-        switch (id) {
-            case 1:
-                body.apiKey = process.env.GOOGLE_CLIENT_ID;
-                response = await this.googleService.buildSendMailObservable(body);
-            case 2:
-                response = await this.discordService.buildSendMessageObservable(body);
-            case 3:
-                response = await this.googleService.buildNewEventObservable(body);
-            default:
-                response = undefined;
+    async factoryHelper(req: any, id: number, body: any): Promise<Observable<any> | undefined> {
+        if (id == 1 && (await this.services.verifySubscription(2, req))) {
+            body.apiKey = process.env.GOOGLE_CLIENT_ID;
+            return await this.googleService.buildSendMailObservable(body);
         }
-        return response;
+        if (id == 2 && (await this.services.verifySubscription(0, req))) {
+            return await this.discordService.buildSendMessageObservable(body);
+        }
+        if (id == 3 && (await this.services.verifySubscription(3, req))) {
+            return await this.googleService.buildNewEventObservable(body);
+        }
+        throw new Error('Unknown Reaction ID or Service not subscribed');
     }
 }

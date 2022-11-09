@@ -5,6 +5,7 @@ import './index.scss';
 import Header from '../../components/Header';
 import registerUser from '../../ApiFunctions/registerUser';
 import Loader from '../../components/Loader';
+import {poptastic} from '../../helpers/poptastic';
 
 const buttons = [
     {
@@ -28,18 +29,8 @@ const Register = () => {
 
     const loginWithGoogle = async () => {
         console.log('login with google');
-        poptastic('http://localhost:8080/auth/google');
+        poptastic(`${process.env.REACT_APP_SERVER_URL}/auth/google`, navigate);
     };
-
-    function poptastic(url: any) {
-        var newWindow = window.open(url, 'name', 'height=600,width=450') as Window;
-        newWindow.focus();
-        window.addEventListener('message', (event) => {
-            if (event.data !== 'failure') {
-                navigate('/areas');
-            }
-        });
-    }
 
     const handleRegister = async (e: any) => {
         e.preventDefault();

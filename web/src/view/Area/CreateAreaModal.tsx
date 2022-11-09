@@ -56,11 +56,22 @@ const actionsList: AreaParam[] = [
     {
         id: 4,
         name: 'New Google calendar event in less than an hour',
-        serviceId: 2,
+        serviceId: 3,
         params: [
             {
                 placeholder: 'Google calendar id',
                 name: 'calendarId',
+            },
+        ],
+    },
+    {
+        id: 5,
+        name: 'New message received',
+        serviceId: 2,
+        params: [
+            {
+                placeholder: 'Your authenticated gmail address',
+                name: 'actionUserId',
             },
         ],
     },
@@ -70,7 +81,7 @@ const reactionsList: AreaParam[] = [
     {
         id: 1,
         name: 'Send mail to Y',
-        serviceId: 3,
+        serviceId: 2,
         params: [
             {
                 placeholder: 'Subject of the mail',
@@ -112,7 +123,7 @@ const reactionsList: AreaParam[] = [
     {
         id: 3,
         name: 'Create new Google calendar event',
-        serviceId: 2,
+        serviceId: 3,
         params: [
             {
                 placeholder: 'Google calendar id',

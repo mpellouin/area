@@ -4,7 +4,7 @@
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    border: double #f45d48;
+    border: 1px rgba($color: $black, $alpha: 0.6) solid;
     position: relative;
     user-select: none;
     display: flex;
@@ -14,6 +14,7 @@
 
     &:hover {
         transform: scale(1.01);
+        border: 1px rgba($color: $black, $alpha: 1) solid;
         transition: 0.1s ease-in;
         box-shadow: 6px 6px 2px 1px rgba(34, 37, 37, 0.1);
     }
@@ -56,11 +57,24 @@
         cursor: pointer;
         border-radius: 10px;
         position: absolute;
+        left: 40%;
         bottom: 6px;
-        margin: 0% calc(50% - 120px / 2);
+
+        @media screen and (max-width: 1280px) {
+            left: 32%;
+        }
+        &:hover {
+            background-color: rgba($color: $black, $alpha: 1);
+            transition-duration: 0.4s;
+        }
     }
 
     .card-button-subbed {
-        background-color: red;
+        background-color: $design-white-theme;
+
+        &:hover {
+            background-color: red;
+            transition-duration: 0.4s;
+        }
     }
 }
