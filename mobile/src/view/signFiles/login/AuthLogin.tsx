@@ -12,8 +12,6 @@ import RNRestart from 'react-native-restart';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import {Colors} from '../../../../Style';
 import GoogleSvg from '../../../components/svg/GoogleSvg';
 import TwitterSvg from '../../../components/svg/TwitterSvg';
@@ -44,11 +42,11 @@ const AuthLogin = ({title}: AppProps) => {
 
   async function handleUrl(event: any) {
     try {
-      const accessToken = await getSearchParamFromURL(event.url, 'token');
-      if (accessToken != null) {
+      const jwt = await getSearchParamFromURL(event.url, 'jwt');
+      if (jwt != null) {
         setItem('isLoggedIn', 'True');
-        console.log(accessToken);
-        setItem(`${title}accessToken`, accessToken);
+        console.log(jwt);
+        setItem(`jwt`, jwt);
         RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {

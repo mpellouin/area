@@ -89,7 +89,7 @@ const Activity = () => {
                 },
                 Styles.textError,
               ]}>
-              You have no activity for now, create one an action reaction !
+              You have no activity for now, create an action reaction !
             </Text>
             <View style={Styles.containerButton}>
               <Pressable

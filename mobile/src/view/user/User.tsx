@@ -67,7 +67,6 @@ const User = () => {
           title={'About Us'}
           component={'AboutUs'}
         />
-
         <LogOut />
       </View>
       <View style={Styles.end}>
