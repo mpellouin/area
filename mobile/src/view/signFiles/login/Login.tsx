@@ -6,7 +6,9 @@ import {
   View,
   ScrollView,
   Text,
+  Pressable,
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAt, faUnlock} from '@fortawesome/free-solid-svg-icons';
@@ -19,8 +21,9 @@ import Title from '../../../components/Title';
 import Separator from '../../../components/Separator';
 import LoginSvg from '../../../components/svg/LoginSvg';
 
-import ButtonLogin from './ButtonLogin';
 import AuthLogin from './AuthLogin';
+import {loginUser} from '../../../apiCalls/UserCalls';
+import {getItem, setItem} from '../../../components/storage/localStorage';
 
 const Styles = StyleSheet.create({
   container: {
@@ -52,6 +55,25 @@ const Styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  containerButton: {
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    paddingHorizontal: 24,
+  },
+  buttonStyle: {
+    height: 35,
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
+  textStyle: {
+    color: Colors.textD,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   input: {
     marginLeft: 35,
@@ -86,9 +108,40 @@ const Styles = StyleSheet.create({
 
 const Login = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState('');
+  const [password, setPwd] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const res = await loginUser({email, password});
+      console.log(res.access_token);
+      if (res.access_token) {
+        setItem('isLoggedIn', 'true');
+        setItem('jwt', res.access_token);
+      } else {
+        setEmail('');
+        setPwd('');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      getItem('isLoggedIn')
+        .then(data => data)
+        .then(value => {
+          if (value !== null) {
+            setIsLoggedIn(true);
+          } else setIsLoggedIn(false);
+        });
+      setIsLoading(false);
+      isLoggedIn === true ? RNRestart.Restart() : '';
+    }
+  };
 
   return (
     <ScrollView style={Styles.container}>
@@ -149,7 +202,29 @@ const Login = () => {
           Forgot Password ?
         </Text>
       </View>
-      <ButtonLogin title="Login" width={160} email={email} pwd={pwd} />
+      <View style={Styles.containerButton}>
+        <Pressable
+          style={({pressed}) => [
+            Styles.buttonStyle,
+            {
+              backgroundColor: isDarkMode
+                ? pressed
+                  ? Colors.majorDOpacity
+                  : Colors.majorD
+                : pressed
+                ? Colors.majorWOpacity
+                : Colors.majorW,
+            },
+            {
+              width: 160,
+            },
+          ]}
+          onPress={() => {
+            handleLogin();
+          }}>
+          <Text style={Styles.textStyle}>Login</Text>
+        </Pressable>
+      </View>
       <View style={Styles.separator}>
         <Separator marginTop={15} marginLeft={0} width={137.5} />
         <Text

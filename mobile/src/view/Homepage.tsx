@@ -18,6 +18,7 @@ import {Colors} from '../../Style';
 import Navbar from '../components/Navbar';
 import TitleApp from '../components/TitleApp';
 import SeparatorColor from '../components/SeparatorColor';
+import {removeItem} from '../components/storage/localStorage';
 
 const Styles = StyleSheet.create({
   container: {

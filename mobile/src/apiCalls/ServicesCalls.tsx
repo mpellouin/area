@@ -2,7 +2,7 @@ import {getItem} from '../components/storage/localStorage';
 
 const serviceSubscribe = async (id: number) => {
   const response = await fetch(
-    `http://localhost:8080/services/subscribe/${id}`,
+    `http://area.eu-west-3.elasticbeanstalk.com/services/subscribe/${id}`,
     {
       method: 'POST',
       headers: {
@@ -17,7 +17,7 @@ const serviceSubscribe = async (id: number) => {
 
 const serviceUnsubscribe = async (id: number) => {
   const response = await fetch(
-    `http://localhost:8080/services/unsubscribe/${id}`,
+    `http://area.eu-west-3.elasticbeanstalk.com/services/unsubscribe/${id}`,
     {
       method: 'POST',
       headers: {
