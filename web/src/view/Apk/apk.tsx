@@ -1,8 +1,9 @@
 import {useEffect} from 'react';
-import {redirect} from 'react-router-dom';
+import {redirect, useNavigate} from 'react-router-dom';
 import './index.scss';
 
 function Apk() {
+    const navigate = useNavigate();
     useEffect(() => {
         fetch('/area/mobile/android/app/build/outputs/apk/release/app-release.apk').then((res) => {
             res.blob().then((blob) => {
@@ -13,6 +14,7 @@ function Apk() {
                 downloadApk.click();
             });
         });
+        navigate('/');
     });
 
     return <></>;
