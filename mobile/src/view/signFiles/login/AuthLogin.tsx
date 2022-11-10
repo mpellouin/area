@@ -43,13 +43,14 @@ const AuthLogin = ({title}: AppProps) => {
   async function handleUrl(event: any) {
     try {
       const jwt = await getSearchParamFromURL(event.url, 'jwt');
-      if (jwt != null) {
+      if (jwt !== null) {
         setItem('isLoggedIn', 'True');
         console.log(jwt);
         setItem(`jwt`, jwt);
         RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {
+        console.log(event.url);
         Alert.alert('An error occured while signin you');
       }
     } catch (err) {
