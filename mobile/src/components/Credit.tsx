@@ -38,7 +38,7 @@ const Credit = () => {
         }}>
         Terms & Privacy
       </Text>
-      <Text>0.1.0</Text>
+      <Text>0.1.2</Text>
     </View>
   );
 };
