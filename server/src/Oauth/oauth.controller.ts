@@ -29,6 +29,7 @@ export class OAuthController {
     @ApiOperation({description: 'This route is the callback of the auth/google route', summary: 'login with google callback'})
     async loginWithGoogleRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
         if (req.user.state) {
+            console.log('using state');
             res.redirect(
                 (process.env.CLIENT_URL || 'http://localhost:8081') +
                     '/services?token=' +
@@ -39,6 +40,7 @@ export class OAuthController {
         }
         const user = await this.oauthService.loggingWithGoogle(req, body);
         if (user) {
+            console.log('using user');
             const user = await this.userService.users({where: {email: body.email}});
             const jwt = await this.authService.loginUser(user[user.length - 1]);
             res.redirect(`${process.env.CLIENT_URL}/Areas?jwt=` + jwt.access_token);

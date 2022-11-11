@@ -149,6 +149,17 @@ const reactionsList: AreaParam[] = [
             },
         ],
     },
+    {
+        id: 4,
+        name: 'Create a new Google Document',
+        serviceId: 2,
+        params: [
+            {
+                placeholder: 'title of your document',
+                name: 'title',
+            },
+        ],
+    },
 ];
 
 const CreateAreaModal = ({setForceRefresh, setIsOpened, user}: any) => {
