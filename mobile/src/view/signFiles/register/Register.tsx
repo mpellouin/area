@@ -6,7 +6,9 @@ import {
   ScrollView,
   useColorScheme,
   TextInput,
+  Pressable,
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 
 import {faAt, faLock, faUnlock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -20,8 +22,9 @@ import Title from '../../../components/Title';
 import Separator from '../../../components/Separator';
 import ButtonBack from '../../../components/buttons/ButtonBack';
 
-import ButtonRegister from './ButtonRegister';
 import AuthRegister from './AuthRegister';
+import {registerUser} from '../../../apiCalls/UserCalls';
+import {getItem, setItem} from '../../../components/storage/localStorage';
 
 const Styles = StyleSheet.create({
   container: {
@@ -47,6 +50,13 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  containerButton: {
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    paddingHorizontal: 24,
+  },
   input: {
     marginLeft: 35,
     marginBottom: 2,
@@ -67,6 +77,18 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
   },
+  buttonStyle: {
+    height: 35,
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
+  textStyle: {
+    color: Colors.textD,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
 const Register = () => {
@@ -75,7 +97,38 @@ const Register = () => {
 
   const [email, setEmail] = useState('');
   const [confirm, setConfirm] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [password, setPwd] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleRegister = async () => {
+    try {
+      setIsLoading(true);
+      const res = await registerUser({email, password});
+      console.log(res.access_token);
+      if (res.access_token) {
+        setItem('jwt', res.access_token);
+        setItem('isLoggedIn', 'true');
+      } else {
+        setEmail('');
+        setPwd('');
+        setConfirm('');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      getItem('isLoggedIn')
+        .then(data => data)
+        .then(value => {
+          if (value !== null) {
+            setIsLoggedIn(true);
+          } else setIsLoggedIn(false);
+        });
+      setIsLoading(false);
+      isLoggedIn === true ? RNRestart.Restart() : '';
+    }
+  };
 
   return (
     <ScrollView style={Styles.container}>
@@ -169,13 +222,30 @@ const Register = () => {
         </View>
         <Separator marginTop={10} marginLeft={45} width={270} />
       </View>
-      <ButtonRegister
-        title="Sign Up"
-        width={160}
-        email={email}
-        pwd={pwd}
-        confirm={confirm}
-      />
+      <View style={Styles.containerButton}>
+        <Pressable
+          style={({pressed}) => [
+            Styles.buttonStyle,
+            {
+              backgroundColor: isDarkMode
+                ? pressed
+                  ? Colors.majorDOpacity
+                  : Colors.majorD
+                : pressed
+                ? Colors.majorWOpacity
+                : Colors.majorW,
+            },
+            {
+              width: 160,
+            },
+          ]}
+          onPress={() => {
+            if (password !== confirm) console.log('false');
+            else handleRegister();
+          }}>
+          <Text style={Styles.textStyle}>Register</Text>
+        </Pressable>
+      </View>
       <View style={Styles.loginInput}>
         <Text
           style={{

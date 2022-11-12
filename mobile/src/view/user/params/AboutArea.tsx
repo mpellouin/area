@@ -28,8 +28,14 @@ const AboutArea = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View style={Styles.container}>
-      <TitleApp title="About AREA" path="User" />
+    <View
+      style={[
+        Styles.container,
+        {
+          backgroundColor: isDarkMode ? Colors.backgroundD : Colors.backgroundW,
+        },
+      ]}>
+      <TitleApp title="About AREA" path="User" backbutton={true} />
       <SeparatorColor width={360} marginTop={0} marginLeft={0} />
       <Text
         style={[

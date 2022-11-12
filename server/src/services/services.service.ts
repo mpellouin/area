@@ -53,13 +53,12 @@ export class ServicesService {
             return;
         } else {
             if (serviceId === 2 || serviceId === 3) {
-                console.log(req.user.ID);
                 const providers = await this.prisma.provider.findMany({
                     where: {
                         userID: req.user.ID,
+                        Name: 'google',
                     },
                 });
-                console.log(providers);
                 if (providers.length === 0) {
                     return {
                         error: true,
@@ -69,6 +68,33 @@ export class ServicesService {
                     };
                 }
             }
+
+            if (serviceId === 5) {
+                const providers = await this.prisma.provider.findMany({
+                    where: {
+                        userID: req.user.ID,
+                        Name: 'twitch',
+                    },
+                });
+                if (providers.length === 0) {
+                    return {
+                        error: true,
+                        message: 'You need to add a provider before subscribing to this service',
+                        status: 400,
+                        errorCode: 'NO_TWITCH_PROVIDER',
+                    };
+                }
+            }
+
+            if (serviceId >= 10 || serviceId < 0) {
+                return {
+                    error: true,
+                    message: 'Invalid service ID',
+                    status: 400,
+                    errorCode: 'INVALID_SERVICE_ID',
+                };
+            }
+
             await this.prisma.user.update({
                 where: {ID: req.user.ID},
                 data: {

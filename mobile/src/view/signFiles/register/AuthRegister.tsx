@@ -9,8 +9,6 @@ import {
 } from 'react-native';
 import RNRestart from 'react-native-restart';
 
-import {useNavigation} from '@react-navigation/native';
-
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
 
@@ -61,9 +59,10 @@ const AuthRegister = ({title}: AppProps) => {
 
   async function handleUrl(event: {url: string; param: string}) {
     try {
-      const accessToken = await getSearchParamFromURL(event.url, 'token');
-      if (accessToken !== null) {
+      const jwt = await getSearchParamFromURL(event.url, 'token');
+      if (jwt !== null) {
         setItem('isLoggedIn', 'True');
+        setItem(`jwt`, jwt);
         RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {

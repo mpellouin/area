@@ -8,12 +8,13 @@ import {GoogleStrategy} from './google/google.strategy';
 import {ProviderStrategy} from './google/provider.startegy';
 import {OAuthController} from './oauth.controller';
 import {OAuthService} from './oauth.service';
+import {TwitchStrategy} from './twitch/twitch.strategy';
 import {TwitterStrategy} from './twitter/twitter.strategy';
 
 @Module({
     imports: [ProviderModule, UserModule, HttpModule],
     controllers: [OAuthController],
-    providers: [OAuthService, GoogleStrategy, ProviderStrategy, AuthService, JwtService, TwitterStrategy],
+    providers: [OAuthService, GoogleStrategy, ProviderStrategy, AuthService, JwtService, TwitterStrategy, TwitchStrategy],
     exports: [OAuthService],
 })
 export class OauthModule {}

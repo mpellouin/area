@@ -20,13 +20,14 @@ const Title: React.FC<
   PropsWithChildren<{
     title: string;
     path: string;
+    backbutton: boolean;
   }>
-> = ({title, path}) => {
+> = ({title, path, backbutton}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <View style={Styles.title}>
-      <ButtonBack path={path} />
+      {backbutton === true ? <ButtonBack path={path} /> : ''}
       <Text
         style={[
           Styles.text,
