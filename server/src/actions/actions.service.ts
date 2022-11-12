@@ -48,6 +48,9 @@ export class ActionsService {
         if (id == 8 && (await this.services.verifySubscription(5, req))) {
             return await this.twitchService.buildNewStreamerIsLiveObservable(req, body);
         }
+        if (id == 9 && (await this.services.verifySubscription(2, req))) {
+            return await this.googleService.buildNewMailObservable(req, body, true);
+        }
         throw new Error('Unknown Action ID or Service not subscribed');
     }
 }
