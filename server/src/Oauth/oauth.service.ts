@@ -5,10 +5,16 @@ import {ProviderService} from 'src/providers/provider.service';
 import {UserService} from 'src/user/user.service';
 import {from} from 'rxjs';
 import {AreaStatusType} from 'src/types/status';
+import {TwitchStrategy} from './twitch/twitch.strategy';
 
 @Injectable()
 export class OAuthService {
-    constructor(private userService: UserService, private providerService: ProviderService, private httpService: HttpService) {}
+    constructor(
+        private userService: UserService,
+        private providerService: ProviderService,
+        private httpService: HttpService,
+        private twitchService: TwitchStrategy,
+    ) {}
 
     async login(user) {
         return 'login ok ! User = ' + JSON.stringify(user);
@@ -54,22 +60,20 @@ export class OAuthService {
             throw new HttpException('No userID provided', HttpStatus.BAD_REQUEST);
         }
 
-        const providerData = (await this.providerService.getUserProviders({where: {userID: userID}})).find(Boolean);
+        const providerData = (await this.providerService.getUserProviders({where: {userID: userID, Name: 'google'}})).find(Boolean);
         if (!providerData) {
             throw new HttpException('No provider found', HttpStatus.INTERNAL_SERVER_ERROR);
         }
         try {
-            const result = from(
-                await this.httpService.post('https://www.googleapis.com/oauth2/v4/token', {
+            const result = await this.httpService
+                .post('https://www.googleapis.com/oauth2/v4/token', {
                     client_id: env.GOOGLE_CLIENT_ID,
                     client_secret: env.GOOGLE_CLIENT_SECRET,
                     refresh_token: providerData.refreshToken,
                     grant_type: 'refresh_token',
-                }),
-            );
-            result.subscribe((data) => {
-                this.providerService.updateUserToken(userID, 'google', data.data.access_token);
-            });
+                })
+                .toPromise();
+            await this.providerService.updateUserToken(userID, 'google', result.data.access_token);
             return {message: 'User Access Token refreshed', status: HttpStatus.OK, error: false};
         } catch (err) {
             throw new HttpException('An error occured : ' + err, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -80,6 +84,8 @@ export class OAuthService {
         switch (provider) {
             case 'google':
                 return await this.refreshGoogleToken(userID);
+            case 'twitch':
+                return await this.twitchService.refreshToken(userID);
             default:
                 return {error: true, status: HttpStatus.BAD_REQUEST, message: `No method for the requested provider ${provider} found`};
         }

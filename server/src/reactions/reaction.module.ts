@@ -1,6 +1,5 @@
 import {HttpModule} from '@nestjs/axios';
 import {Module} from '@nestjs/common';
-import {OAuthController} from 'src/Oauth/oauth.controller';
 import {OauthModule} from 'src/Oauth/oauth.module';
 import {ProviderModule} from 'src/providers/provider.module';
 import {ServiceModule} from 'src/services/services.module';

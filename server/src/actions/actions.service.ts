@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {ServicesService} from 'src/services/services.service';
 import {FlightService} from './flight/flight.service';
 import {GoogleActionsService} from './google/google.actions.service';
+import {TwitchActionsService} from './twitch/twitch.actions.service';
 import {TwitterActionsService} from './twitter/twitter.actions.service';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class ActionsService {
         private readonly flightService: FlightService,
         private readonly googleService: GoogleActionsService,
         private readonly services: ServicesService,
+        private readonly twitchService: TwitchActionsService,
     ) {}
 
     async factory(id: number, body: any, req: any): Promise<Observable<any>> {
@@ -36,6 +38,15 @@ export class ActionsService {
         }
         if (id == 5 && (await this.services.verifySubscription(2, req))) {
             return await this.googleService.buildNewMailObservable(body, req.user.ID);
+        }
+        if (id == 6 && (await this.services.verifySubscription(5, req))) {
+            return await this.twitchService.buildNewBestStreamObservable(req, body);
+        }
+        if (id == 7 && (await this.services.verifySubscription(5, req))) {
+            return await this.twitchService.buildNewHypeTrainObservable(req, body);
+        }
+        if (id == 8 && (await this.services.verifySubscription(5, req))) {
+            return await this.twitchService.buildNewStreamerIsLiveObservable(req, body);
         }
         throw new Error('Unknown Action ID or Service not subscribed');
     }
