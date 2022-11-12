@@ -7,12 +7,13 @@ import {ServiceModule} from 'src/services/services.module';
 import {ActionsService} from './actions.service';
 import {FlightService} from './flight/flight.service';
 import {GoogleActionsService} from './google/google.actions.service';
+import {TwitchActionsService} from './twitch/twitch.actions.service';
 import {TwitterActionsService} from './twitter/twitter.actions.service';
 
 @Module({
     imports: [HttpModule, ServiceModule, OauthModule, ProviderModule],
     controllers: [],
-    providers: [ActionsService, GoogleActionsService, TwitterActionsService, FlightService],
-    exports: [ActionsService, GoogleActionsService, TwitterActionsService, FlightService],
+    providers: [ActionsService, GoogleActionsService, TwitterActionsService, FlightService, TwitchActionsService],
+    exports: [ActionsService, GoogleActionsService, TwitterActionsService, FlightService, TwitchActionsService],
 })
 export class ActionModule {}
