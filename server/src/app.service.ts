@@ -39,40 +39,94 @@ export class AppService {
                         actions: [],
                         reactions: [
                             {
-                                name: 'Send message',
-                                description: 'Send a message to a discord channel',
+                                name: 'send New message',
+                                description: 'A new message in a discord channel',
                             },
                         ],
                     },
                     {
                         name: 'Twitter',
-                        actions: [],
-                        reactions: [
+                        actions: [
                             {
-                                name: 'Send tweet',
-                                description: 'Send a tweet to a twitter account',
+                                name: 'New tweet from user',
+                                description: 'The user X posted a new tweet',
+                            },
+                            {
+                                name: 'User got a new follower',
+                                description: 'The user X got a new follower on Twitter',
                             },
                         ],
+                        reactions: [],
                     },
                     {
-                        name: 'GMail',
-                        actions: [],
+                        name: 'Gmail',
+                        actions: [
+                            {
+                                name: 'User received a mail',
+                                description: 'You received an email on gmail',
+                            },
+                            {
+                                name: 'User got a new follower',
+                                description: 'The user X got a new follower on Twitter',
+                            },
+                        ],
                         reactions: [
                             {
-                                name: 'Send mail',
-                                description: 'Send a mail to a gmail account',
+                                name: 'send New mail',
+                                description: 'Sends a mail',
+                            },
+                            {
+                                name: 'New document',
+                                description: 'Creates a document in google documents',
                             },
                         ],
                     },
                     {
                         name: 'Google Calendar',
-                        actions: [],
-                        reactions: [
+                        actions: [
                             {
-                                name: 'Create event',
-                                description: 'Create an event in a google calendar',
+                                name: 'Received Mail',
+                                description: 'The user received a new mail',
+                            },
+                            {
+                                name: 'Even incoming',
+                                description: 'The user have an event in 1 hour or less',
                             },
                         ],
+                        reactions: [
+                            {
+                                name: 'New event',
+                                description: 'Create a new event in calendar',
+                            },
+                        ],
+                    },
+                    {
+                        name: 'Flight Tracker',
+                        actions: [
+                            {
+                                name: 'Plane Nearby',
+                                description: 'A plane is 50 or less km away from coordinates',
+                            },
+                        ],
+                        reactions: [],
+                    },
+                    {
+                        name: 'Twitch',
+                        actions: [
+                            {
+                                name: 'Streamer goes live',
+                                description: 'The streamer X has gone live',
+                            },
+                            {
+                                name: 'Best Stream',
+                                description: 'The stream with the most viewers change',
+                            },
+                            {
+                                name: 'Hype train',
+                                description: 'The stream X has a new hype train',
+                            },
+                        ],
+                        reactions: [],
                     },
                 ],
             },
