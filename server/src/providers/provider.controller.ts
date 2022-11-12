@@ -8,7 +8,6 @@ import {AreaStatusType} from 'src/types/status';
 export class ProviderController {
     constructor(private providerService: ProviderService) {}
 
-    @UseGuards(JwtAuthGuard)
     @Get()
     async getProviders(): Promise<ProviderModel[]> {
         return this.providerService.getUserProviders({});
