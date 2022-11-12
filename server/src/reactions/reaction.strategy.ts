@@ -36,6 +36,8 @@ export class ReactionService {
         if (id == 5 && (await this.services.verifySubscription(2, req))) {
             return await this.googleService.buildNewDraftObservable(req, body);
         }
+        console.log('ID of reaction = ', id);
+        console.log('subbed to the right service: ', await this.services.verifySubscription(2, req));
         throw new Error('Unknown Reaction ID or Service not subscribed');
     }
 }

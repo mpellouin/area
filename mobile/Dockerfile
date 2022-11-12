@@ -19,6 +19,11 @@ ENV PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}tools/bin"
 RUN yes | sdkmanager --licenses
 RUN sdkmanager --install "build-tools;31.0.0"
 
+RUN apt-get install sudo
+
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
+
 RUN apt install -y npm
 RUN npm install -g npm@latest
 RUN npm install -g n
