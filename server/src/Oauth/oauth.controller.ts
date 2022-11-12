@@ -1,14 +1,22 @@
-import {Body, Controller, Get, Param, Req, Res, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Req, Request, Res, UseGuards} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
 import {AuthService} from 'src/auth/auth.service';
 import {UserService} from 'src/user/user.service';
 import {OAuthService} from './oauth.service';
 import {ApiBody, ApiOperation, ApiTags} from '@nestjs/swagger';
+import {TwitchStrategy} from './twitch/twitch.strategy';
+import {AreaStatusType} from 'src/types/status';
+import {JwtAuthGuard} from 'src/auth/jwt-auth.guard';
 
 @Controller('auth')
 @ApiTags('Oauth routes')
 export class OAuthController {
-    constructor(private oauthService: OAuthService, private userService: UserService, private authService: AuthService) {}
+    constructor(
+        private oauthService: OAuthService,
+        private userService: UserService,
+        private authService: AuthService,
+        private twitchService: TwitchStrategy,
+    ) {}
 
     @UseGuards(AuthGuard('google'))
     @Get('google')
@@ -47,20 +55,36 @@ export class OAuthController {
         }
     }
 
-    @UseGuards(AuthGuard('twitter'))
-    @Get('twitter')
-    @ApiOperation({description: 'This route is used to login with twitter or register it as a provider', summary: 'login with twitter'})
-    async loginTwitter() {
-        console.log('someone is trying to login with twitter');
+    @Get('twitch/:jwt/provider')
+    @ApiOperation({description: 'This route is used to login with twitch or register it as a provider', summary: 'login with twitch'})
+    async loginTwitch(@Request() req, @Res() res, @Param('jwt') jwt: string) {
+        console.log('someone is trying to login with twitch');
+        const ID = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString()).sub;
+        const url = await this.twitchService.getTwitchCodeUrl(ID);
+        res.redirect(url);
     }
 
-    @UseGuards(AuthGuard('twitter'))
-    @Get('twitter/redirect')
-    @ApiOperation({description: 'This route is the callback of the auth/twitter route', summary: 'login with twitter callback'})
-    async loginWithTwitterRedirect(@Req() req, @Res() res, @Body() body?: {email: string}) {
-        return {req, res};
+    @Get('twitch/redirect')
+    @ApiOperation({description: 'This route is the callback of the auth/twitch route', summary: 'login with twitch callback'})
+    async loginWithTwitchRedirect(@Req() req, @Res() res): Promise<AreaStatusType> {
+        if (!req.query.code) return;
+        const userId = parseInt(req.query.state);
+        const callres = await this.twitchService.getTwitchToken(req.query.code);
+
+        if (!callres.access_token || !callres.refresh_token)
+            return {
+                error: true,
+                message: 'Something went wrong with the twitch login',
+                status: 500,
+            };
+
+        const {access_token, refresh_token} = callres;
+        await this.twitchService.updateUserToken(userId, access_token, refresh_token);
+
+        res.redirect(`${process.env.CLIENT_URL}/services?provider=twitch`);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(':provider/refresh')
     @ApiOperation({description: 'This route is used to refresh a User Access Token', summary: 'refresh access token'})
     @ApiBody({

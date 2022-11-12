@@ -22,7 +22,8 @@ export class ReactionService {
     async factoryHelper(req: any, id: number, body: any): Promise<Observable<any> | undefined> {
         if (id == 1 && (await this.services.verifySubscription(2, req))) {
             body.apiKey = process.env.GOOGLE_CLIENT_ID;
-            return await this.googleService.buildSendMailObservable(body);
+            body.userID = req.user.ID;
+            return await this.googleService.buildSendMailObservable(req, body);
         }
         if (id == 2 && (await this.services.verifySubscription(0, req))) {
             return await this.discordService.buildSendMessageObservable(body);

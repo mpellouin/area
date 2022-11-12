@@ -70,14 +70,21 @@ export class GoogleActionsService {
         if (!body.actionUserId) return undefined;
         await this.oauthService.refreshGoogleToken(userId);
         const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
+        if (user[0].accessToken == null) {
+            console.log('bug');
+            return undefined;
+        }
         const observable = new Observable((observer) => {
             let biggestEmailId = 0;
             this.httpService
-                .get(`https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}`, {
-                    headers: {
-                        Authorization: `Bearer ${user[0].accessToken}`,
+                .get(
+                    `https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}&q=to%3A${body.actionUserId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user[0].accessToken}`,
+                        },
                     },
-                })
+                )
                 .subscribe((response) => {
                     if ((response.data?.messages.length ?? -1) > 0) {
                         biggestEmailId = response.data.messages[0].id;
@@ -87,11 +94,14 @@ export class GoogleActionsService {
                 await this.oauthService.refreshGoogleToken(userId);
                 const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
                 this.httpService
-                    .get(`https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}`, {
-                        headers: {
-                            Authorization: `Bearer ${user[0].accessToken}`,
+                    .get(
+                        `https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}&q=to%3A${body.actionUserId}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${user[0].accessToken}`,
+                            },
                         },
-                    })
+                    )
                     .subscribe((response) => {
                         console.log(response.data);
                         if ((response.data?.messages.length ?? -1) > 0 && (response.data?.messages[0].id ?? -1) > biggestEmailId) {

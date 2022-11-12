@@ -34,6 +34,7 @@ export class GoogleReactionsService {
             )
             .pipe(
                 catchError((error) => {
+                    console.log(error);
                     throw new HttpException(error.response.data, error.response.status);
                 }),
             );

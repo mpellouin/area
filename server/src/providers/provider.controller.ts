@@ -9,8 +9,8 @@ export class ProviderController {
     constructor(private providerService: ProviderService) {}
 
     @Get()
-    async getProviders(): Promise<ProviderModel[]> {
-        return this.providerService.getUserProviders({});
+    async getProviders(@Request() req): Promise<ProviderModel[]> {
+        return this.providerService.getUserProviders({where: {userID: parseInt(req.user.ID)}});
     }
 
     @UseGuards(JwtAuthGuard)

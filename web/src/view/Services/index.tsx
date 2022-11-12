@@ -66,6 +66,13 @@ const servicesList: serviceType[] = [
         image: 'https://imgs.search.brave.com/XR1oFJO3S6kymy7SWOXLF3DCXz_RzrJUo4zw_0_fyj4/rs:fit:820:820:1/g:ce/aHR0cHM6Ly9pbWcu/ZmF2cG5nLmNvbS8x/OC8wLzE5L2FpcnBs/YW5lLWFpcmNyYWZ0/LWZsaWdodC1sb2dv/LWNsaXAtYXJ0LXBu/Zy1mYXZwbmctTThN/NzFrckVZcDk0UjlE/M3B0SlJ3R2N6US5q/cGc',
         isSubbed: false,
     },
+    {
+        name: 'Twitch',
+        description:
+            'Twitch is a live streaming video platform owned by Twitch Interactive, a subsidiary of Amazon. It is primarily used for video gaming, including playthroughs of video games.',
+        image: 'https://imgs.search.brave.com/-cvosxS09zMUJkZSkUd3C7p2meI0kC8hb140jvzNr1I/rs:fit:800:799:1/g:ce/aHR0cHM6Ly9wbmdp/bWcuY29tL3VwbG9h/ZHMvdHdpdGNoL3R3/aXRjaF9QTkc0Ni5w/bmc',
+        isSubbed: false,
+    },
 ];
 
 function Services() {

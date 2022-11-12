@@ -20,6 +20,13 @@ function Card({name, description, image, isSubbed, service, forceRefresh}: any) 
                 poptastic((process.env.REACT_APP_SERVER_URL || 'http://localhost:8080') + '/auth/google/provider', 'google');
                 return;
             }
+            if (res.error && res.errorCode === 'NO_TWITCH_PROVIDER') {
+                poptastic(
+                    (process.env.REACT_APP_SERVER_URL || 'http://localhost:8080') + `/auth/twitch/${localStorage.getItem('jwt')}/provider`,
+                    'twitch',
+                );
+                return;
+            }
         } catch (e) {
             console.log(e);
         } finally {
