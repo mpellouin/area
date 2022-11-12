@@ -26,7 +26,7 @@ export class TwitchActionsService {
                     },
                 })
                 .subscribe((response) => {
-                    bestStreamer = response.data.user_id;
+                    bestStreamer = response.data.data[0].user_id;
                 });
             setInterval(async () => {
                 console.log('Fetching Twitch streams');
@@ -41,8 +41,8 @@ export class TwitchActionsService {
                         },
                     })
                     .subscribe((response) => {
-                        if ((response.data.user_id ?? bestStreamer) != bestStreamer) {
-                            bestStreamer = response.data.user_id;
+                        if ((response.data.data[0]?.user_id ?? bestStreamer) != bestStreamer) {
+                            bestStreamer = response.data.data[0].user_id;
                             observer.next(response.data);
                         }
                     });
@@ -96,6 +96,46 @@ export class TwitchActionsService {
                         }
                     });
             }, 30000);
+        });
+        return observable;
+    }
+
+    async buildNewStreamerIsLiveObservable(req: any, body: any): Promise<Observable<any> | undefined> {
+        if (!body.twitchUsername) return undefined;
+        await this.oauthService.refreshUserAccessToken(req.user.ID, 'twitch');
+        let userProvider = await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'twitch'}});
+        let accessToken = userProvider[0].accessToken;
+        const observable = new Observable((observer) => {
+            let isLive = false;
+            this.httpService
+                .get(`https://api.twitch.tv/helix/streams?user_login=${body.twitchUsername}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Client-ID': process.env.TWITCH_CLIENT_ID,
+                    },
+                })
+                .subscribe((response) => {
+                    isLive = response.data.data.length > 0;
+                });
+            setInterval(async () => {
+                console.log('Fetching Twitch streams');
+                await this.oauthService.refreshUserAccessToken(req.user.ID, 'twitch');
+                userProvider = await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'twitch'}});
+                accessToken = userProvider[0].accessToken;
+                this.httpService
+                    .get(`https://api.twitch.tv/helix/streams?user_login=${body.twitchUsername}`, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                            'Client-ID': process.env.TWITCH_CLIENT_ID,
+                        },
+                    })
+                    .subscribe((response) => {
+                        if (response.data.data.length > 0 != isLive) {
+                            isLive = response.data.data.length > 0;
+                            observer.next(response.data);
+                        }
+                    });
+            }, 10000);
         });
         return observable;
     }

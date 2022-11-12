@@ -45,6 +45,9 @@ export class ActionsService {
         if (id == 7 && (await this.services.verifySubscription(5, req))) {
             return await this.twitchService.buildNewHypeTrainObservable(req, body);
         }
+        if (id == 8 && (await this.services.verifySubscription(5, req))) {
+            return await this.twitchService.buildNewStreamerIsLiveObservable(req, body);
+        }
         throw new Error('Unknown Action ID or Service not subscribed');
     }
 }
