@@ -12,7 +12,7 @@ export class GoogleReactionsService {
         private readonly oauthService: OAuthService,
     ) {}
 
-    async buildSendMailObservable(@Request() req, body: {apiKey: string; to: string; subject: string; message: string}) {
+    async buildSendMailObservable(@Request() req, body: {to: string; subject: string; message: string}) {
         await this.oauthService.refreshGoogleToken(req.user.ID);
         const userData = (await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'google'}})).find(Boolean);
         console.log(userData);
@@ -22,7 +22,7 @@ export class GoogleReactionsService {
         const res = await this.http
             .post(
                 'https://gmail.googleapis.com/gmail/v1/users/me/messages/send',
-                {raw: encoded64Message, key: body.apiKey},
+                {raw: encoded64Message, key: process.env.GOOGLE_CLIENT_ID},
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -96,6 +96,35 @@ export class GoogleReactionsService {
                 },
             },
         );
+        res.subscribe(() => {});
+        return res;
+    }
+
+    async buildNewDraftObservable(@Request() req, body: {to: string; subject: string; message: string}) {
+        await this.oauthService.refreshGoogleToken(req.user.ID);
+        const userData = (await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'google'}})).find(Boolean);
+        console.log(userData);
+        const encoded64Message = Buffer.from(
+            'From: <me>\nTo: \nSubject: ' + body.subject + '\n\n' + body.message + '\n' + Date.now().toLocaleString(),
+        ).toString('base64');
+        const res = await this.http
+            .post(
+                'https://gmail.googleapis.com/gmail/v1/users/me/drafts?key=' + process.env.GOOGLE_CLIENT_ID,
+                {message: {raw: encoded64Message}},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: 'Bearer ' + userData.accessToken,
+                    },
+                },
+            )
+            .pipe(
+                catchError((error) => {
+                    console.log(error);
+                    throw new HttpException(error.response.data, error.response.status);
+                }),
+            );
         res.subscribe(() => {});
         return res;
     }

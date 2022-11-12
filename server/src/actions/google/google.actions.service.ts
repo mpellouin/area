@@ -66,7 +66,7 @@ export class GoogleActionsService {
         return observable;
     }
 
-    async buildNewMailObservable(body: any, userId: number): Promise<Observable<any> | undefined> {
+    async buildNewMailObservable(body: any, userId: number, mailSent: boolean = false): Promise<Observable<any> | undefined> {
         if (!body.actionUserId) return undefined;
         await this.oauthService.refreshGoogleToken(userId);
         const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
@@ -78,7 +78,9 @@ export class GoogleActionsService {
             let biggestEmailId = 0;
             this.httpService
                 .get(
-                    `https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}&q=to%3A${body.actionUserId}`,
+                    `https://gmail.googleapis.com/gmail/v1/users/${body.actionUserId}/messages?key=${process.env.GOOGLE_CLIENT_ID}&q=${
+                        mailSent ? 'from' : 'to'
+                    }%3A${body.actionUserId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${user[0].accessToken}`,
