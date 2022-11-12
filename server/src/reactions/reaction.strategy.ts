@@ -32,6 +32,7 @@ export class ReactionService {
             return await this.googleService.buildNewEventObservable(body);
         }
         if (id == 4 && (await this.services.verifySubscription(2, req))) {
+            body.userID = req.user.ID;
             return await this.googleService.buildNewDocumentObservable(body);
         }
         throw new Error('Unknown Reaction ID or Service not subscribed');
