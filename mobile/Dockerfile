@@ -24,7 +24,6 @@ RUN apt-get install sudo
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
-RUN apt install -y npm
 RUN npm install -g npm@latest
 RUN npm install -g n
 RUN n prune
