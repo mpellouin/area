@@ -22,18 +22,16 @@ export class ReactionService {
     async factoryHelper(req: any, id: number, body: any): Promise<Observable<any> | undefined> {
         if (id == 1 && (await this.services.verifySubscription(2, req))) {
             body.apiKey = process.env.GOOGLE_CLIENT_ID;
-            body.userID = req.user.ID;
             return await this.googleService.buildSendMailObservable(req, body);
         }
         if (id == 2 && (await this.services.verifySubscription(0, req))) {
             return await this.discordService.buildSendMessageObservable(body);
         }
         if (id == 3 && (await this.services.verifySubscription(3, req))) {
-            return await this.googleService.buildNewEventObservable(body);
+            return await this.googleService.buildNewEventObservable(req, body);
         }
         if (id == 4 && (await this.services.verifySubscription(2, req))) {
-            body.userID = req.user.ID;
-            return await this.googleService.buildNewDocumentObservable(body);
+            return await this.googleService.buildNewDocumentObservable(req, body);
         }
         throw new Error('Unknown Reaction ID or Service not subscribed');
     }

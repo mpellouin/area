@@ -1,5 +1,5 @@
 import {HttpService} from '@nestjs/axios';
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, Request} from '@nestjs/common';
 import {catchError, Observable} from 'rxjs';
 import {OAuthService} from 'src/Oauth/oauth.service';
 import {ProviderService} from 'src/providers/provider.service';
@@ -12,11 +12,10 @@ export class GoogleReactionsService {
         private readonly oauthService: OAuthService,
     ) {}
 
-    async buildSendMailObservable(
-        body: {accessToken: string; apiKey: string; to: string; subject: string; message: string; userID: number},
-        retry: boolean = false,
-    ) {
-        const userData = (await this.providerService.getUserProviders({where: {userID: body.userID, Name: 'google'}})).find(Boolean);
+    async buildSendMailObservable(@Request() req, body: {apiKey: string; to: string; subject: string; message: string}) {
+        await this.oauthService.refreshGoogleToken(req.user.ID);
+        const userData = (await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'google'}})).find(Boolean);
+        console.log(userData);
         const encoded64Message = Buffer.from(
             'From: <me>\nTo: <' + body.to + '>\nSubject: ' + body.subject + '\n\n' + body.message + '\n' + Date.now().toLocaleString(),
         ).toString('base64');
@@ -38,24 +37,23 @@ export class GoogleReactionsService {
                     throw new HttpException(error.response.data, error.response.status);
                 }),
             );
-        res.subscribe((data) => {
-            if (!retry && data.status == HttpStatus.UNAUTHORIZED) {
-                this.oauthService.refreshUserAccessToken(body.userID, 'google');
-                this.buildSendMailObservable(body, true);
-            }
-        });
+        res.subscribe(() => {});
         return res;
     }
 
-    async buildNewEventObservable(body: {
-        startTime: string;
-        endTime: string;
-        accessToken: string;
-        reaCalendarId: string;
-        summary: string;
-        description: string;
-        userID: number;
-    }) {
+    async buildNewEventObservable(
+        @Request() req,
+        body: {
+            startTime: string;
+            endTime: string;
+            accessToken: string;
+            reaCalendarId: string;
+            summary: string;
+            description: string;
+            userID: number;
+        },
+    ) {
+        await this.oauthService.refreshGoogleToken(req.user.ID);
         const userData = (await this.providerService.getUserProviders({where: {userID: body.userID, Name: 'google'}})).find(Boolean);
         const res = await this.http.post(
             `https://www.googleapis.com/calendar/v3/calendars/${body.reaCalendarId}/events`,
@@ -84,8 +82,9 @@ export class GoogleReactionsService {
         return res;
     }
 
-    async buildNewDocumentObservable(body: {title: string; userID: number}, retry: boolean = false) {
-        const userData = (await this.providerService.getUserProviders({where: {userID: body.userID, Name: 'google'}})).find(Boolean);
+    async buildNewDocumentObservable(@Request() req, body: {title: string}) {
+        await this.oauthService.refreshGoogleToken(req.user.ID);
+        const userData = (await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'google'}})).find(Boolean);
         const res = await this.http.post(
             `https://docs.googleapis.com/v1/documents`,
             {title: body.title},
@@ -97,12 +96,7 @@ export class GoogleReactionsService {
                 },
             },
         );
-        res.subscribe((data) => {
-            if (!retry && data.status == HttpStatus.UNAUTHORIZED) {
-                this.oauthService.refreshUserAccessToken(body.userID, 'google');
-                this.buildNewDocumentObservable(body, true);
-            }
-        });
+        res.subscribe(() => {});
         return res;
     }
 }

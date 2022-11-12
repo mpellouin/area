@@ -64,20 +64,16 @@ export class OAuthService {
         if (!providerData) {
             throw new HttpException('No provider found', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        console.log(providerData);
         try {
-            const result = from(
-                await this.httpService.post('https://www.googleapis.com/oauth2/v4/token', {
+            const result = await this.httpService
+                .post('https://www.googleapis.com/oauth2/v4/token', {
                     client_id: env.GOOGLE_CLIENT_ID,
                     client_secret: env.GOOGLE_CLIENT_SECRET,
                     refresh_token: providerData.refreshToken,
                     grant_type: 'refresh_token',
-                }),
-            );
-            result.subscribe(async (data) => {
-                console.log(data.data);
-                await this.providerService.updateUserToken(userID, 'google', data.data.access_token);
-            });
+                })
+                .toPromise();
+            await this.providerService.updateUserToken(userID, 'google', result.data.access_token);
             return {message: 'User Access Token refreshed', status: HttpStatus.OK, error: false};
         } catch (err) {
             throw new HttpException('An error occured : ' + err, HttpStatus.INTERNAL_SERVER_ERROR);
