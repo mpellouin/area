@@ -34,7 +34,7 @@ export class TwitchStrategy {
     }
 
     async updateUserToken(userId, access_token, refresh_token) {
-        this.providerService.updateUserToken(userId, 'twitch', access_token, refresh_token);
+        await this.providerService.updateUserToken(userId, 'twitch', access_token, refresh_token);
     }
 
     async refreshToken(userId: number) {
