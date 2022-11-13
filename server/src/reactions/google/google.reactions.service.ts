@@ -34,7 +34,7 @@ export class GoogleReactionsService {
             .pipe(
                 catchError((error) => {
                     console.log(error);
-                    throw new HttpException(error.response.data, error.response.status);
+                    return error;
                 }),
             );
         res.subscribe(() => {});
@@ -55,29 +55,36 @@ export class GoogleReactionsService {
     ) {
         await this.oauthService.refreshGoogleToken(req.user.ID);
         const userData = (await this.providerService.getUserProviders({where: {userID: body.userID, Name: 'google'}})).find(Boolean);
-        const res = await this.http.post(
-            `https://www.googleapis.com/calendar/v3/calendars/${body.reaCalendarId}/events`,
-            {
-                key: process.env.GOOGLE_API_KEY,
-                start: {
-                    dateTime: body.startTime,
-                    timeZone: 'America/Los_Angeles',
+        const res = await this.http
+            .post(
+                `https://www.googleapis.com/calendar/v3/calendars/${body.reaCalendarId}/events`,
+                {
+                    key: process.env.GOOGLE_API_KEY,
+                    start: {
+                        dateTime: body.startTime,
+                        timeZone: 'America/Los_Angeles',
+                    },
+                    end: {
+                        dateTime: body.endTime,
+                        timeZone: 'America/Los_Angeles',
+                    },
+                    summary: body.summary,
+                    description: body.description,
                 },
-                end: {
-                    dateTime: body.endTime,
-                    timeZone: 'America/Los_Angeles',
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: 'Bearer ' + userData.accessToken,
+                    },
                 },
-                summary: body.summary,
-                description: body.description,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: 'Bearer ' + userData.accessToken,
-                },
-            },
-        );
+            )
+            .pipe(
+                catchError((err) => {
+                    console.log(err);
+                    return err;
+                }),
+            );
         res.subscribe((data) => {});
         return res;
     }
@@ -85,17 +92,24 @@ export class GoogleReactionsService {
     async buildNewDocumentObservable(@Request() req, body: {title: string}) {
         await this.oauthService.refreshGoogleToken(req.user.ID);
         const userData = (await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'google'}})).find(Boolean);
-        const res = await this.http.post(
-            `https://docs.googleapis.com/v1/documents`,
-            {title: body.title},
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: 'Bearer ' + userData.accessToken,
+        const res = await this.http
+            .post(
+                `https://docs.googleapis.com/v1/documents`,
+                {title: body.title},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: 'Bearer ' + userData.accessToken,
+                    },
                 },
-            },
-        );
+            )
+            .pipe(
+                catchError((err) => {
+                    console.log(err);
+                    return err;
+                }),
+            );
         res.subscribe(() => {});
         return res;
     }
@@ -122,7 +136,7 @@ export class GoogleReactionsService {
             .pipe(
                 catchError((error) => {
                     console.log(error);
-                    throw new HttpException(error.response.data, error.response.status);
+                    return error;
                 }),
             );
         res.subscribe(() => {});

@@ -15,7 +15,8 @@ export class DiscordReactionsService {
             })
             .pipe(
                 catchError((error) => {
-                    throw new HttpException(error.response.data, error.response.status);
+                    console.log(error);
+                    return error;
                 }),
             );
         res.subscribe((data) => {});

@@ -6,11 +6,12 @@ import {ServiceModule} from 'src/services/services.module';
 import {DiscordReactionsService} from './discord/discord.reactions.service';
 import {GoogleReactionsService} from './google/google.reactions.service';
 import {ReactionService} from './reaction.strategy';
+import {TwitchReactionsService} from './twitch/twitch.reactions.service';
 
 @Module({
     imports: [HttpModule, ServiceModule, ProviderModule, OauthModule],
     controllers: [],
-    providers: [ReactionService, GoogleReactionsService, DiscordReactionsService],
-    exports: [ReactionService, GoogleReactionsService, DiscordReactionsService],
+    providers: [ReactionService, GoogleReactionsService, DiscordReactionsService, TwitchReactionsService],
+    exports: [ReactionService, GoogleReactionsService, DiscordReactionsService, TwitchReactionsService],
 })
 export class ReactionModule {}

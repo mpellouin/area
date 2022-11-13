@@ -7,6 +7,7 @@ import {ApiBody, ApiOperation, ApiTags} from '@nestjs/swagger';
 import {TwitchStrategy} from './twitch/twitch.strategy';
 import {AreaStatusType} from 'src/types/status';
 import {JwtAuthGuard} from 'src/auth/jwt-auth.guard';
+import {ServicesService} from 'src/services/services.service';
 
 @Controller('auth')
 @ApiTags('Oauth routes')
@@ -16,6 +17,7 @@ export class OAuthController {
         private userService: UserService,
         private authService: AuthService,
         private twitchService: TwitchStrategy,
+        private servicesService: ServicesService,
     ) {}
 
     @UseGuards(AuthGuard('google'))
@@ -80,6 +82,12 @@ export class OAuthController {
 
         const {access_token, refresh_token} = callres;
         await this.twitchService.updateUserToken(userId, access_token, refresh_token);
+
+        try {
+            await this.servicesService.subscribe(5, {user: {ID: userId}});
+        } catch (e) {
+            console.log(e);
+        }
 
         res.redirect(`${process.env.CLIENT_URL}/services?provider=twitch`);
     }

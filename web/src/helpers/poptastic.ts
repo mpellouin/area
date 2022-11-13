@@ -16,8 +16,7 @@ export const poptastic = (url: string, navigate: any) => {
             window.location.reload();
         }
         if (event.data.provider && event.data.provider === 'twitch') {
-            await serviceSubscribe(5);
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 100);
         } else {
             if (event.data !== 'failure') {
                 navigate('/areas');
@@ -36,8 +35,7 @@ export const poptastic = (url: string, navigate: any) => {
             window.location.reload();
         }
         if (event.data.provider && event.data.provider === 'twitch') {
-            await serviceSubscribe(5);
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 100);
         } else {
             if (event.data !== 'failure') {
                 navigate('/areas');

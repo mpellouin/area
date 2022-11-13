@@ -17,13 +17,13 @@ function Card({name, description, image, isSubbed, service, forceRefresh}: any) 
                 res = await serviceSubscribe(service);
             }
             if (res.error && res.errorCode === 'NO_GOOGLE_PROVIDER') {
-                poptastic((process.env.REACT_APP_SERVER_URL || 'http://localhost:8080') + '/auth/google/provider', 'google');
+                poptastic((process.env.REACT_APP_SERVER_URL || 'http://localhost:8080') + '/auth/google/provider', () => {});
                 return;
             }
             if (res.error && res.errorCode === 'NO_TWITCH_PROVIDER') {
                 poptastic(
                     (process.env.REACT_APP_SERVER_URL || 'http://localhost:8080') + `/auth/twitch/${localStorage.getItem('jwt')}/provider`,
-                    'twitch',
+                    () => {},
                 );
                 return;
             }
