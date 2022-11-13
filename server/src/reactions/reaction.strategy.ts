@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {ServicesService} from 'src/services/services.service';
 import {DiscordReactionsService} from './discord/discord.reactions.service';
 import {GoogleReactionsService} from './google/google.reactions.service';
+import {TwitchReactionsService} from './twitch/twitch.reactions.service';
 
 @Injectable()
 export class ReactionService {
@@ -10,6 +11,7 @@ export class ReactionService {
         private readonly googleService: GoogleReactionsService,
         private readonly discordService: DiscordReactionsService,
         private readonly services: ServicesService,
+        private readonly twitchService: TwitchReactionsService,
     ) {}
 
     async factory(req: any, id: number, body: any): Promise<Observable<any>> {
@@ -36,8 +38,9 @@ export class ReactionService {
         if (id == 5 && (await this.services.verifySubscription(2, req))) {
             return await this.googleService.buildNewDraftObservable(req, body);
         }
-        console.log('ID of reaction = ', id);
-        console.log('subbed to the right service: ', await this.services.verifySubscription(2, req));
+        if (id == 6 && (await this.services.verifySubscription(5, req))) {
+            return await this.twitchService.buildSendWhisperMessage(req, body);
+        }
         throw new Error('Unknown Reaction ID or Service not subscribed');
     }
 }
