@@ -2,6 +2,7 @@ import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, Text, StyleSheet, View} from 'react-native';
 
 import {Colors} from '../../Style';
+
 import ButtonBack from './buttons/ButtonBack';
 
 const Styles = StyleSheet.create({

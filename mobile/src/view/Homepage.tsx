@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,25 +7,41 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
+import {Card} from 'react-native-paper';
 
 import {useNavigation} from '@react-navigation/native';
 
+import {
+  faDiscord,
+  faGoogle,
+  faGoogleDrive,
+  faTwitch,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
+import {
+  faPlane,
+  faUserCircle,
+  faCalendar,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
 
 import {Colors} from '../../Style';
 
 import Navbar from '../components/Navbar';
 import TitleApp from '../components/TitleApp';
 import SeparatorColor from '../components/SeparatorColor';
-import {removeItem} from '../components/storage/localStorage';
+
+import {getAreas} from '../apiCalls/AreaCalls';
 
 const Styles = StyleSheet.create({
   container: {
     height: '100%',
+    flexGrow: 1,
+    paddingBottom: 15,
   },
   navbar: {
-    flex: 1,
+    flexGrow: 2,
     justifyContent: 'flex-end',
   },
   header: {
@@ -52,22 +68,100 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     borderRadius: 8,
+    marginBottom: 15,
   },
   textButton: {
     color: Colors.textD,
     fontSize: 18,
     fontWeight: 'bold',
   },
+  containerArea: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  area: {
+    margin: 8,
+    height: 90,
+    width: 300,
+    borderRadius: 8,
+  },
 });
+
+const actionLogoList: {
+  logo: IconDefinition;
+}[] = [
+  {
+    logo: faTwitter,
+  },
+  {
+    logo: faTwitter,
+  },
+  {
+    logo: faPlane,
+  },
+  {
+    logo: faCalendar,
+  },
+  {
+    logo: faGoogle,
+  },
+  {
+    logo: faTwitch,
+  },
+  {
+    logo: faTwitch,
+  },
+  {
+    logo: faTwitch,
+  },
+  {
+    logo: faGoogle,
+  },
+];
+
+const reactionLogoList: {
+  logo: IconDefinition;
+}[] = [
+  {
+    logo: faGoogle,
+  },
+  {
+    logo: faDiscord,
+  },
+  {
+    logo: faCalendar,
+  },
+  {
+    logo: faGoogleDrive,
+  },
+  {
+    logo: faGoogle,
+  },
+  {
+    logo: faTwitch,
+  },
+];
 
 const Homepage = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation();
+  const [areas, setAreas] = useState([]);
+  const [forceRefresh, setForceRefresh] = useState(true);
 
-  const [list, setList] = useState(undefined);
+  useEffect(() => {
+    if (!forceRefresh) return;
+    const fetchAreas = async () => {
+      const areas = await getAreas();
+      return areas;
+    };
+    fetchAreas().then(areas => {
+      setAreas(areas);
+    });
+    setForceRefresh(false);
+  }, [forceRefresh]);
 
   return (
-    <>
+    <View style={{flex: 1}}>
       <ScrollView
         style={[
           {
@@ -79,14 +173,19 @@ const Homepage = () => {
         ]}>
         <View style={Styles.header}>
           <TitleApp title="Let's start !" path="" backbutton={false} />
-          <FontAwesomeIcon
-            icon={faUserCircle}
-            size={25}
-            color={isDarkMode ? Colors.majorD : Colors.majorW}
-          />
+          <Pressable
+            onPress={() => {
+              navigation.navigate('User');
+            }}>
+            <FontAwesomeIcon
+              icon={faUserCircle}
+              size={25}
+              color={isDarkMode ? Colors.majorD : Colors.majorW}
+            />
+          </Pressable>
         </View>
         <SeparatorColor width={360} marginTop={0} marginLeft={0} />
-        {!list ? (
+        {!areas ? (
           <Text
             style={[
               {
@@ -97,7 +196,59 @@ const Homepage = () => {
             You have no action reaction for now, create one !
           </Text>
         ) : (
-          <></>
+          areas.map((area: any, index: number) => {
+            const params = JSON.parse(area.parameters);
+
+            return (
+              <View key={index} style={Styles.containerArea}>
+                <Card
+                  style={[
+                    Styles.area,
+                    {
+                      backgroundColor: isDarkMode
+                        ? Colors.majorDOpacity
+                        : Colors.majorWOpacity,
+                    },
+                  ]}>
+                  <Card.Content>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                        color: isDarkMode ? Colors.textD : Colors.textW,
+                      }}>
+                      {area.name}
+                    </Text>
+                    <Text
+                      style={{
+                        marginBottom: 5,
+                        color: isDarkMode ? Colors.textD : Colors.textW,
+                      }}>
+                      {params.action.name + ' => ' + params.reaction.name}
+                    </Text>
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                      }}>
+                      <FontAwesomeIcon
+                        icon={actionLogoList[params.action.id - 1].logo}
+                        size={15}
+                        color={isDarkMode ? Colors.textD : Colors.textW}
+                      />
+                      <FontAwesomeIcon
+                        style={{marginLeft: 5}}
+                        icon={reactionLogoList[params.reaction.id - 1].logo}
+                        size={15}
+                        color={isDarkMode ? Colors.textD : Colors.textW}
+                      />
+                    </View>
+                  </Card.Content>
+                </Card>
+              </View>
+            );
+          })
         )}
         <View style={Styles.containerButton}>
           <Pressable
@@ -118,6 +269,7 @@ const Homepage = () => {
             ]}
             onPress={() => {
               navigation.navigate('Create');
+              setForceRefresh(true);
             }}>
             <Text style={Styles.textButton}>Create an AREA</Text>
           </Pressable>
@@ -126,7 +278,7 @@ const Homepage = () => {
       <View style={Styles.navbar}>
         <Navbar page={'Homepage'} />
       </View>
-    </>
+    </View>
   );
 };
 

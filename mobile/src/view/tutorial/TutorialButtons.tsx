@@ -1,12 +1,12 @@
 import React, {PropsWithChildren} from 'react';
 import {useColorScheme, View, Text, Pressable} from 'react-native';
 
+import {useNavigation} from '@react-navigation/native';
+
+import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {Colors} from '../../../Style';
-
-import {useNavigation} from '@react-navigation/native';
-import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 
 const SkipButton = () => {
   const navigation = useNavigation();

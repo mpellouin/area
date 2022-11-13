@@ -13,6 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
 
 import {Colors} from '../../../../Style';
+
 import GoogleSvg from '../../../components/svg/GoogleSvg';
 import TwitterSvg from '../../../components/svg/TwitterSvg';
 import {setItem} from '../../../components/storage/localStorage';
@@ -43,10 +44,11 @@ const AuthLogin = ({title}: AppProps) => {
   async function handleUrl(event: any) {
     try {
       const jwt = await getSearchParamFromURL(event.url, 'jwt');
-      if (jwt !== null) {
+
+      if (jwt != null) {
         setItem('isLoggedIn', 'True');
-        console.log(jwt);
         setItem(`jwt`, jwt);
+
         RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {

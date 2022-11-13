@@ -21,10 +21,11 @@ import SignUpSvg from '../../../components/svg/SignUpSvg';
 import Title from '../../../components/Title';
 import Separator from '../../../components/Separator';
 import ButtonBack from '../../../components/buttons/ButtonBack';
+import {getItem, setItem} from '../../../components/storage/localStorage';
+
+import {registerUser} from '../../../apiCalls/UserCalls';
 
 import AuthRegister from './AuthRegister';
-import {registerUser} from '../../../apiCalls/UserCalls';
-import {getItem, setItem} from '../../../components/storage/localStorage';
 
 const Styles = StyleSheet.create({
   container: {

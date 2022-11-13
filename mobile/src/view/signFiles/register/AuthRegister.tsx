@@ -60,7 +60,7 @@ const AuthRegister = ({title}: AppProps) => {
   async function handleUrl(event: {url: string; param: string}) {
     try {
       const jwt = await getSearchParamFromURL(event.url, 'token');
-      if (jwt !== null) {
+      if (jwt != null) {
         setItem('isLoggedIn', 'True');
         setItem(`jwt`, jwt);
         RNRestart.Restart();
@@ -90,17 +90,17 @@ const AuthRegister = ({title}: AppProps) => {
     <Pressable
       onPress={() => {
         setIsPressed(!isPressed);
-        openBrowser('http://area.eu-west-3.elasticbeanstalk.com/auth/google');
+        openBrowser(`http://area.eu-west-3.elasticbeanstalk.com/auth/${title}`);
       }}>
       <View
         style={[
           Styles.container,
           {
             borderColor: isDarkMode
-              ? isPressed === true
+              ? isPressed
                 ? Colors.minorD
                 : '#A9A9A9'
-              : isPressed === true
+              : isPressed
               ? Colors.minorW
               : Colors.textW,
           },
