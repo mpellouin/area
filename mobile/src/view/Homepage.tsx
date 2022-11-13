@@ -148,8 +148,11 @@ const Homepage = () => {
   const [areas, setAreas] = useState([]);
   const [forceRefresh, setForceRefresh] = useState(true);
 
+  setInterval(() => {
+    setForceRefresh(true);
+  }, 120000);
+
   useEffect(() => {
-    if (!forceRefresh) return;
     const fetchAreas = async () => {
       const areas = await getAreas();
       return areas;
@@ -198,7 +201,6 @@ const Homepage = () => {
         ) : (
           areas.map((area: any, index: number) => {
             const params = JSON.parse(area.parameters);
-
             return (
               <View key={index} style={Styles.containerArea}>
                 <Card
@@ -211,14 +213,37 @@ const Homepage = () => {
                     },
                   ]}>
                   <Card.Content>
-                    <Text
+                    <View
                       style={{
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                        color: isDarkMode ? Colors.textD : Colors.textW,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: 2,
                       }}>
-                      {area.name}
-                    </Text>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: 20,
+                          color: isDarkMode ? Colors.textD : Colors.textW,
+                        }}>
+                        {area.name}
+                      </Text>
+                      <View style={{display: 'flex', flexDirection: 'row'}}>
+                        <FontAwesomeIcon
+                          icon={actionLogoList[params.action.id - 1].logo}
+                          size={15}
+                          color={isDarkMode ? Colors.textD : Colors.textW}
+                        />
+                        <FontAwesomeIcon
+                          style={{marginLeft: 5}}
+                          icon={reactionLogoList[params.reaction.id - 1].logo}
+                          size={15}
+                          color={isDarkMode ? Colors.textD : Colors.textW}
+                        />
+                      </View>
+                    </View>
+
                     <Text
                       style={{
                         marginBottom: 5,
@@ -226,24 +251,6 @@ const Homepage = () => {
                       }}>
                       {params.action.name + ' => ' + params.reaction.name}
                     </Text>
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                      }}>
-                      <FontAwesomeIcon
-                        icon={actionLogoList[params.action.id - 1].logo}
-                        size={15}
-                        color={isDarkMode ? Colors.textD : Colors.textW}
-                      />
-                      <FontAwesomeIcon
-                        style={{marginLeft: 5}}
-                        icon={reactionLogoList[params.reaction.id - 1].logo}
-                        size={15}
-                        color={isDarkMode ? Colors.textD : Colors.textW}
-                      />
-                    </View>
                   </Card.Content>
                 </Card>
               </View>
