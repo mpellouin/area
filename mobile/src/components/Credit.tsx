@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, useColorScheme, Linking} from 'react-native';
+
 import {Colors} from '../../Style';
 
 const Styles = StyleSheet.create({
@@ -15,6 +16,7 @@ const Styles = StyleSheet.create({
     paddingRight: 10,
     paddingLeft: 10,
     borderTopWidth: 1,
+    zIndex: 10,
   },
 });
 

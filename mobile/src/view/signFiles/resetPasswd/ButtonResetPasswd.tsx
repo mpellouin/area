@@ -1,5 +1,6 @@
 import React, {type PropsWithChildren} from 'react';
 import {useColorScheme, View, StyleSheet, Pressable, Text} from 'react-native';
+
 import {Colors} from '../../../../Style';
 
 const Styles = StyleSheet.create({

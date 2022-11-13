@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {Dialog, Paragraph, Portal} from 'react-native-paper';
 
 const PopUpError = (error: any, setError: any) => {
