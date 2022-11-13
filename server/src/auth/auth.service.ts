@@ -30,6 +30,13 @@ export class AuthService {
     }
 
     async registerUser(username: string, password: string): Promise<any> {
+        if (
+            !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                username,
+            )
+        ) {
+            throw new Error('Invalid email');
+        }
         const salt = await genSalt(10);
         const hashedPassword = await hash(password, salt);
         const user = await this.userService.createUser({email: username, customToken: '', password: hashedPassword});

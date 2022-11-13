@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './index.scss';
 import Header from '../../components/Header';
-import CreateAreaModal from './CreateAreaModal';
+import CreateAreaModal, {actionsList, reactionsList} from './CreateAreaModal';
 import {useNavigate} from 'react-router-dom';
 import getAreas from '../../ApiFunctions/getAreas';
 import {getUser} from '../../ApiFunctions/getUser';
@@ -45,6 +45,7 @@ const AreaPage = () => {
         };
         fetchAreas().then((res) => {
             setAreas(res);
+            console.log(res);
         });
         setForceRefresh(false);
     }, [forceRefresh]);
@@ -89,17 +90,22 @@ const AreaPage = () => {
             {isCreateMode && <CreateAreaModal setIsOpened={setIsCreateMode} setForceRefresh={setForceRefresh} user={user} />}
             <div className="areaPageContent">
                 <div className="areaPageTitle">Areas list</div>
-                <div className="areaPageList">
-                    {areas.map((area: any, i: number) => (
-                        <div key={i} className="areaPageItem">
-                            <div className="areaPageItemName">{area.name}</div>
-                        </div>
-                    ))}
-                </div>
                 <div className="areaPageCreate">
                     <button className="areaPageCreateButton" onClick={() => setIsCreateMode(true)}>
                         Create new area
                     </button>
+                </div>
+                <div className="areaPageList">
+                    {areas.map((area: any, i: number) => (
+                        <div key={i} className="areaPageItem">
+                            <div className="areaPageItemName">{area.name}</div>
+                            <div className="areaPageItemDescription">
+                                {(actionsList.find((action) => action.id === area.actionID)?.name ?? 'unknown') +
+                                    ' => ' +
+                                    (reactionsList.find((reaction) => reaction.id === area.reactionID)?.name ?? 'unknown')}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
             <br />

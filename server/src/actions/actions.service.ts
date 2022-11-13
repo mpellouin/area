@@ -24,6 +24,7 @@ export class ActionsService {
     }
 
     async factoryHelper(id: number, body: any, req: any): Promise<Observable<any>> {
+        console.log('entering');
         if (id == 1 && (await this.services.verifySubscription(1, req))) {
             return await this.twitterService.buildNewTweetObservable(body);
         }
@@ -49,8 +50,9 @@ export class ActionsService {
             return await this.twitchService.buildNewStreamerIsLiveObservable(req, body);
         }
         if (id == 9 && (await this.services.verifySubscription(2, req))) {
-            return await this.googleService.buildNewMailObservable(req, body, true);
+            return await this.googleService.buildNewMailObservable(body, req.user.ID, true);
         }
+        console.log('No action found');
         throw new Error('Unknown Action ID or Service not subscribed');
     }
 }

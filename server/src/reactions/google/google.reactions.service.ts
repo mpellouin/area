@@ -15,7 +15,6 @@ export class GoogleReactionsService {
     async buildSendMailObservable(@Request() req, body: {to: string; subject: string; message: string}) {
         await this.oauthService.refreshGoogleToken(req.user.ID);
         const userData = (await this.providerService.getUserProviders({where: {userID: req.user.ID, Name: 'google'}})).find(Boolean);
-        console.log(userData);
         const encoded64Message = Buffer.from(
             'From: <me>\nTo: <' + body.to + '>\nSubject: ' + body.subject + '\n\n' + body.message + '\n' + Date.now().toLocaleString(),
         ).toString('base64');

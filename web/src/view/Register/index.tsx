@@ -100,7 +100,16 @@ const Register = () => {
                             />
                         </div>
                         <div className="formFooter">
-                            <button onClick={handleRegister} disabled={isLoading || password !== passwordConfirmation}>
+                            {/* eslint-disable-next-line */}
+                            <button
+                                onClick={handleRegister}
+                                disabled={
+                                    isLoading ||
+                                    password !== passwordConfirmation ||
+                                    !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                                        email,
+                                    )
+                                }>
                                 {isLoading && <Loader />}Register
                             </button>
                         </div>

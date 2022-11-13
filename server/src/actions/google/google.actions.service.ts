@@ -13,7 +13,7 @@ export class GoogleActionsService {
     ) {}
 
     async buildNewEventObservable(body: any, userId: number): Promise<Observable<any> | undefined> {
-        if (!body?.calendarId || !body?.accessToken) return undefined;
+        if (!body?.calendarId) return undefined;
         await this.oauthService.refreshGoogleToken(userId);
         const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});
         console.log(user);
@@ -67,6 +67,7 @@ export class GoogleActionsService {
     }
 
     async buildNewMailObservable(body: any, userId: number, mailSent: boolean = false): Promise<Observable<any> | undefined> {
+        console.log(body);
         if (!body.actionUserId) return undefined;
         await this.oauthService.refreshGoogleToken(userId);
         const user = await this.providerService.getUserProviders({where: {userID: userId, Name: 'google'}});

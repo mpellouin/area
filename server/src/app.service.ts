@@ -9,6 +9,7 @@ import {AreaService} from './area/area.service';
 import {Area} from '@prisma/client';
 import {ServicesService} from './services/services.service';
 import {PrismaService} from './prisma.service';
+import {randomUUID} from 'crypto';
 
 @Injectable()
 export class AppService {
@@ -144,14 +145,18 @@ export class AppService {
 
     async userRegister(req): Promise<any> {
         if (!req.body?.email || !req.body?.password) {
-            throw new Error('Missing email or password');
+            return 'Missing email or password';
         }
         const userSearch = await this.userService.users({where: {email: req.body.email}});
         if (userSearch.length > 0) {
-            throw new Error('User already exists');
+            return 'User already exists';
         }
-        const user = await this.authService.registerUser(req.body.email, req.body.password);
-        return this.authService.loginUser(user);
+        try {
+            const user = await this.authService.registerUser(req.body.email, req.body.password);
+            return this.authService.loginUser(user);
+        } catch (e) {
+            return 'Error while creating user';
+        }
     }
 
     async createArea(req, actionId: string, reactionId: string): Promise<AreaStatusType> {
@@ -173,7 +178,7 @@ export class AppService {
         await this.areaService.createArea({
             actionID: parseInt(actionId),
             reactionID: parseInt(reactionId),
-            name: req.body.name,
+            name: req.body.name === undefined || req.body.name === '' ? randomUUID() : req.body.name,
             user: {connect: {ID: req.user.ID}},
             parameters: JSON.stringify(req.body),
         });

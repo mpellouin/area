@@ -37,7 +37,7 @@ export const poptastic = (url: string, navigate: any) => {
         if (event.data.provider && event.data.provider === 'twitch') {
             setTimeout(() => window.location.reload(), 100);
         } else {
-            if (event.data !== 'failure') {
+            if (event.data !== 'failure' && !event.data.payload) {
                 navigate('/areas');
             }
         }

@@ -15,7 +15,7 @@ interface AreaParam {
     }[];
 }
 
-const actionsList: AreaParam[] = [
+export const actionsList: AreaParam[] = [
     {
         id: 1,
         name: 'New tweet from @X',
@@ -116,7 +116,7 @@ const actionsList: AreaParam[] = [
     },
 ];
 
-const reactionsList: AreaParam[] = [
+export const reactionsList: AreaParam[] = [
     {
         id: 1,
         name: 'Send mail to Y',
