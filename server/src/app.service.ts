@@ -126,7 +126,12 @@ export class AppService {
                                 description: 'The stream X has a new hype train',
                             },
                         ],
-                        reactions: [],
+                        reactions: [
+                            {
+                                name: 'Send Whisper',
+                                description: 'Send a message to an other user',
+                            },
+                        ],
                     },
                 ],
             },
