@@ -75,6 +75,45 @@ const actionsList: AreaParam[] = [
             },
         ],
     },
+    {
+        id: 6,
+        name: 'New best stream on Twitch',
+        serviceId: 5,
+        params: [],
+    },
+    {
+        id: 7,
+        name: 'New hype train',
+        serviceId: 5,
+        params: [
+            {
+                placeholder: 'your twitch username',
+                name: 'twitchUsername',
+            },
+        ],
+    },
+    {
+        id: 8,
+        name: 'Streamer just went live',
+        serviceId: 5,
+        params: [
+            {
+                placeholder: 'Streamer username',
+                name: 'twitchUsername',
+            },
+        ],
+    },
+    {
+        id: 9,
+        name: 'New Mail sent',
+        serviceId: 2,
+        params: [
+            {
+                placeholder: 'Your authenticated gmail address',
+                name: 'actionUserId',
+            },
+        ],
+    },
 ];
 
 const reactionsList: AreaParam[] = [
@@ -157,6 +196,40 @@ const reactionsList: AreaParam[] = [
             {
                 placeholder: 'title of your document',
                 name: 'title',
+            },
+        ],
+    },
+    {
+        id: 5,
+        name: 'Create a new GMAIL draft',
+        serviceId: 2,
+        params: [
+            {
+                placeholder: 'Subject of the mail',
+                name: 'subject',
+            },
+            {
+                placeholder: 'Contents of the mail',
+                name: 'message',
+            },
+        ],
+    },
+    {
+        id: 6,
+        name: 'Send a twitch whisper to X',
+        serviceId: 5,
+        params: [
+            {
+                placeholder: 'Twitch username to send to',
+                name: 'to',
+            },
+            {
+                placeholder: 'Message to send',
+                name: 'message',
+            },
+            {
+                placeholder: 'Your twitch username',
+                name: 'from',
             },
         ],
     },
