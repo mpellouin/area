@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, useColorScheme} from 'react-native';
 
 import {
@@ -9,13 +9,16 @@ import {
   faUserCog,
 } from '@fortawesome/free-solid-svg-icons';
 
+import {Colors} from '../../../Style';
+
 import Credit from '../../components/Credit';
 import Navbar from '../../components/Navbar';
 import ButtonParams from './ButtonParams';
 
+import {getUser} from '../../apiCalls/UserCalls';
+
 import LogOut from './LogOut';
 import Profile from './Profile';
-import {Colors} from '../../../Style';
 
 const Styles = StyleSheet.create({
   container: {
@@ -33,6 +36,25 @@ const Styles = StyleSheet.create({
 
 const User = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [user, setUser] = useState({
+    ID: '',
+    customToken: '',
+    email: '',
+    googleID: '',
+    password: '',
+    services: '',
+  });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getUser();
+      return user[0];
+    };
+    fetchUser().then(user => {
+      setUser(user);
+    });
+  }, []);
+
   return (
     <View
       style={[
@@ -40,7 +62,7 @@ const User = () => {
         Styles.container,
       ]}>
       <View style={Styles.containerParams}>
-        <Profile email={'lisa.glaziou@epitech.eu'} />
+        <Profile email={user.email} />
         <ButtonParams
           icon={faUserCog}
           title={'My Profile'}

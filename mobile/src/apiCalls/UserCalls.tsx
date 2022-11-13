@@ -1,6 +1,8 @@
 import {getItem} from '../components/storage/localStorage';
 
 const getUser = async () => {
+  const jwt = await getItem('jwt');
+
   const response = await fetch(
     `http://area.eu-west-3.elasticbeanstalk.com/user`,
     {
@@ -8,7 +10,7 @@ const getUser = async () => {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        Authorization: `Bearer ${getItem('jwt')}`,
+        Authorization: `Bearer ${jwt?.split(`"`)[1]}`,
       },
     },
   );

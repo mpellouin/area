@@ -1,5 +1,3 @@
-import {faLock, faUnlock} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useState} from 'react';
 import {
   ScrollView,
@@ -8,6 +6,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+
+import {faLock, faUnlock} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
 import {Colors} from '../../../../Style';
 
 import ButtonBack from '../../../components/buttons/ButtonBack';

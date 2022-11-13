@@ -20,10 +20,11 @@ import {Colors} from '../../../../Style';
 import Title from '../../../components/Title';
 import Separator from '../../../components/Separator';
 import LoginSvg from '../../../components/svg/LoginSvg';
+import {getItem, setItem} from '../../../components/storage/localStorage';
+
+import {loginUser} from '../../../apiCalls/UserCalls';
 
 import AuthLogin from './AuthLogin';
-import {loginUser} from '../../../apiCalls/UserCalls';
-import {getItem, setItem} from '../../../components/storage/localStorage';
 
 const Styles = StyleSheet.create({
   container: {
