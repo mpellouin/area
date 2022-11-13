@@ -7,9 +7,9 @@
     <application
       android:name="com.area.MainApplication"
       android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
+      android:icon="@mipmap/logoarea"
       android:usesCleartextTraffic="true"
-      android:roundIcon="@mipmap/ic_launcher_round"
+      android:roundIcon="@mipmap/logoarea"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
       <activity
