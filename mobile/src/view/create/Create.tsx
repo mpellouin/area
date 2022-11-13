@@ -47,10 +47,12 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     margin: 30,
+    height: 100,
     zIndex: 5,
   },
   containerMenu: {
     zIndex: 5,
+    height: 120,
   },
   containerInput: {
     height: 50,
@@ -312,8 +314,7 @@ const Create = () => {
             style={Styles.containerInput}
             label={'Name your new AREA'}
             onChangeText={value => {
-              if (name === '') value = name;
-              else setName(value);
+              setName(value);
             }}
             activeUnderlineColor={isDarkMode ? Colors.majorD : Colors.majorW}
           />
@@ -492,7 +493,7 @@ const Create = () => {
                 },
               ]}
               onPress={() => {
-                action.name === '' || reaction.name === ''
+                action.name === '' || reaction.name === '' || name === ''
                   ? setErrorArea(true)
                   : submitArea();
               }}>
@@ -553,7 +554,7 @@ const Create = () => {
                 }}
                 style={Styles.dialogError}>
                 <Dialog.Content>
-                  <Paragraph>You should put an action or a reaction.</Paragraph>
+                  <Paragraph>All the parameters should be put.</Paragraph>
                 </Dialog.Content>
               </Dialog>
             </Portal>
