@@ -63,7 +63,6 @@ const AuthRegister = ({title}: AppProps) => {
       if (jwt != null) {
         setItem('isLoggedIn', 'True');
         setItem(`jwt`, jwt);
-        console.log(jwt);
         RNRestart.Restart();
         Linking.removeAllListeners('url');
       } else {
@@ -98,10 +97,10 @@ const AuthRegister = ({title}: AppProps) => {
           Styles.container,
           {
             borderColor: isDarkMode
-              ? isPressed === true
+              ? isPressed
                 ? Colors.minorD
                 : '#A9A9A9'
-              : isPressed === true
+              : isPressed
               ? Colors.minorW
               : Colors.textW,
           },

@@ -155,8 +155,6 @@ const Homepage = () => {
       return areas;
     };
     fetchAreas().then(areas => {
-      const test = JSON.parse(areas[0].parameters);
-      console.log(test.action, test.reaction);
       setAreas(areas);
     });
     setForceRefresh(false);
