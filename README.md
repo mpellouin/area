@@ -46,6 +46,10 @@ docker-compose build && docker-compose up
 ## Services and Widgets implemented
 #### - GMAIL
   - Get a new Mail
+  - new mail sent
+  -> send a mail
+  -> create a new draft
+  -> create a new document on drive
 
 #### - TWITTER
   - Get new tweets from User
@@ -55,15 +59,28 @@ docker-compose build && docker-compose up
   - Get the flights from City in a 50 km radius
 
 #### - TWITCH
-  - Get new followed channel live
+  - Streamer went live
+  - New streamer has most views
+  - New Hype Train
+  -> Send a whisper
 
 #### - CALENDAR
   - Get events of a calendar in less than 1 hour
+  -> Create new event
+  
+#### - DISCORD
+  -> Send message on webhook
 
 ## API documentation
 Find our documentation under `doc/`
 
 ## Postman
+
+## Useful endpoints
+
+You can get informations about the project by sending an HTML GET request on endpoint `/about.json`.
+
+You can also download our apk on the website.
 
 ## Contributors
 Back-End | API | Database:
@@ -73,6 +90,8 @@ Back-End | API | Database:
 Web application :
 - [Justine Trupheme](https://github.com/Flackho)
 - [Florian Gibault](https://github.com/Fgib)
+- [Maxence Pellouin](https://github.com/mpellouin)
 
 Mobile application :
 - [Lisa Glaziou](https://github.com/LisaGHeclys)
+- [Laurent Cazette](https://github.com/Laurent-cazette)
