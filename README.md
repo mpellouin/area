@@ -1,12 +1,14 @@
-# Epitech AREA - by On Area La
-> This is an Epitech 3rd-year project.
+# AREA
+![maintenance-status](https://img.shields.io/badge/maintenance-as--is-yellow.svg)
 
-## Introduction
-The goal of this project is to make a dashboard-style web app to gather feeds from multiple external APIs and centralize them into one interface.
 
-The project must implement a software suite that functions similar to that of [IFTTT](https://ifttt.com/) and/or [Zapier](https://zapier.com/)
+The AREA is a 3rd year project consisting in building a multi-platform dashboard-style app allowing users to create automations just like [IFTTT](https://ifttt.com/) and [Zapier](https://zapier.com/).
 
-## The project
+In order to do so, students must gather feeds from multiple external APIs and centralize them to all users.
+
+Beware, this project was done in late 2022 and APIs change are happening regularly. This project is therefore deprecated and no maintenance will take place.
+
+## Code base
 <strong>The project is organized in three parts:</strong>
 1. The mobile front-end is located under `mobile/`
 2. The desktop/web front-end is located under `desktop/`
@@ -22,6 +24,7 @@ The project must implement a software suite that functions similar to that of [I
   - Prisma
   - AWS elastic beanstalk
   - Swagger
+  - RxJS
  
 - Web application:
   - React
@@ -37,61 +40,27 @@ The project must implement a software suite that functions similar to that of [I
 ## Prerequisites
 - Docker
 
-## How to launch the project
+## How to use?
 #### Run the following commands to launch the three parts of the project
 ```
 docker-compose build && docker-compose up
 ```
 
-## Services and Widgets implemented
-#### - GMAIL
-  - Get a new Mail
-  - new mail sent
-  -> send a mail
-  -> create a new draft
-  -> create a new document on drive
+## Grade
 
-#### - TWITTER
-  - Get new tweets from User
-  - Get all the new followers
+|Module Name | Grade |
+|---|---|
+| B5 - Application Development | A |
 
-#### - FLIGHT TRACKER
-  - Get the flights from City in a 50 km radius
 
-#### - TWITCH
-  - Streamer went live
-  - New streamer has most views
-  - New Hype Train
-  -> Send a whisper
+## LICENCE
 
-#### - CALENDAR
-  - Get events of a calendar in less than 1 hour
-  -> Create new event
-  
-#### - DISCORD
-  -> Send message on webhook
-
-## API documentation
-Find our documentation under `doc/`
-
-## Postman
-
-## Useful endpoints
-
-You can get informations about the project by sending an HTML GET request on endpoint `/about.json`.
-
-You can also download our apk on the website.
+This code is freely available for use.
+Epitech students, you should copy code at your own risk.
 
 ## Contributors
-Back-End | API | Database:
 - [Maxence Pellouin](https://github.com/mpellouin)
 - [Laurent Cazette](https://github.com/Laurent-cazette)
-
-Web application :
 - [Justine Trupheme](https://github.com/Flackho)
 - [Florian Gibault](https://github.com/Fgib)
-- [Maxence Pellouin](https://github.com/mpellouin)
-
-Mobile application :
 - [Lisa Glaziou](https://github.com/LisaGHeclys)
-- [Laurent Cazette](https://github.com/Laurent-cazette)
